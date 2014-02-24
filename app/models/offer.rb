@@ -1,4 +1,6 @@
 class Offer < ActiveRecord::Base
+  include ActionView::Helpers::NumberHelper
+  
   belongs_to :user
   
   has_many :group_offerings, dependent: :delete_all 
@@ -68,5 +70,18 @@ class Offer < ActiveRecord::Base
     kopy.deliveries << self.deliveries.collect{ |delivery| delivery.dup }
     kopy.group_offerings << self.group_offerings.collect{ |group_offering| group_offering.dup }
     kopy.save ? kopy : nil
+  end
+  
+  def handle_attach(uploaded_attach)
+    if uploaded_attach.present? && UPLOAD_CONTENT_TYPES_WHITELIST.include?(uploaded_attach.content_type) && (uploaded_attach.tempfile.size <= UPLOAD_MAX_FILE_SIZE)
+      self.attach = uploaded_attach.read
+      # self.filename  = uploaded_attach.original_filename
+      self.attach_mime_type = uploaded_attach.content_type
+      self.attach_file_size = uploaded_attach.tempfile.size
+      self.save
+    else
+      errors.add(:attach, "Dozvoljen je samo PDF dokument manji od #{number_to_human_size(UPLOAD_MAX_FILE_SIZE)}")
+      return false
+    end
   end
 end
