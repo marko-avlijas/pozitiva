@@ -1,0 +1,94 @@
+<div class="panel panel-offer">
+  <%#= render :partial => 'offers/offer_heading' %> 
+  <div class="panel-heading offer-author">
+    <div class="row">
+      <div class="col-md-12">
+        <%= link_to "&laquo; Moje narudžbe".html_safe, my_orders_path, class: "nav-link"%>
+      </div>
+    </div>
+  </div>
+  
+  <div class="panel-heading offer-title">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Narudžba br. <%= @order.id %> </h3>
+        <h4><%= link_to @offer.title, @offer, target: '_blank' %> - <%= link_to @offer.user.name, profile_path(@offer.user), target: '_blank' %></h4>
+        <p><%= @offer.note %></p>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- <p><strong>User:</strong><%= @order.user.email %></p> -->
+        
+        <!-- <p><strong>Status:</strong><%= @order.status %></p> -->
+        <div class="focus">
+          
+          <table class="table">
+            <thead>
+              <tr>
+                <th align="left">Proizvod</th>
+                <th>Naručena količina</th>
+                <th>Korigirana količina</th>
+                <th class="hidden-xs">Jed. cijena</th>
+                <th>Ukupna cijena</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% total = 0 %>
+              <% @order.order_items.each do |order_item| %>
+              <tr>
+                <td><%= order_item.offer_item.title %></td>
+                <td ><%= formatted_item_qty_unit order_item %></td>
+                <td><%= formatted_item_corrected_qty_unit order_item %></td>
+                <td class="hidden-xs"><%= formatted_price order_item.offer_item.decimal_price %></td>
+                <td><%= vario_price_unknown(order_item) %></td>
+              </tr>
+              <% total += order_item.item_price %>
+              
+              <% end %>
+            </tbody>
+            <tfoot style="border-top: 2px solid #ADBDB3">
+              <tr>
+                <td ><strong>Ukupno:</strong></td>
+                <td ></td>
+                <td ></td>
+                <td class="hidden-xs" ></td>
+                <td ><strong><%= formatted_price total %></strong></td>
+              </tr>
+            </tfoot>
+          </table>
+          <p>
+            <span class="badge important" >Isporuka:
+              <%= "#{@order.delivery.location.title} - #{formatted_delivery_when @order.delivery}" %>
+            </span>
+          </p>
+          <% if @order.note? %>
+          <p><strong>Poruka proizvođaču:</strong> <%= @order.note %></p>
+          <% end %>
+        </div>
+        <br/>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <div class="row">
+      <div class="offer-footer">
+
+    <% if @offer.status == :active && @order.user == current_user %>
+    <%#= link_to 'Promijeni narudžbu', edit_offer_order_path(@offer, @order) %> 
+    <%#= link_to 'Izbriši narudžbu', [@offer, @order], method: :delete, data: { confirm: 'Are you sure?' } %>
+    
+    <%= link_to('Uredi narudžbu', edit_offer_order_path(@offer, @order)) unless @offer.expired? %> | 
+    <%= link_to('Izbriši narudžbu', offer_order_path(@offer, @order), method: :delete, data: { confirm: 'Jeste li sigurni da želite obrisati narudžbu?' }) unless @offer.expired? %>
+    
+    <%#= link_to 'Back', offer_orders_path(@offer) %>
+    <% end %>
+    <br/>
+  </div>
+</div>
+  </div>
+</div>

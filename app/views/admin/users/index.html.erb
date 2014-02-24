@@ -1,0 +1,138 @@
+<div class="panel panel-offer">
+  <div class="panel-heading offer-author">  
+    <h3>Korisnici</h3> 
+  </div>
+  <div class="panel-body">
+    
+    <ul class="nav nav-tabs">
+      <li class="active" ><a href="#users-tab-1" data-toggle="tab">Prijavljeni</a></li>
+      <li><a href="#users-tab-2" data-toggle="tab">Aktivni</a></li>
+      <li><a href="#users-tab-3" data-toggle="tab">Suspendirani</a></li>
+    </ul>
+    
+    
+    <div class="tab-content">
+      <div id="users-tab-1" class="tab-pane active" >
+    <h3>Prijavljeni</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th></th>
+          <th>Oznaka kupca</th>
+          <th>Name / Email</th>
+          <th>Grupa</th>
+          <th>Admin</th>
+          <th>Suspend.</th>
+          <th>created_at</th>
+          <th>Proizvođač</th>
+          <th>broj prijava</th>
+          <th>zadnja prijava</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @users_without_group_not_suspended.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= gravatar_image_tag(user.email, gravatar: { size: 50 }) %></td>
+          <td><%= user.buyer_tag %></td>
+          <td><%= user.name %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
+          <td><%= user.try(:group) ? user.group.title : '-' %></td>
+          <td><%= user.admin ? 'Da' : '-' %></td>
+          <td><%= user.try(:locked_at) ? short_dt(user.locked_at) : '-' %></td>
+          <td><%= short_dt user.created_at %></td>
+          <td><%= user.is_producer ? "Da" : "-" %></td>
+          <td><%= user.sign_in_count %></td>
+          <td><%= short_dt user.last_sign_in_at %></td>
+          <td><%= link_to "Promijeni", edit_admin_user_path(user) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div id="users-tab-2" class="tab-pane" >
+    <h3>Aktivni</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th></th>
+          <th>Oznaka kupca</th>
+          <th>Name / Email</th>
+          <th>Grupa</th>
+          <th>Admin</th>
+          <th>Suspend.</th>
+          <th>created_at</th>
+          <th>Proizvođač</th>
+          <th>broj prijava</th>
+          <th>zadnja prijava</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @users_with_group_not_suspended.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= gravatar_image_tag(user.email, gravatar: { size: 50 }) %></td>
+          <td><%= user.buyer_tag %></td>
+          <td><%= user.name %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
+          <td><%= user.try(:group) ? user.group.title : '-' %></td>
+          <td><%= user.admin ? 'Da' : '-' %></td>
+          <td><%= user.try(:locked_at) ? short_dt(user.locked_at) : '-' %></td>
+          <td><%= short_dt user.created_at %></td>
+          <td><%= user.is_producer ? "Da" : "-" %></td>
+          <td><%= user.sign_in_count %></td>
+          <td><%= short_dt user.last_sign_in_at %></td>
+          <td><%= link_to "Promijeni", edit_admin_user_path(user) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div><div id="users-tab-3" class="tab-pane" >
+    <h3>Suspendirani</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th></th>
+          <th>Oznaka kupca</th>
+          <th>Name / Email</th>
+          <th>Grupa</th>
+          <th>Admin</th>
+          <th>Suspend.</th>
+          <th>created_at</th>
+          <th>Proizvođač</th>
+          <th>broj prijava</th>
+          <th>zadnja prijava</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @users_suspended.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= gravatar_image_tag(user.email, gravatar: { size: 50 }) %></td>
+          <td><%= user.buyer_tag %></td>
+          <td><%= user.name %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
+          <td><%= user.try(:group) ? user.group.title : '-' %></td>
+          <td><%= user.admin ? 'Da' : '-' %></td>
+          <td><%= user.try(:locked_at) ? short_dt(user.locked_at) : '-' %></td>
+          <td><%= short_dt user.created_at %></td>
+          <td><%= user.is_producer ? "Da" : "-" %></td>
+          <td><%= user.sign_in_count %></td>
+          <td><%= short_dt user.last_sign_in_at %></td>
+          <td><%= link_to "Promijeni", edit_admin_user_path(user) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  </div>
+  </div>
+  <!-- Mailer Username (API Key): <%#= ENV['MAILER_USER'] %> -->
+  <div class="panel-footer">&nbsp;</div>
+</div>

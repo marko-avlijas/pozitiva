@@ -1,0 +1,27 @@
+
+<div class="panel panel-offer">
+  <%#= render :partial => 'offers/offer' %>
+  
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-md-12">
+        <%= link_to "&laquo; Moje narudžbe".html_safe, my_orders_path, class: "nav-link"%>
+      </div>
+    </div>
+  </div>
+  
+  <div class="panel-heading offer-title">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Nova narudžba</h3>
+        <h4><%= link_to @offer.title, @offer, target: '_blank' %> - <%= link_to @offer.user.name, profile_path(@offer.user), target: '_blank' %></h4>
+        <p><%= link_to @offer.note, @offer %></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="panel-body">
+    <%= render 'form' %>
+  </div>
+</div>
+<%#= link_to 'Back', orders_path %>

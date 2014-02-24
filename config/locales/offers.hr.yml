@@ -1,0 +1,4 @@
+hr:
+  draft: "u pripremi"
+  active: "u tijeku"
+  finished: "završena"

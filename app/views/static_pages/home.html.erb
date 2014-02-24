@@ -1,0 +1,52 @@
+<% if current_user.try(:group).blank? %>
+<p></p>
+<% else %>
+<div class="row" style="margin-top: 20px">
+  <div class="col-md-3 col-sm-6 ">
+  <%= link_to offers_path, class: "white-card home home-offer" do %>
+      <p><span class="glyphicon glyphicon-tags"></span></p>
+      <h3>Sve ponude</h3>
+    <% end %>
+  </div>
+  
+  <div class="col-md-3 col-sm-6">
+    <%= link_to my_orders_path, class: "white-card home home-my-orders" do %>
+      <p><span class="glyphicon glyphicon-shopping-cart"></span></p>
+      <h3>Moje narudžbe</h3>
+    <% end %>
+  </div>
+  
+  <!-- <div class="col-sm-6">
+  <a href="">
+    <div class="white-card home" style="background-color: #ADA9B4; border: 1px solid #888" >
+      <p><span class="glyphicon glyphicon-refresh"></span></p>
+      <h3>Razmjena</h3>
+    </div>
+    </a>
+  </div> -->
+  <% if current_user.is_producer %>
+  <div class="col-md-3 col-sm-6 ">
+  <%= link_to my_offers_path, class: "white-card home home-my-offers" do %>
+      <p><span class="glyphicon glyphicon-bullhorn"></span></p>
+      <h3>Moje ponude</h3>
+    <% end %>
+  </div>
+  <% end %>
+  
+  <div class="col-md-3 col-sm-6 ">
+  <%= link_to my_profile_path, class: "white-card home home-edit-user-registration" do %>
+      <p><span class="glyphicon glyphicon-user"></span></p>
+      <h3>Moj profil</h3>
+    <% end %>
+  </div>
+  
+  <% if @current_user_is_admin %>
+  <div class="col-md-3 col-sm-6 ">
+  <%= link_to admin_users_path, class: "white-card home home-admin-users" do %>
+      <p><span class="glyphicon glyphicon-tower"></span></p>
+      <h3>Administracija</h3>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+<% end %>

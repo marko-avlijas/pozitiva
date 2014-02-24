@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-offer">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-lg-12">
+              <%= link_to "&laquo; Aktualne ponude".html_safe, offers_path, class: "nav-link"%>
+            </div>
+          </div>
+        </div>
+        <div class="panel-heading offer-title">
+          <div class="row">
+            <div class="col-lg-12">
+              <h3><%= my_gravatar_image_tag %> Moje ponude</h3>
+            </div>
+          </div>
+        </div>
+      <div class="panel-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="hidden-xs">ID</th>
+              <th class="hidden-xs">Za koga</th>
+              <th>Naziv ponude</th>
+              <th>Status</th>
+              <th class="hidden-xs">Objavljena</th>
+              <th class="hidden-xs">Rok za narudžbu</th>
+              <th class="hidden-xs">Broj narudžbi</th>
+              <th></th>
+              <th></th>
+              <!-- <th></th> -->
+              <!-- <th></th> -->
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @my_offers.each do |offer| %>
+            <tr>
+              <td class="hidden-xs"><%= offer.id %></td>
+              <td class="hidden-xs">
+                  <% offer.groups.each do |group| %>
+                  <%= group.title %><br/>
+                  <% end %>
+              </td>
+              <td><%= offer.title %></td>
+              <td><%= badge_important(offer.status) %></td>
+              <td class="hidden-xs">
+                <%= formatted_valid_from offer %><br/>
+                <%= "(počinje za #{distance_of_time_in_words_to_now offer.valid_from})" if offer.valid_from && offer.valid_from > Time.now %> 
+              </td>
+              <td class="hidden-xs"><%= formatted_valid_until offer %></td>
+              <td class="hidden-xs"><%= offer.orders.count %></td>
+              <td><%= link_to 'Detaljnije', offer %></td>
+              <td><%= link_to 'Kalkulacija', offer_orders_path(offer) %></td>
+              <!-- <td><%#= link_to '', edit_offer_path(offer),  class: "link glyphicon glyphicon-pencil"%></td> -->
+              <!-- <td><%#= link_to '', offer, method: :delete, data: { confirm: 'Are you sure?' }, class: "link glyphicon glyphicon-trash" %></td> -->
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel-footer">
+        <div class="offer-footer" >
+        <%= link_to 'Nova ponuda', new_offer_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

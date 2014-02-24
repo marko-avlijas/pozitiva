@@ -1,0 +1,43 @@
+<div class="panel-heading">
+  <div class="row">
+    <div class="col-lg-12">
+      <!-- ako je current user ujedno i autor ponude, prikazati ovo:
+        <a href="" class="nav-link">&laquo; Moje ponude</a>
+        inače prikazati ovo dolje (što je u h5)
+        -->
+      <h5>
+          <%= link_to profile_path(@offer.user) do %>
+          <%= gravatar_image_tag(@offer.user.email) %>
+          <span class="author"><%= @offer.user.name %></span>
+          <% end %>
+      </h5>
+    </div>
+  </div>
+</div>
+<div class="panel-heading offer-title">
+  <div class="row">
+    <div class="col-lg-12">
+      <h3><%= @offer.title %>
+        <span class="badge" style="position: relative; top: -2px; font-size: 14px; padding-bottom: 5px">ponuda <%= t(@offer.status) %></span>
+      </h3>
+      <p><%= @offer.note %></p>
+      <p>
+        
+        <% if @offer.try(:attach) %>
+        Više o ponudi: 
+        <%= link_to "PDF (#{number_to_human_size @offer.attach_file_size.to_i})", attach_offer_path(@offer), target: "_blank" %>
+        <% if @show_delete %>
+        | <%= link_to("x", delete_attach_offer_path(@offer)) %>
+        <% end %>
+        <% end %>  
+      </p>
+    </div>
+  </div>
+</div>
+
+  
+
+	
+
+
+

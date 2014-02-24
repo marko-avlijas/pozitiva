@@ -1,0 +1,43 @@
+<div class="panel panel-offer">
+  <div class="panel-heading offer-author">
+    <h3>Lokacije isporuke</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-lg-12">
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Naziv</th>
+              <th>Lat (geogr. širina)</th>
+              <th>Lng (geogr. dužina)</th>
+              <th>Opis</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @locations.each do |location| %>
+            <tr>
+              <td><%= location.title %></td>
+              <td><%= location.lat %></td>
+              <td><%= location.lng %></td>
+              <td><%= location.description %></td>
+              <td><%= link_to 'Uredi', edit_location_path(location) %></td>
+              <td><%= link_to "Prikaži na karti", location.map_url, target: "_blank" if location.map_url %></td>
+              <td><%= link_to 'Izbriši', location, method: :delete, data: { confirm: 'Jeste li sigurni da želite izbrisati lokaciju?' } %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <%= link_to 'Nova lokacija', new_location_path, class: "btn btn-primary" %>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<%= form_for @location, html: {role: "form", style: "max-width: 400px"}  do |f| %>
+
+  <div class="form-group">
+    <%= f.label :title, "Naziv" %>
+    <%= f.text_field :title, class: "form-control", placeholder: "Naziv"  %>
+  </div>
+  <div class="form-group">
+    <%= f.label :lat %>
+    <%= f.text_field :lat, class: "form-control", placeholder: "Lat (geografska širina)" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :lng %>
+    <%= f.text_field :lng, class: "form-control", placeholder: "Long (geografska dužinu)" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, "Opis" %>
+    <%= f.text_area :description, class: "form-control", placeholder: "Opis" %>
+  </div>
+
+  <%= f.submit nil, class: "btn btn-primary" %>
+<% end %>

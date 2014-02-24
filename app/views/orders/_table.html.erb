@@ -1,0 +1,61 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Br.</th>
+      <th>Status ponude</th>
+      <th>Iz ponude</th>
+      <th>Ponuđač</th>
+      <th>Dostava</th>
+
+      <th width="300">Narudžba</th>
+      <th>Ukupan iznos</th>
+      <!-- <th>Status</th> -->
+      <th></th>
+      <!-- <th></th> -->
+      <!-- <th></th> -->
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @my_orders.each do |order| %>
+    <tr>
+      <td><%= order.id %> <%#= order.user.email %></td>
+      <td>
+        <% if order.offer.status == :active %>
+          <span class="badge">još <%= distance_of_time_in_words_to_now order.offer.valid_until %></span>
+        <% elsif order.offer.status == :finished %>
+          Istekla
+        <% end %>
+      </td>
+      <td><%= link_to order.offer.title, order.offer %></td>
+      <td><%= link_to order.offer.user.name, profile_path(order.offer.user), target: '_blank' %></td>
+      <td><span class="badge important"><%= display_delivery order%></span></td>
+      <td>
+        <table class="table">
+          
+        <% total = 0 %>
+        <% order.order_items.each do |order_item| %>
+          <% unless order_item.offer_item.nil? %>
+            <tr>
+              <td>
+                <%= order_item.offer_item.title %>
+              </td>
+              <td>
+                <%= formatted_item_numeric_qty_unit(order_item) %>
+              </td>
+            </tr>
+            <%#= formatted_price order_item.item_price %>
+            <% total += order_item.item_price %>
+          <% end %>
+        <% end %>
+        </table>
+      </td>
+      <td><strong><%= formatted_price total %></strong></td>
+      <!-- <td><%#= order.status %></td> -->
+      <td><%= link_to 'Detaljnije', offer_order_path(order.offer, order) %></td>
+      <!-- <td><%#= link_to('', edit_offer_order_path(order.offer, order), class: "link glyphicon glyphicon-pencil") unless order.offer.expired? %></td> -->
+      <!-- <td><%#= link_to '', offer_order_path(order.offer, order), method: :delete, data: { confirm: 'Jeste li sigurni da želite obrisati narudžbu?' }, class: "link glyphicon glyphicon-trash" unless expired %></td> -->
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel white-card">
+      <div class="panel-heading">
+        <h3 class="panel-title text-center">Korisnički profil</h3>
+      </div>
+      <div class="panel-body">
+        <div style="text-align: center">
+          <p><%= gravatar_image_tag(@user.email) %></p>
+          <h4><%= @user.name %></h4>
+          <p style="margin-bottom: 5px">Član grupe <strong><%= @user.group.title %></strong></p>
+          <p><strong><%= @user.buyer_tag %></strong></p><br/>
+        </div>
+        <p><%= @user.about_text %></p>
+        <p>Više na linku: <%= @user.about_url %></p>
+        <p>Više u dokumentu: 
+          <% if @user.try(:about_attach) %>
+          <%= link_to "Download (#{number_to_human_size @user.about_attach_file_size.to_i})", 
+          about_attach_profile_path %> 
+          <% if @show_delete %>
+          | <%= link_to("Delete", delete_about_attach_profile_path) %>
+          <% end %>
+          <% else %>
+          -
+          <% end %>
+        </p>
+      </div>
+      <div class="panel-footer">
+        <button class="btn btn-primary message-trigger" data-toggle="modal" data-target="#message_to_user">
+          <i class="fa fa-envelope"></i> Poruka korisniku
+        </button>
+        
+        
+        <div class="modal fade" id="message_to_user">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Poruka korisniku</h4>
+              </div>
+              <%= render 'shared/contact_form' %>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
+      </div>
+    </div>
+  </div>
+</div>

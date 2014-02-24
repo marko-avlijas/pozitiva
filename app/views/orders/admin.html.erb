@@ -1,0 +1,60 @@
+<div class="panel panel-offer">
+  <div class="panel-heading offer-author">
+    <h3>Sve narudžbe</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-lg-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Zadnja izmjena</th>
+              <th>Naručitelj</th>
+              <th>Iz ponude</th>
+              <th>Ponuđač</th>
+              <th>Dostava</th>
+              <th>Proizvodi (količina i cijena)</th>
+              <th>Iznos</th>
+              <!-- <th>Status</th> -->
+              <th></th>
+              <!-- <th></th> -->
+              <!-- <th></th> -->
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @orders.each do |order| %>
+            <tr>
+              <td><%= order.id %></td>
+              <td><%= formatted_dt order.updated_at %></td>
+              <td><%= order.user.name %> <%= order.user.email %></td>
+              <td><%= link_to order.offer.title, order.offer %></td>
+              <td><%= order.offer.user.name %> <%= order.offer.user.email %></td>
+              <td><%= "#{order.delivery.location.title} - #{formatted_delivery_when order.delivery}" %></td>
+              <td>
+                <% total = 0 %>
+                <% order.order_items.each do |order_item| %>
+                <%= order_item.offer_item.title %>
+                <%= order_item.numeric_qty %> <%= order_item.offer_item.unit %>
+                = <%= formatted_price order_item.item_price %>
+                <% total += order_item.item_price %>
+                <br/>
+                <% end %>
+              </td>
+              <td><%= formatted_price total %></td>
+              <!-- <td><%#= order.status %></td> -->
+              <td><%= link_to 'Show', offer_order_path(order.offer, order) %></td>
+              <!-- <td><%#= link_to 'Edit', edit_offer_order_path(order.offer, order) %></td> -->
+              <!-- <td><%#= link_to 'Destroy', offer_order_path(order.offer, order), method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    &nbsp;
+  </div>
+</div>

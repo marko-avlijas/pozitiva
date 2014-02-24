@@ -1,0 +1,17 @@
+<%= form_for Message.new, url: @contact_form_url, html: {role: "form", class: "form-horizontal"} do |f| %>
+<div class="modal-body">
+  <div class="form-group">
+    <%= f.label :subject, "Naslov:", class: "col-lg-4 control-label" %>
+    <div class="col-lg-8"><%= f.text_field :subject, class: "form-control" %></div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :body, "Poruka:", class: "col-lg-4 control-label" %>
+    <div class="col-lg-8"><%= f.text_area :body, class: "form-control", style: "height: 200px" %></div>
+  </div>
+</div>
+<div class="modal-footer">
+  <%= f.submit "Pošalji", class: "btn btn-primary" %>
+  <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+</div>
+<% end %>

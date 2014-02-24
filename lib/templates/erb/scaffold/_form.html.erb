@@ -1,0 +1,11 @@
+<%%= form_for @<%= singular_table_name %>, html: {role: "form"}  do |f| %>
+
+  <%- attributes.each do |attribute| -%>
+  <div class="form-group">
+    <%%= f.<%= :label %> :<%= attribute.name %> %>
+    <%%= f.<%= :text_field %> :<%= attribute.name %>, class: "form-control", placeholder: "Enter <%= attribute.name.titleize %>" %>
+  </div>
+  <%- end -%>
+
+  <%%= f.submit nil, class: "btn btn-primary" %>
+<%% end %>

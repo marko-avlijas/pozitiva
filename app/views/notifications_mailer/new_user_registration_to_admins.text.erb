@@ -1,0 +1,8 @@
+Nova Registracija
+
+Ime i prezime: <%= @user.name %> 
+email: <%= @user.email %>
+tel: <%= @user.phone %>
+članstvo u grupi: <%= Group.find(@user.requested_group_id).try(:title) %>
+
+Admin url: <%= admin_users_url %>
