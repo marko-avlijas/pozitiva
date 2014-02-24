@@ -39,11 +39,11 @@ class OffersController < ApplicationController
   # POST /offers
   # POST /offers.json
   def create
-    @offer = Offer.new(offer_params)
+    @offer = Offer.new(offer_params.except(:attach))
     @offer.user = current_user
     
     respond_to do |format|
-      if @offer.save && handle_upload
+      if @offer.save && @offer.handle_attach(offer_params[:attach])
         format.html { redirect_to @offer, notice: 'Offer was successfully created.' }
         # format.json { render action: 'show', status: :created, location: @offer }
       else
@@ -59,9 +59,9 @@ class OffersController < ApplicationController
 
   # PATCH/PUT /offers/1
   # PATCH/PUT /offers/1.json
-  def update
-    respond_to do |format|
-      if @offer.update(offer_params) && handle_upload
+  def update    
+    respond_to do |format|      
+      if @offer.update(offer_params.except(:attach)) && @offer.handle_attach(offer_params[:attach])
         format.html { 
           flash[:notice] = 'Offer was successfully updated'
           if offer_params_include_total_available_qty?
@@ -152,19 +152,10 @@ class OffersController < ApplicationController
   
   private
   
-  def handle_upload
-    uploaded_attach = params[:offer][:attach]
-    if uploaded_attach.present?  && (UPLOAD_CONTENT_TYPES_WHITELIST.include? uploaded_attach.content_type) && (uploaded_attach.tempfile.size < UPLOAD_MAX_FILE_SIZE)
-      @offer.attach = uploaded_attach.read
-      # @offer.filename  = uploaded_attach.original_filename
-      @offer.attach_mime_type = uploaded_attach.content_type
-      @offer.attach_file_size = uploaded_attach.tempfile.size
-      return @offer.save
-    else
-      return true
-    end
+  def offer_params_include_total_available_qty?
+    offer_params && offer_params["offer_items_attributes"] && offer_params["offer_items_attributes"].map{|k1,v1| v1.map{|k2,v2| k2}}.flatten.include?("total_available_qty")
   end
-
+  
   def offer_from_current_user?
     current_user.offers.exists?(params[:id])
   end
@@ -198,14 +189,12 @@ class OffersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def offer_params
-    params.require(:offer).permit(:user_id, :title, :note, :valid_from, :valid_until, :delivered_at, :status, { group_ids: [] }, 
-      offer_items_attributes: [:id, :_destroy, :position,  :title, :unit, :decimal_price, :note, :packaging, :total_available_qty, :status, :min_qty_per_order, :packaging_description, :unit_bulk, :decimal_price_bulk, :unit_package, :decimal_price_package, :unit_vario, :decimal_price_vario], 
-      offer_items:            [:id, :_destroy, :position,  :title, :unit, :decimal_price, :note, :packaging, :total_available_qty, :status, :min_qty_per_order, :packaging_description, :unit_bulk, :decimal_price_bulk, :unit_package, :decimal_price_package, :unit_vario, :decimal_price_vario], 
-      deliveries:             [:id, :_destroy, :location_id, :when], 
-      deliveries_attributes:  [:id, :_destroy, :location_id, :when] )
+    offer_item_fields = [:id, :_destroy, :position,  :title, :unit, :decimal_price, :note, :packaging, :total_available_qty, :status, :min_qty_per_order, :packaging_description, :unit_bulk, :decimal_price_bulk, :unit_package, :decimal_price_package, :unit_vario, :decimal_price_vario]
+    delivery_fields = [:id, :_destroy, :location_id, :when]
+    
+    params.require(:offer).permit(:user_id, :title, :note, :valid_from, :valid_until, :delivered_at, :status, :attach, { group_ids: [] }, 
+      offer_items_attributes: offer_item_fields, offer_items: offer_item_fields, 
+      deliveries: delivery_fields, deliveries_attributes: delivery_fields)
   end
-  
-  def offer_params_include_total_available_qty?
-    offer_params && offer_params["offer_items_attributes"] && offer_params["offer_items_attributes"].map{|k1,v1| v1.map{|k2,v2| k2}}.flatten.include?("total_available_qty")
-  end
+
 end

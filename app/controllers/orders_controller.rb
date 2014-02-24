@@ -11,43 +11,17 @@ class OrdersController < ApplicationController
   def index
     @offer = Offer.find(params[:offer_id])
     @offer_items = @offer.offer_items
-    
     @orders = @offer.orders.order("orders.delivery_id, orders.user_id")
-        
-    @proizvodi = {} 
-    @orders.each do |order| 
-      order.order_items.each do |order_item| 
-        if order_item.offer_item 
-          @proizvodi[order_item.offer_item_id] = {title: order_item.offer_item.title, unit: order_item.offer_item.unit, price: order_item.offer_item.decimal_price, icon: order_item.offer_item.packaging} 
-        end  
-      end 
-    end
+    @offer_items_sum = OfferItemOrders.new(@offer, @orders).get_sum_hash
     
-    @qty_sum = @offer.orders.includes(:order_items).group(:offer_item_id).sum(:qty)
-    @qty_sum.each do |id, qty_sum| 
-      @proizvodi[id][:qty_sum] = qty_sum.to_d 
-    end
-
-
-    @offer.orders.includes(:order_items).to_a.each do |order|       
-      order.order_items.each do |order_item| 
-        id = order_item.offer_item_id
-        if @proizvodi[id][:numeric_qty_sum]
-          @proizvodi[id][:numeric_qty_sum] += order_item.numeric_qty.to_d
-        else
-          @proizvodi[id][:numeric_qty_sum] = order_item.numeric_qty.to_d
-        end
-      end
-    end
-
     @contact_form_url = message_to_orderers_offer_path(@offer)
     
     respond_to do |format|
       format.html
-      format.csv { render text: 
-        @offer.orders.includes(order_items: :offer_item, order_items: {order: {user: :group}}).references(order_items: :offer_item, order_items: {order: {user: :group}}).to_csv }
+      format.csv { render text: @offer.orders.
+        includes(order_items: :offer_item, order_items: { order: { user: :group }}).
+        references(order_items: :offer_item, order_items: { order: { user: :group }}).to_csv }
     end
-    
   end
 
   # GET /my_orders
