@@ -141,14 +141,14 @@
             <tbody>
               <% @offer_items.each do |offer_item| %>
               <% id = offer_item.id %>
-              <% if @proizvodi[id] %>
+              <% if @offer_items_sum[id] %>
               <tr>
                 <td><%= id %></td>
-                <td><%= offer_item_packaging_icon @proizvodi[id][:icon] %></td>
-                <td><strong><%= @proizvodi[id][:title] %></strong></td>
-                <td><%= @proizvodi[id][:unit] %></td>
+                <td><%= offer_item_packaging_icon @offer_items_sum[id][:icon] %></td>
+                <td><strong><%= @offer_items_sum[id][:title] %></strong></td>
+                <td><%= @offer_items_sum[id][:unit] %></td>
                 <td><strong>
-                  <%= formatted_qty(@proizvodi[id][:qty_sum]) unless offer_item.packaging == 'vario' %>
+                  <%= formatted_qty(@offer_items_sum[id][:qty_sum]) unless offer_item.packaging == 'vario' %>
                 </strong></td>
                 <td>
                   <table class="table">
@@ -198,9 +198,9 @@
                     <% end # form_for %>
                   <% end # unless %>
                 </td>
-                <td><%= (@proizvodi[id][:numeric_qty_sum])%></td>
+                <td><%= (@offer_items_sum[id][:numeric_qty_sum])%></td>
               </tr>
-              <% end # if @proizvodi[id] %>
+              <% end # if @offer_items_sum[id] %>
               <% end # @offer_items.each %>
             </tbody>
           </table>
@@ -226,14 +226,14 @@
             <tbody>
               <% @offer_items.each do |offer_item| %>
               <% id = offer_item.id %>
-              <% if @proizvodi[id] %>
+              <% if @offer_items_sum[id] %>
               <tr>
                 <td><%= id %></td>
-                <td><%= offer_item_packaging_icon @proizvodi[id][:icon] %></td>
-                <td><strong><%= @proizvodi[id][:title] %></strong></td>
-                <td><%= @proizvodi[id][:unit] %></td>
-                <td><%= formatted_price @proizvodi[id][:price] %></td>
-                <td><strong><%= formatted_qty @proizvodi[id][:qty_sum] %></strong></td>
+                <td><%= offer_item_packaging_icon @offer_items_sum[id][:icon] %></td>
+                <td><strong><%= @offer_items_sum[id][:title] %></strong></td>
+                <td><%= @offer_items_sum[id][:unit] %></td>
+                <td><%= formatted_price @offer_items_sum[id][:price] %></td>
+                <td><strong><%= formatted_qty @offer_items_sum[id][:qty_sum] %></strong></td>
                 <td>
                   <table class="table">
                     <thead>
@@ -252,8 +252,8 @@
                     </tbody>
                   </table>
                 </td>
-                <td><strong><%= formatted_price @proizvodi[id][:numeric_qty_sum] * @proizvodi[id][:price] %></strong></td>
-                <td><strong><%= @proizvodi[id][:numeric_qty_sum] %></strong></td>
+                <td><strong><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></strong></td>
+                <td><strong><%= @offer_items_sum[id][:numeric_qty_sum] %></strong></td>
               </tr>
               <% end %>
               <% end %>

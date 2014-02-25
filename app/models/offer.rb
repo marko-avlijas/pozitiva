@@ -73,15 +73,19 @@ class Offer < ActiveRecord::Base
   end
   
   def handle_attach(uploaded_attach)
-    if uploaded_attach.present? && UPLOAD_CONTENT_TYPES_WHITELIST.include?(uploaded_attach.content_type) && (uploaded_attach.tempfile.size <= UPLOAD_MAX_FILE_SIZE)
-      self.attach = uploaded_attach.read
-      # self.filename  = uploaded_attach.original_filename
-      self.attach_mime_type = uploaded_attach.content_type
-      self.attach_file_size = uploaded_attach.tempfile.size
-      self.save
+    if uploaded_attach.present?
+      if UPLOAD_CONTENT_TYPES_WHITELIST.include?(uploaded_attach.content_type) && (uploaded_attach.tempfile.size <= UPLOAD_MAX_FILE_SIZE)
+        self.attach = uploaded_attach.read
+        # self.filename  = uploaded_attach.original_filename
+        self.attach_mime_type = uploaded_attach.content_type
+        self.attach_file_size = uploaded_attach.tempfile.size
+        self.save
+      else
+        errors.add(:attach, "Dozvoljen je samo PDF dokument manji od #{number_to_human_size(UPLOAD_MAX_FILE_SIZE)}")
+        return false
+      end
     else
-      errors.add(:attach, "Dozvoljen je samo PDF dokument manji od #{number_to_human_size(UPLOAD_MAX_FILE_SIZE)}")
-      return false
+      return true
     end
   end
 end

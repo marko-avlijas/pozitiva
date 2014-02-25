@@ -40,15 +40,19 @@ class User < ActiveRecord::Base
   
   def handle_about_attach(uploaded_attach)
     # save about_attach if uploaded and allowed type and size
-    if uploaded_attach.present? && UPLOAD_CONTENT_TYPES_WHITELIST.include?(uploaded_attach.content_type) && (uploaded_attach.tempfile.size <= UPLOAD_MAX_FILE_SIZE)
-      self.about_attach = uploaded_attach.read
-      # self.about_attach_filename  = uploaded_attach.original_filename
-      self.about_attach_mime_type = uploaded_attach.content_type
-      self.about_attach_file_size = uploaded_attach.tempfile.size
-      self.save
+    if uploaded_attach.present?
+      if UPLOAD_CONTENT_TYPES_WHITELIST.include?(uploaded_attach.content_type) && (uploaded_attach.tempfile.size <= UPLOAD_MAX_FILE_SIZE)
+        self.about_attach = uploaded_attach.read
+        # self.about_attach_filename  = uploaded_attach.original_filename
+        self.about_attach_mime_type = uploaded_attach.content_type
+        self.about_attach_file_size = uploaded_attach.tempfile.size
+        self.save
+      else
+        errors.add(:about_attach, "Dozvoljen je samo PDF dokument manji od #{number_to_human_size(UPLOAD_MAX_FILE_SIZE)}")
+        return false
+      end
     else
-      errors.add(:about_attach, "Dozvoljen je samo PDF dokument manji od #{number_to_human_size(UPLOAD_MAX_FILE_SIZE)}")
-      return false
+      return true
     end
   end
 end
