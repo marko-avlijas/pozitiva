@@ -15,7 +15,7 @@
       <div class="col-md-12">
         <h3>Nova narudžba</h3>
         <h4><%= link_to @offer.title, @offer, target: '_blank' %> - <%= link_to @offer.user.name, profile_path(@offer.user), target: '_blank' %></h4>
-        <p><%= link_to @offer.note, @offer %></p>
+        <p><%= @offer.note %></p>
       </div>
     </div>
   </div>

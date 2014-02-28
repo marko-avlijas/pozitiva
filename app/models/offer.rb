@@ -1,4 +1,6 @@
 class Offer < ActiveRecord::Base
+  include ActionView::Helpers::NumberHelper
+  
   belongs_to :user
   
   has_many :group_offerings, dependent: :delete_all 
@@ -14,7 +16,7 @@ class Offer < ActiveRecord::Base
 
   scope :published, -> { where('offers.valid_from <= ? AND offers.valid_until > ?', Time.current, Time.current).order("offers.created_at DESC") }
   
-  validates :title, presence: { message: 'cannot be blank' }, uniqueness: { message: 'cannot be same as any existing' }
+  validates :title, presence: { message: 'cannot be blank' }
   validates :valid_until, presence: { message: 'cannot be blank' }
   validate :valid_until_cannot_be_greater_than_delivery_date
   
@@ -68,5 +70,22 @@ class Offer < ActiveRecord::Base
     kopy.deliveries << self.deliveries.collect{ |delivery| delivery.dup }
     kopy.group_offerings << self.group_offerings.collect{ |group_offering| group_offering.dup }
     kopy.save ? kopy : nil
+  end
+  
+  def handle_attach(uploaded_attach)
+    if uploaded_attach.present?
+      if UPLOAD_CONTENT_TYPES_WHITELIST.include?(uploaded_attach.content_type) && (uploaded_attach.tempfile.size <= UPLOAD_MAX_FILE_SIZE)
+        self.attach = uploaded_attach.read
+        # self.filename  = uploaded_attach.original_filename
+        self.attach_mime_type = uploaded_attach.content_type
+        self.attach_file_size = uploaded_attach.tempfile.size
+        self.save
+      else
+        errors.add(:attach, "Dozvoljen je samo PDF dokument manji od #{number_to_human_size(UPLOAD_MAX_FILE_SIZE)}")
+        return false
+      end
+    else
+      return true
+    end
   end
 end

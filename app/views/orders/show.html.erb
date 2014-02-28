@@ -30,10 +30,10 @@
             <thead>
               <tr>
                 <th align="left">Proizvod</th>
+                <th class="hidden-xs">Jed. cijena</th>
                 <th>Naručena količina</th>
                 <th>Korigirana količina</th>
-                <th class="hidden-xs">Jed. cijena</th>
-                <th>Ukupna cijena</th>
+                <th>Iznos</th>
               </tr>
             </thead>
 
@@ -42,9 +42,9 @@
               <% @order.order_items.each do |order_item| %>
               <tr>
                 <td><%= order_item.offer_item.title %></td>
+                <td class="hidden-xs"><%= offer_item_quantity_for_price(order_item.offer_item) %></td>
                 <td ><%= formatted_item_qty_unit order_item %></td>
                 <td><%= formatted_item_corrected_qty_unit order_item %></td>
-                <td class="hidden-xs"><%= formatted_price order_item.offer_item.decimal_price %></td>
                 <td><%= vario_price_unknown(order_item) %></td>
               </tr>
               <% total += order_item.item_price %>

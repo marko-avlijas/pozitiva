@@ -39,18 +39,16 @@ function zebra() {
 }
 
 $(document).on('change', '.packaging', function(e)  { setPackaging($(this)) });
+$(document).on('change', '.form-unit', function(e) {
+  var unit_val = $(this).val();
+  $(this).parent().parent().find(".price-unit").text("kn/" + unit_val);
+  $(this).parent().parent().find(".min-qty-unit").text(unit_val);
+});
 
 $(document).ready(function(){
   zebra();
   // one-time initialize according to form values
   $('.packaging').each(function() { setPackaging($(this)) });
-  
-  $('.form-unit').change(function() {
-    var unit_val = $(this).val();
-    $(this).parent().parent().find(".price-unit").text("kn/" + unit_val);
-    $(this).parent().parent().find(".min-qty-unit").text(unit_val);
-  });  
-  
 });
 
 // kod loadanja stranice nijedan select nije odabran - div je kolapsiran

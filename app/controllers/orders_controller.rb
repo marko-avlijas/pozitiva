@@ -11,43 +11,17 @@ class OrdersController < ApplicationController
   def index
     @offer = Offer.find(params[:offer_id])
     @offer_items = @offer.offer_items
-    
     @orders = @offer.orders.order("orders.delivery_id, orders.user_id")
-        
-    @proizvodi = {} 
-    @orders.each do |order| 
-      order.order_items.each do |order_item| 
-        if order_item.offer_item 
-          @proizvodi[order_item.offer_item_id] = {title: order_item.offer_item.title, unit: order_item.offer_item.unit, price: order_item.offer_item.decimal_price, icon: order_item.offer_item.packaging} 
-        end  
-      end 
-    end
+    @offer_items_sum = OfferItemOrders.new(@offer, @orders).get_sum_hash
     
-    @qty_sum = @offer.orders.includes(:order_items).group(:offer_item_id).sum(:qty)
-    @qty_sum.each do |id, qty_sum| 
-      @proizvodi[id][:qty_sum] = qty_sum.to_d 
-    end
-
-
-    @offer.orders.includes(:order_items).to_a.each do |order|       
-      order.order_items.each do |order_item| 
-        id = order_item.offer_item_id
-        if @proizvodi[id][:numeric_qty_sum]
-          @proizvodi[id][:numeric_qty_sum] += order_item.numeric_qty.to_d
-        else
-          @proizvodi[id][:numeric_qty_sum] = order_item.numeric_qty.to_d
-        end
-      end
-    end
-
     @contact_form_url = message_to_orderers_offer_path(@offer)
     
     respond_to do |format|
       format.html
-      format.csv { render text: 
-        @offer.orders.includes(order_items: :offer_item, order_items: {order: {user: :group}}).references(order_items: :offer_item, order_items: {order: {user: :group}}).to_csv }
+      format.csv { render text: @offer.orders.
+        includes(order_items: :offer_item, order_items: { order: { user: :group }}).
+        references(order_items: :offer_item, order_items: { order: { user: :group }}).to_csv }
     end
-    
   end
 
   # GET /my_orders
@@ -125,18 +99,13 @@ class OrdersController < ApplicationController
   end
   
   def offer_from_current_user?
-    !!((current_user.offers.size > 0) && current_user.offers.find(params[:offer_id]))
+    (current_user.offers.size > 0) && current_user.offers.exists?(id: params[:offer_id])
   end
   
   def order_from_current_user?
-    !!current_user.orders.find(params[:id])
+    current_user.orders.exists?(id: params[:id])
   end
-  
-  def order_from_current_users_offer?
-    # current_user.offers.includes(:orders).where("orders.id = ?", params[:id]).references(:orders)
-    !!((current_user.orders.size > 0) && current_user.orders.find(params[:id]))
-  end
-  
+
   def current_user_is_admin
     raise "[OrdersController#admin] current_user is not admin" unless current_user.admin
   end
@@ -146,11 +115,16 @@ class OrdersController < ApplicationController
   end
 
   def current_user_can_see_order
-    raise "[OrdersController#current_user_can_see_order]" unless order_from_current_users_offer?
+    # Rails.logger.info "current_user: #{current_user.inspect}"
+    # Rails.logger.info "current_user_is_admin: #{current_user.admin ? 'Yes' : 'No'}"
+    # Rails.logger.info "offer_from_current_user: #{offer_from_current_user?}"
+    # Rails.logger.info "order_from_current_user: #{order_from_current_user?}"
+    
+    raise "[OrdersController#current_user_can_see_order]" unless (current_user_is_admin || offer_from_current_user? || order_from_current_user?)
   end
 
   def current_user_can_write
-    raise "[OrdersController#current_user_can_write]" unless order_from_current_user?
+    raise "[OrdersController#current_user_can_write]" unless (order_from_current_user? || offer_from_current_user?)
   end
 
   # Use callbacks to share common setup or constraints between actions.

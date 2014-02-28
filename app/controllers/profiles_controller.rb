@@ -36,7 +36,7 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1
   def update
     respond_to do |format|
-      if @user.update(profile_params) && handle_upload
+      if @user.update(profile_params.slice(:about_text, :about_url, :phone)) && @user.handle_about_attach(profile_params[:about_attach])
         format.html { redirect_to my_profile_path, notice: 'Profile was successfully updated.' }
         # format.json { head :no_content }
       else
@@ -64,20 +64,7 @@ class ProfilesController < ApplicationController
   end
   
   private
-  
-  def handle_upload
-    uploaded_attach = params[:user][:about_attach]
-    if uploaded_attach.present? && (UPLOAD_CONTENT_TYPES_WHITELIST.include? uploaded_attach.content_type) && (uploaded_attach.tempfile.size < UPLOAD_MAX_FILE_SIZE)
-      @user.about_attach = uploaded_attach.read
-      # @user.about_attach_filename  = uploaded_attach.original_filename
-      @user.about_attach_mime_type = uploaded_attach.content_type
-      @user.about_attach_file_size = uploaded_attach.tempfile.size
-      return @user.save
-    else
-      return true
-    end
-  end
-  
+   
   def current_user_is_owner
     raise "[ProfilesController#current_user_is_owner]" if current_user != @user && !current_user.admin?
   end
@@ -88,6 +75,7 @@ class ProfilesController < ApplicationController
   end
   
   def profile_params
-    params.require(:user).permit(:about_text, :about_url, :phone) # can't change email, name
-  end
+    params.require(:user).permit(:about_text, :about_url, :phone, :about_attach) # can't change email, name
+  end  
+
 end
