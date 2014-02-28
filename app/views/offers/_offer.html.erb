@@ -5,7 +5,9 @@
     <div class="col-md-6">
       <p style="padding-bottom: 20px; border-bottom: 1px solid #ddd">Rok za narudžbu:<br/>
         <strong style="padding-left: 20px; display: inline-block; margin-top: 10px"><span class="glyphicon glyphicon-record"></span> <%= formatted_valid_until @offer %></strong>
+        <% if @offer.valid_until && @offer.valid_until > Time.now %>
         <span class="badge">još <%= distance_of_time_in_words_to_now @offer.valid_until %></span>
+        <% end %>
       </p>
       Isporuke:<br/>
       <ul style="padding: 5px 20px 20px 20px; border-bottom: 1px solid #ddd">

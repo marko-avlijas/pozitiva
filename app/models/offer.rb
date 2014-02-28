@@ -16,7 +16,7 @@ class Offer < ActiveRecord::Base
 
   scope :published, -> { where('offers.valid_from <= ? AND offers.valid_until > ?', Time.current, Time.current).order("offers.created_at DESC") }
   
-  validates :title, presence: { message: 'cannot be blank' }, uniqueness: { message: 'cannot be same as any existing' }
+  validates :title, presence: { message: 'cannot be blank' }
   validates :valid_until, presence: { message: 'cannot be blank' }
   validate :valid_until_cannot_be_greater_than_delivery_date
   

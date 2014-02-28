@@ -157,7 +157,7 @@ class OffersController < ApplicationController
   end
   
   def offer_from_current_user?
-    current_user.offers.exists?(params[:id])
+    current_user.offers.exists?(id: params[:id])
   end
   
   def group_offerings_valid_for_current_user?

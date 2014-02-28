@@ -24,7 +24,9 @@
         <p style="padding-bottom: 20px; border-bottom: 1px solid #ddd">
           Rok za narudžbu:<br/>
           <strong style="line-height: 26px"><span class="glyphicon glyphicon-record"></span> <%= "#{formatted_valid_until offer}" if offer.valid_until %></strong>
-          <span class="badge"><%= "još #{distance_of_time_in_words_to_now offer.valid_until}" if offer.valid_until %></span>
+          <% if offer.valid_until && offer.valid_until > Time.now %>
+          <span class="badge"><%= "još #{distance_of_time_in_words_to_now offer.valid_until}" if offer.valid_until && offer.valid_until > Time.now %></span>
+          <% end %>
         </p>
         <p style="margin-bottom: 5px">Isporuka:</p>
         <ul style="padding-left: 0">

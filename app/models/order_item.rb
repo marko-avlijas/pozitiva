@@ -15,12 +15,13 @@ class OrderItem < ActiveRecord::Base
     self.offer_item.packaging == "vario"
   end
   
-  validate :qty_is_not_less_than_min_qty_per_order
-  def qty_is_not_less_than_min_qty_per_order
-    if qty.to_s.gsub(',', '.').to_d < self.offer_item.min_qty_per_order.to_s.gsub(',', '.').to_d
-      errors.add(:qty, "Naručena količina ne smije biti manja od Minimalne količine")
-    end
-  end
+  # suspendirano jer onemogućuje solidarizaciju količina ispod minimalne
+  # validate :qty_is_not_less_than_min_qty_per_order
+  # def qty_is_not_less_than_min_qty_per_order
+  #   if qty.to_s.gsub(',', '.').to_d < self.offer_item.min_qty_per_order.to_s.gsub(',', '.').to_d
+  #     errors.add(:qty, "Naručena količina ne smije biti manja od Minimalne količine")
+  #   end
+  # end
   
   def numeric_qty
     if corrected_qty
@@ -51,5 +52,9 @@ class OrderItem < ActiveRecord::Base
       write_attribute(:qty, value.to_s.gsub(',', '.').to_d)
       # this is same as self[:qty] = value
     end
+  end
+  
+  def corrected_qty=(value)
+    write_attribute(:corrected_qty, value.to_s.gsub(',', '.').to_d)
   end
 end
