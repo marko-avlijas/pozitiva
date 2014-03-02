@@ -232,8 +232,8 @@
                           <% else %>
                           ponuda nije istekla
                           <% end %>
-                          <% else %>
-                          <%= order_item.corrected_qty %>
+                          <% elsif order_item.corrected_qty.present? %>
+                            <%= formatted_qty order_item.corrected_qty %>
                           <% end %>
                         </td>
                       </tr>
@@ -248,14 +248,14 @@
                     <%= form_for @offer, html: {role: "form"} do |f| %>
                       <%= f.fields_for :offer_items do |f_offer_item| %>
                         <% if offer_item.id == f_offer_item.object.id %>
-                        <%= f_offer_item.text_field :total_available_qty, class: "xs-form-input" %>
+                        <%= f_offer_item.text_field :total_available_qty, value: f_offer_item.object.total_available_qty.to_s.gsub('.', ','), class: "xs-form-input" %>
                         <%= f.submit "Solidariziraj", class: "btn btn-xs btn-primary" %>
                         <% end %>
                       <% end # fields_for :offer_items %>
                     <% end # form_for %>
                   <% end # unless %>
                 </td>
-                <td><%= (@offer_items_sum[id][:numeric_qty_sum])%></td>
+                <td><%= @offer_items_sum[id][:numeric_qty_sum].to_s.gsub('.', ',') %></td>
               </tr>
               <% end # if @offer_items_sum[id] %>
               <% end # @offer_items.each %>

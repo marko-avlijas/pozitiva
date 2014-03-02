@@ -34,13 +34,13 @@
           <%= "1" unless offer_item.packaging %><%= offer_item.unit %> = <%= formatted_price offer_item.decimal_price %>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3">
-          <%= offer_item_packaging_min_qty(offer_item) %>
+          Minimalna narudžba: <%= offer_item_packaging_min_qty(offer_item) %>
         </div>
         
         <% if offer_item.packaging != "vario" %>   
         <div class="col-lg-2 col-md-3 col-sm-3 qty">
           <div class="input-group">
-           <%= order_item_form.text_field :qty, class: "form-control", placeholder: "količina", style: "color: #cc2200; font-weight: bold" %><%= offer_item_packaging_unit(offer_item) %>
+           <%= order_item_form.text_field :qty, value: order_item_form.object.qty.to_s.gsub('.', ','), class: "form-control", placeholder: "količina", style: "color: #cc2200; font-weight: bold" %><%= offer_item_packaging_unit(offer_item) %>
           </div>
         </div>
         <% else %>

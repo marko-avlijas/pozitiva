@@ -74,9 +74,10 @@ module ApplicationHelper
   end
   
   def offer_item_packaging_min_qty(offer_item)
+    # return "-" if offer_item.min_qty_per_order.blank? || offer_item.min_qty_per_order.to_d == 0.0
     case offer_item.packaging
     when "bulk"
-      "Minimalna narudžba: #{offer_item.min_qty_per_order.to_s.gsub('.', ',')} #{offer_item.unit}"
+      "#{formatted_qty offer_item.min_qty_per_order} #{offer_item.unit}"
     else
       ""
     end if offer_item.min_qty_per_order
@@ -84,8 +85,10 @@ module ApplicationHelper
   
   def formatted_qty(qty)
     return 0 if qty.nil?
-    qty_d = qty.to_s.gsub(',', '.').to_d
-    (qty_d.to_int < qty) ? qty_d.to_s.gsub('.', ',') : qty_d.to_int
+    # qty_d = qty.to_s.gsub(',', '.').to_d
+    # (qty_d.to_int < qty) ? qty_d.to_s.gsub('.', ',') : qty_d.to_int
+    
+    (qty.to_int < qty) ? qty.to_s.gsub('.', ',') : qty.to_int
   end
   
   def formatted_item_qty_unit(item)
@@ -97,7 +100,7 @@ module ApplicationHelper
     else
       out = "#{formatted_qty item.qty} x #{item.offer_item.unit}"
     end
-    (item.corrected_qty.present?) ? "(#{out})" : out
+    item.corrected_qty.present? ? "(#{out})" : out
   end
   
   def formatted_item_corrected_qty_unit(item)
@@ -134,7 +137,8 @@ module ApplicationHelper
   end
   
   def formatted_price(price)
-    price.blank? ? '-' : "#{sprintf("%.2f", price).gsub('.', ',')} kn" # "#{number_to_currency price}"
+    # price.blank? ? '-' : "#{sprintf("%.2f", price).gsub('.', ',')} kn" 
+    price.blank? ? '-' : number_to_currency(price)    
   end
 
   def vario_price_unknown(order_item)

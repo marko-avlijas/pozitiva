@@ -12,10 +12,16 @@ class Order < ActiveRecord::Base
   
   accepts_nested_attributes_for :order_items, 
     allow_destroy: true, 
+
+    # reject_if: lambda { |order_item| 
+    #   (order_item[:qty].blank? || order_item[:qty].to_s.gsub(',', '.').to_d == 0) && 
+    #   order_item[:qty_description].blank? && 
+    #   (order_item[:corrected_qty].blank? || order_item[:corrected_qty].to_s.gsub(',', '.').to_d == 0)
+    # }
     reject_if: lambda { |order_item| 
-      (order_item[:qty].blank? || order_item[:qty].to_s.gsub(',', '.').to_d == 0) && 
+      (order_item[:qty].blank? || order_item[:qty].to_d == 0.0) && 
       order_item[:qty_description].blank? && 
-      (order_item[:corrected_qty].blank? || order_item[:corrected_qty].to_s.gsub(',', '.').to_d == 0)
+      (order_item[:corrected_qty].blank? || order_item[:corrected_qty].to_d == 0.0)
     }
   
   validates :order_items, presence: { message: 'ništa nije naručeno (neispravan unos količine)'}

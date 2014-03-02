@@ -37,7 +37,13 @@ class OfferItem < ActiveRecord::Base
   def unit
     self.send("unit_#{packaging}") unless packaging.blank?
   end
-  
+
+  # override setter to accept comma for decimal point
+  def min_qty_per_order=(value)
+    write_attribute(:min_qty_per_order, value.to_s.gsub(',', '.').to_d)
+    # this is same as self[:attribute_name] = value
+  end
+    
   def decimal_price
     self.send("decimal_price_#{packaging}") unless packaging.blank?
   end
@@ -47,7 +53,7 @@ class OfferItem < ActiveRecord::Base
   end
 
   def decimal_price_bulk=(input_value)
-    self.price_bulk = input_value.gsub('.', ',').gsub(',', '.').to_d*100 if input_value.present?
+    self.price_bulk = input_value.to_s.gsub(',', '.').to_d * 100 if input_value.present?
   end
 
   def decimal_price_package
@@ -55,25 +61,19 @@ class OfferItem < ActiveRecord::Base
   end
 
   def decimal_price_package=(input_value)
-    self.price_package = input_value.gsub('.', ',').gsub(',', '.').to_d*100 if input_value.present?
+    self.price_package = input_value.to_s.gsub(',', '.').to_d * 100 if input_value.present?
   end
 
   def decimal_price_vario
-    price_vario.nil? ? 0.0 : price_vario.to_d/100    
+    price_vario.nil? ? 0.0 : price_vario.to_d / 100    
   end
 
   def decimal_price_vario=(input_value)
-    self.price_vario = input_value.gsub('.', ',').gsub(',', '.').to_d*100 if input_value.present?
+    self.price_vario = input_value.to_s.gsub(',', '.').to_d * 100 if input_value.present?
   end
-
-  # def min_qty_per_order
-  #   self.min_qty_per_order.to_s.gsub('.', ',')
-  # end
   
-  # override setter (accept comma for decimal point)
-  def min_qty_per_order=(value)
-    write_attribute(:min_qty_per_order, value.to_s.gsub(',', '.').to_d)
-    # this is same as self[:attribute_name] = value
+  def total_available_qty=(input_value)
+    write_attribute(:total_available_qty, input_value.to_s.gsub(',', '.').to_d)
   end
   
 end
