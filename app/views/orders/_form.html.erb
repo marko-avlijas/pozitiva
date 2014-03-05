@@ -1,5 +1,4 @@
 <%= form_for [@offer, @order], html: {role: "form"}  do |f| %>
-
 <% if @order.errors.any? %>
 <div id="error_explanation">
   <h2><%= pluralize(@order.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -10,69 +9,79 @@
   </ul>
 </div>
 <% end %>
-
 <div class="row">
   <div class="col-md-12 order">
-    <h4><i class="fa fa-truck"></i> &nbsp;Mjesto i vrijeme isporuke: </h4>
-    <i class="fa fa-asterisk"></i>  <%= f.select :delivery_id, @offer.deliveries.collect{|p| [ "#{p.location.title} - #{p.when.strftime("%A %d.%m.%Y %k:%M") if p.when.present? }", p.id ] }, {}, class: "form-control" %>
-<br/>
-  
-
-    <h4><i class="fa fa-th-list"></i> &nbsp;Proizvodi:</h4>
-        
-    <% @offer.offer_items.each do |offer_item| %>
-    <%= f.fields_for :order_items, @order.find_or_build_order_item_for(offer_item) do |order_item_form| %>
-
-    <div class="form-group order-row"> 
-      <div class="row">
-        <div class="col-lg-4 col-md-3 col-sm-3">
-          <strong><%= offer_item.title %></strong>
-          <span style="display:block; margin-bottom: 5px; font-size: 13px"><%= offer_item.note %></span>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3">
-          <%= offer_item_packaging_icon(offer_item.packaging) %> &nbsp;
-          <%= "1" unless offer_item.packaging %><%= offer_item.unit %> = <%= formatted_price offer_item.decimal_price %>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3">
-          Minimalna narudžba: <%= offer_item_packaging_min_qty(offer_item) %>
-        </div>
-        
-        <% if offer_item.packaging != "vario" %>   
-        <div class="col-lg-2 col-md-3 col-sm-3 qty">
-          <div class="input-group">
-           <%= order_item_form.text_field :qty, value: order_item_form.object.qty.to_s.gsub('.', ','), class: "form-control", placeholder: "količina", style: "color: #cc2200; font-weight: bold" %><%= offer_item_packaging_unit(offer_item) %>
-          </div>
-        </div>
-        <% else %>
-        <%= order_item_form.hidden_field :qty, value: "0" %>        
-        <div class="col-lg-2 col-sm-3">
-          <%= order_item_form.text_field :qty_description, class: "form-control", placeholder: "opisna količina", style: "color: #cc2200; font-weight: bold" %>
-        </div>
-        <% end %>
-        <%= order_item_form.hidden_field :offer_item_id %>
+    <div class="group">
+      <h4><i class="fa fa-truck"></i> &nbsp;Mjesto i vrijeme isporuke<span style="color: #cc2200">*</span> </h4>
+      <div class="content">
+        <%= f.select :delivery_id, @offer.deliveries.collect{|p| [ "#{p.location.title} - #{p.when.strftime("%A %d.%m.%Y %k:%M") if p.when.present? }", p.id ] }, {}, class: "form-control" %>
       </div>
-    </div> 
-    <% end %>
-    <% end %>
-    <p class="order-legend">
-      <i class="fa fa-tachometer"></i> &nbsp;<span>Rinfuza - moguć je unos decimalnih brojeva - obratite pažnju na minimalnu količinu koju je potrebno naručiti.</span><br/>
-      <i class="fa fa-gift"></i> &nbsp;<span>Pakiranje - naručuje se po komadu (i cijene su izražene po komadu), pa je moguć unos samo cijelih brojeva.</span><br/>
-      <i class="fa fa-question-circle"></i> &nbsp;<span>Komad varijabilne težine (npr. tikva, glavice zelja i sl.) - cijena je izražena u mjernoj jedinici (npr. kg) a naručuje se opisno (npr. molim 1 komad od cca. 2 kg). Proizvođač će prilagoditi konačnu cijenu prema stvarnoj težini proizvoda koji vam isporučuje (koja može malo varirati u odnosu na naručenu, ovisno o dostupnim komadima).</span><br/>
+    </div>
+    <div class="group">
+      <h4><i class="fa fa-th-list"></i> &nbsp;Proizvodi</h4>
+      <div class="content">
+        <% @offer.offer_items.each do |offer_item| %>
+        <%= f.fields_for :order_items, @order.find_or_build_order_item_for(offer_item) do |order_item_form| %>
 
-  </p><br/>
-    <h4><i class="fa fa-pencil"></i> &nbsp;Poruka proizvođaču:</h4>
-    <p><%= f.text_area :note, class: "form-control", placeholder: "poruka", style: "max-width: 600px" %></p>
-    <br/>
-    <p class="row-submit">
-      <%= f.submit "Naruči", class: "btn btn-primary btn-lg" %>
-    </p>
+        <div class="form-group order-row"> 
+          <div class="row">
+            <div class="col-lg-4 col-md-3 col-sm-3">
+              <strong><%= offer_item.title %></strong>
+              <span style="display:block; margin-bottom: 5px; font-size: 13px"><%= offer_item.note %></span>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <%= offer_item_packaging_icon(offer_item.packaging) %> &nbsp;
+              <%= "1" unless offer_item.packaging %><%= offer_item.unit %> = <%= formatted_price offer_item.decimal_price %>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <%= offer_item_packaging_min_qty(offer_item) %>
+            </div>
+        
+            <% if offer_item.packaging != "vario" %>   
+            <div class="col-lg-2 col-md-3 col-sm-3 qty">
+              <div class="input-group">
+                <%= order_item_form.text_field :qty, value: order_item_form.object.qty.to_s.gsub('.', ','), class: "form-control", placeholder: "količina", style: "color: #cc2200; font-weight: bold" %><%= offer_item_packaging_unit(offer_item) %>
+              </div>
+            </div>
+            <% else %>
+            <%= order_item_form.hidden_field :qty, value: "0" %>        
+            <div class="col-lg-2 col-sm-3">
+              <%= order_item_form.text_field :qty_description, class: "form-control", placeholder: "opisna količina", style: "color: #cc2200; font-weight: bold" %>
+            </div>
+            <% end %>
+            <%= order_item_form.hidden_field :offer_item_id %>
+          </div>
+        </div> 
+        <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <p class="order-legend">
+          <i class="fa fa-tachometer"></i> &nbsp;<span>Rinfuza - moguć je unos decimalnih brojeva - obratite pažnju na minimalnu količinu koju je potrebno naručiti.</span><br/>
+          <i class="fa fa-gift"></i> &nbsp;<span>Pakiranje - naručuje se po komadu (i cijene su izražene po komadu), pa je moguć unos samo cijelih brojeva.</span>
+        </div>
+        <div class="col-md-6">
+          <p class="order-legend">
+            <i class="fa fa-question-circle"></i> &nbsp;<span>Komad varijabilne težine (npr. tikva, glavice zelja i sl.) - cijena je izražena u mjernoj jedinici (npr. kg) a naručuje se opisno (npr. molim 1 komad od cca. 2 kg). Proizvođač će prilagoditi konačnu cijenu prema stvarnoj težini proizvoda koji vam isporučuje (koja može malo varirati u odnosu na naručenu, ovisno o dostupnim komadima).</span>
+          </p>
+        </div>
+      </div>
+      <br/>
+      <div class="group" style="margin-bottom: 0">
+        <h4><i class="fa fa-pencil"></i> &nbsp;Poruka proizvođaču</h4>
+        <div class="content">
+          <p><%= f.text_area :note, class: "form-control", placeholder: "poruka", style: "max-width: 600px" %></p>
+        </div>
+      </div>
+    </div>
   </div>
-  
 </div>
-
-</div>
-<div class="panel-footer">
-  &nbsp;
+<div class="panel-footer" style="padding: 0 30px 30px 30px">
+  <p class="row-submit">
+    <%= f.submit "Naruči", class: "btn btn-primary btn-lg" %>
+  </p>
 </div>
 
 <% end %>

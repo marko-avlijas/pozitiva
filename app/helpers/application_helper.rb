@@ -11,7 +11,7 @@ module ApplicationHelper
   end
   
   def my_gravatar_image_tag
-    gravatar_image_tag(current_user.email)
+    gravatar_image_tag(current_user.email) 
   end
 
   def offer_item_packaging_icon(offer_item_packaging)
@@ -77,7 +77,7 @@ module ApplicationHelper
     # return "-" if offer_item.min_qty_per_order.blank? || offer_item.min_qty_per_order.to_d == 0.0
     case offer_item.packaging
     when "bulk"
-      "#{formatted_qty offer_item.min_qty_per_order} #{offer_item.unit}"
+      "Min. narudžba: #{formatted_qty offer_item.min_qty_per_order} #{offer_item.unit}"
     else
       ""
     end if offer_item.min_qty_per_order

@@ -5,17 +5,17 @@
     <%= f.text_field :title, class: "form-control", placeholder: "Naziv"  %>
   </div>
   <div class="form-group">
-    <%= f.label :lat %>
-    <%= f.text_field :lat, class: "form-control", placeholder: "Lat (geografska širina)" %>
+    <%= f.label :lat, "Geografska širina (Lat)" %>
+    <%= f.text_field :lat, class: "form-control", placeholder: "Geografska širina (Lat)" %>
   </div>
   <div class="form-group">
-    <%= f.label :lng %>
-    <%= f.text_field :lng, class: "form-control", placeholder: "Long (geografska dužinu)" %>
+    <%= f.label :lng, "Geografska dužina (Lng)" %>
+    <%= f.text_field :lng, class: "form-control", placeholder: "Geografska dužina (Lng)" %>
   </div>
   <div class="form-group">
     <%= f.label :description, "Opis" %>
     <%= f.text_area :description, class: "form-control", placeholder: "Opis" %>
   </div>
 
-  <%= f.submit nil, class: "btn btn-primary" %>
+  <%= f.submit "Spremi", class: "btn btn-primary" %>
 <% end %>

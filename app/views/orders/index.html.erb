@@ -1,14 +1,9 @@
+<%= link_to "&laquo; Pregled ponude".html_safe, @offer, class: "nav-link"%>
 <div class="panel panel-offer">
-  
-  <div class="panel-heading offer-author">
-    <%= link_to "&laquo; Pregled ponude".html_safe, @offer, class: "nav-link"%>
-    
-  </div>
-  
   <div class="panel-heading offer-title">
-    <h2><%= @offer.title %> (kalkulacija narudžbi)</h2>
+    <h2><%= @offer.title %> - kalkulacija</h2>
     <p>
-      <strong>Bilješka:</strong>
+      <strong>Napomena:</strong>
       <%= @offer.note %>
     </p>
     <p>
@@ -28,7 +23,7 @@
         <span class="badge"><%= @offer.status %></span>
       </p>
 
-    <button class="btn btn-primary message-trigger topright" data-toggle="modal" data-target="#message_to_orederers">
+    <button class="btn btn-primary btn-absolute topright" data-toggle="modal" data-target="#message_to_orederers">
       <i class="fa fa-envelope"></i> Pošalji e-mail naručiteljima
     </button>
       
@@ -46,6 +41,7 @@
   </div>
   
   <div class="panel-body">
+    <%= link_to 'Nova ponuda', new_offer_path, class: "btn btn-primary btn-absolute topright"%>
     <ul class="nav nav-tabs">
       <li class="active" ><a href="#calculation-tab-1" data-toggle="tab">Narudžbe prema naručitelju</a></li>
       <li><a href="#calculation-tab-3" data-toggle="tab">Narudžbe prema proizvodu</a></li>
@@ -55,7 +51,6 @@
     <div class="tab-content">
       <div id="calculation-tab-1" class="tab-pane active" >
         <h3>Narudžbe prema naručitelju</h3><br/>
-
         <table class="table">
           <thead>
             <tr>
@@ -71,7 +66,6 @@
               <!-- <th></th> -->
             </tr>
           </thead>
-
           <tbody>
             <% @orders.each do |order| %>
             <% if order.delivery %>
@@ -120,11 +114,9 @@
               <% end %>
             </tbody>
           </table>
-
-          <br>
-
+          <br/>
         </div>
-      
+
         <div id="calculation-tab-3" class="tab-pane">
           <h3>Narudžbe prema proizvodu</h3><br/>
 
@@ -262,12 +254,11 @@
             </tbody>
           </table>
         </div>
-        
       </div>
+    </div>
+    <div class="panel-footer">
+      <div class="footer-links">
       <%= link_to "download csv", offer_orders_path(@offer, format: :csv) %>
     </div>
-
-    <div class="panel-footer">
-      <%= link_to 'Nova ponuda', new_offer_path, class: "btn btn-primary"%>
     </div>
   </div>

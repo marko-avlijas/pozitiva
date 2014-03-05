@@ -1,26 +1,11 @@
+<%= link_to "&laquo; Moje narudžbe".html_safe, my_orders_path, class: "nav-link"%>
 <div class="panel panel-offer">
-  
-  <div class="panel-heading offer-author">
-    <div class="row">
-      <div class="col-md-12">
-        <%= link_to "&laquo; Moje narudžbe".html_safe, my_orders_path, class: "nav-link"%>
-      </div>
-    </div>
-  </div>
-  
   <div class="panel-heading offer-title">
-    <div class="row">
-      <div class="col-md-12">
-        <h3>Uređivanje narudžbe br. <%= @order.id %></h3>
-        <h4><%= link_to @offer.title, @offer, target: '_blank' %> - <%= link_to @offer.user.name, profile_path(@offer.user), target: '_blank' %></h4>
-        <p><%= link_to @offer.note, @offer %></p>
-      </div>
-    </div>
+    <h3>Uređivanje narudžbe br. <%= @order.id %></h3>
+    <h4><%= link_to @offer.title, @offer, target: '_blank' %> - <%= link_to @offer.user.name, profile_path(@offer.user), target: '_blank' %></h4>
+    <p style="margin-top: 15px"><%= @offer.note %></p>
   </div>
-  
-  
   <%#= render :partial => 'offers/offer_heading' %>
-  
   <div class="panel-body">
     <%= render 'form' %>
   </div>

@@ -1,27 +1,21 @@
 <div class="panel-body <% if @offer.valid_from.blank? %>offer-publish<% end %>">
-  <div class="row">
-    <div class="col-lg-12">
-      <% if @offer.valid_from.blank? %>
-      <h4><i class="fa fa-exclamation-circle"></i> &nbsp;Ponuda još nije objavljena</h4>
-      <% end %>
+  <% if @offer.valid_from.blank? %>
+  <h4><i class="fa fa-exclamation-circle"></i> &nbsp;Ponuda još nije objavljena</h4>
+  <% end %>
 
-      <%= form_for @offer, html: { role: "form"} do |f| %>
-      <div class="form-group" style="overflow: auto;">
-        <h5>Prilagodi vrijeme objave:</h5>
-        <div>
-          <div class="input-group date datetimepicker" style="float: left; margin-right: 10px">
-            <%= f.text_field :valid_from, value: dt_picker(f.object.valid_from || Time.now), class: "form-control" %>
-            <span class="input-group-addon" style="background-color: #ddd">
-              <span class="glyphicon glyphicon-calendar">
-              </span>
-            </span>
-          </div>
-        </div>
-        <%= f.submit "Objavi", class: "btn btn-primary" %>
+  <%= form_for @offer, html: { role: "form"} do |f| %>
+  <div class="form-group" style="overflow: auto;">
+    <h5>Prilagodi vrijeme objave:</h5>
+    <div>
+      <div class="input-group date datetimepicker" style="float: left; margin-right: 10px">
+        <%= f.text_field :valid_from, value: dt_picker(f.object.valid_from || Time.now), class: "form-control" %>
+        <span class="input-group-addon" style="background-color: #ddd">
+          <span class="glyphicon glyphicon-calendar">
+          </span>
+        </span>
       </div>
-
-      <% end %>
-    
     </div>
+    <%= f.submit "Objavi", class: "btn btn-primary" %>
   </div>
+  <% end %>
 </div>

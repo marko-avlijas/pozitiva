@@ -1,32 +1,27 @@
 <div class="panel-body">
-  <div class="row">
-    <div class="col-lg-12">
-<%= form_for [:admin, @user], html: {role: "form"} do |f| %>
+  <%= form_for [:admin, @user], html: {role: "form"} do |f| %>
   <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this post from being saved:</h2>
-      <ul>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this post from being saved:</h2>
+    <ul>
       <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+      <li><%= msg %></li>
       <% end %>
-      </ul>
-    </div>
+    </ul>
+  </div>
   <% end %>
-
   <p>Ime i prezime: <strong><%= link_to @user.name, profile_path(@user) %></strong></p>
   <p>E-mail adresa: <strong><%= @user.email %></strong></p>
   <p>Telefon: <strong><%= @user.phone %></strong></p>
   <p>Resetirana lozinka: <strong><%= @user.try(:reset_password_sent_at) ? short_dt(user.reset_password_sent_at) : 'nikad' %></strong></p>
-
   <div class="form-group">
     <%= f.label :group_id, "Grupa:" %>
     <%= f.select :group_id, Group.all.collect {|g| [ g.title, g.id ] }, {include_blank: true}, {class: "form-control"} %>
   </div>
-	<div class="form-group">
-		<%= f.label :buyer_tag, "Oznaka naručitelja" %>
-		<%= f.text_field :buyer_tag, class: "form-control", style: "width: 200px" %>
-	</div>
-  
+  <div class="form-group">
+    <%= f.label :buyer_tag, "Oznaka naručitelja" %>
+    <%= f.text_field :buyer_tag, class: "form-control", style: "width: 200px" %>
+  </div>
   <div class="form-group">
     <div class="checkbox">
       <%= f.check_box :admin %> <%= f.label :admin, "Administrator" %>
@@ -37,7 +32,6 @@
       <%= f.check_box :is_producer %> <%= f.label :is_producer, "Proizvođač" %>
     </div>
   </div>
-  
   <div class="form-group">
     <div class="checkbox">
       <%= hidden_field_tag "user[locked_at]", nil, id: "hidden_locked_at" %>
@@ -46,13 +40,10 @@
       <%= f.label :locked_at, "Suspendiran" %>
     </div>
   </div>
-  
-	
-</div>
-</div>
 </div>
 <div class="panel-footer">
-
-  <%= f.submit "Spremi promjene", class: "btn btn-primary" %>
-<% end %>
+  <div class="footer-links">
+    <%= f.submit "Spremi promjene", class: "btn btn-primary" %>
+    <% end %>
+  </div>
 </div>

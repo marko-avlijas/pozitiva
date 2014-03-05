@@ -38,7 +38,7 @@
     <ul class="nav navbar-nav navbar-right">
       <% if user_signed_in? %>
       <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="max-width: 180px; height: 38px; overflow: hidden">
 			<%= "#{current_user.group.title}" if current_user.try(:group) %>
 			<%= current_user.admin? ? 'Admin' : '' %> <b><%= current_user.name %></b> (<%= current_user.email %>) <b class="caret"></b></a>
         <ul class="dropdown-menu">

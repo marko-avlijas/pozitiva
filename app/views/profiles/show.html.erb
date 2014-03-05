@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <div class="panel white-card">
-      <div class="panel-heading">
-        <h3 class="panel-title text-center">Korisnički profil</h3>
+    <div class="panel panel-offer">
+      <div class="panel-heading offer-title">
+        <h3>Korisnički profil</h3>
       </div>
       <div class="panel-body">
         <div style="text-align: center">
@@ -12,8 +12,8 @@
           <p><strong><%= @user.buyer_tag %></strong></p><br/>
         </div>
         <p><%= @user.about_text %></p>
-        <p>Više na linku: <%= @user.about_url %></p>
-        <p>Više u dokumentu: 
+        <p><label>Više na linku:</label> <%= @user.about_url %></p>
+        <p><label>Više u dokumentu: </label>
           <% if @user.try(:about_attach) %>
           <%= link_to "Download (#{number_to_human_size @user.about_attach_file_size.to_i})", 
           about_attach_profile_path %> 
@@ -26,11 +26,10 @@
         </p>
       </div>
       <div class="panel-footer">
+        <div class="footer-links">
         <button class="btn btn-primary message-trigger" data-toggle="modal" data-target="#message_to_user">
           <i class="fa fa-envelope"></i> Poruka korisniku
         </button>
-        
-        
         <div class="modal fade" id="message_to_user">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -42,7 +41,7 @@
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        
+        </div>
       </div>
     </div>
   </div>
