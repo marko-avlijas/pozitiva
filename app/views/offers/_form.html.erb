@@ -35,63 +35,6 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <h4><i class="fa fa-users"></i> &nbsp;Vidljivost ponude po grupama <i class="fa fa-asterisk"></i> </h4>
-    <%# http://railscasts.com/episodes/17-habtm-checkboxes-revised %>
-    <%= hidden_field_tag "offer[group_ids][]", nil %>
-    <% Group.all.each do |group| %>
-
-    <div class="checkbox" style="padding-left: 35px">
-      <% check_box_selected = (@offer.new_record? && group.id == 1) ? true : @offer.group_ids.include?(group.id) %>
-      <%= check_box_tag "offer[group_ids][]", group.id, check_box_selected, id: dom_id(group) %>
-      <%= label_tag dom_id(group), group.title %>
-    </div>
-
-    <% end %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-12">
-    <h4><i class="fa fa-clock-o"></i> &nbsp;Rok za narudžbu <i class="fa fa-asterisk"></i> </h4>
-    <div class="form-group col-lg-12">
-      <div class="input-group date datetimepicker">
-        <%= f.text_field :valid_until, value: dt_picker(f.object.valid_until), class: "form-control" %>
-        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-12">
-    <h4><i class="fa fa-truck"></i> &nbsp;Mjesto i vrijeme isporuke</h4>
-    <div class="form-group">
-      <%= f.fields_for :deliveries do |deliveries_form| %>
-      <div class="duplicatable_nested_form deliveries">
-        <%= deliveries_form.hidden_field :id %>       
-        <div class="delivery-row">
-          <div style="float: left; margin: 0 10px 10px 0"><i class="fa fa-asterisk"></i>  <%= deliveries_form.collection_select :location_id, Location.all.to_a, 'id', 'title', {include_blank: 'odaberite lokaciju'}, class: "form-control" %></div>
-          <div style="float: left;">
-            <div class="form-group">
-              <div class="input-group date datetimepicker">
-                <%= deliveries_form.text_field :when, value: dt_picker(deliveries_form.object.when), class: "form-control" %>
-                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-              </div>
-            </div>
-          </div>
-          <%= link_to '', '', class: 'remove_nested_form glyphicon glyphicon-trash', data: {fields: "deliveries"} %>
-          <%#= deliveries_form.check_box :_destroy %> <%#= deliveries_form.label :_destroy, "Remove" %>
-          <%#= hidden_field_tag nil, "0", id: "offer_deliveries_attributes_#{deliveries_form.index}__destroy", name: "offer[deliveries_attributes][#{deliveries_form.index}][_destroy]" %>
-        </div>
-      </div>
-      <% end %>
-    </div>
-    <p class="col-lg-12"><%= link_to 'Dodaj lokaciju', '', class: 'duplicate_nested_form delivery', data: {fields: "deliveries"} %> </p>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-12">
     <h4><i class="fa fa-th-list"></i> &nbsp;Proizvodi</h4>
     <div class="form-group" >
       <%= f.fields_for :offer_items do |offer_items_form| %>

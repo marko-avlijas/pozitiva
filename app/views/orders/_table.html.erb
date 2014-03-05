@@ -20,17 +20,11 @@
     <% @my_orders.each do |order| %>
     <tr>
       <td class="hidden-xs hidden-sm"><%= order.id %> <%#= order.user.email %></td>
-      <td class="hidden-xs hidden-sm" >
-        <% if order.offer.status == :active %>
-          <span class="badge">još <%= distance_of_time_in_words_to_now order.offer.valid_until %></span>
-        <% elsif order.offer.status == :finished %>
-          <span class="badge grey">istekla</span>
-        <% end %>
-      </td>
+      <td class="hidden-xs hidden-sm" ><%= badge_status(order.offer) %></td>
       <td><%= link_to order.offer.title, order.offer %></td>
       <td class="hidden-xs"><%= link_to order.offer.user.name, profile_path(order.offer.user), target: '_blank' %></td>
-      <td class="hidden-xs" ><span class="badge important"><%= display_delivery order%></span></td>
-      <td class="hidden-sm hidden-md hidden-lg" ><%= display_delivery order%></td>
+      <td class="hidden-xs" ><%= badge_delivery order %></td>
+      <td class="hidden-sm hidden-md hidden-lg" ><%= badge_delivery order %></td>
       <td class="hidden-xs hidden-sm" >
         <table class="table">
           

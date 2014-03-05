@@ -1,6 +1,8 @@
 class Offer < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   
+  attr_accessor :publishing_offer
+  
   belongs_to :user
   
   has_many :group_offerings, dependent: :delete_all 
@@ -9,25 +11,32 @@ class Offer < ActiveRecord::Base
   has_many :deliveries, inverse_of: :offer, dependent: :destroy 
   accepts_nested_attributes_for :deliveries, allow_destroy: true, reject_if: lambda { |attributes| attributes[:location_id].blank? }  
   validates_associated :deliveries
-  validates :deliveries, presence: true
+  validates :deliveries, presence: true, if: lambda{ |object| object.publishing_offer.present? }
   
   has_many :locations, through: :deliveries
   has_many :orders, dependent: :restrict_with_error 
 
   scope :published, -> { where('offers.valid_from <= ? AND offers.valid_until > ?', Time.current, Time.current).order("offers.created_at DESC") }
   
-  validates :title, presence: { message: 'cannot be blank' }
-  validates :valid_until, presence: { message: 'cannot be blank' }
+  validates :title, presence: true
+  validates :valid_until, presence: true, if: lambda{ |object| object.publishing_offer.present? }
+
   validate :valid_until_cannot_be_greater_than_delivery_date
-  
   def valid_until_cannot_be_greater_than_delivery_date
     if valid_until.present?
       deliveries.each do |delivery| 
-        errors.add(:valid_until, "can't be later than delivery") if delivery.when && (valid_until > delivery.when)
+        errors.add(:valid_until, "isporuka mora biti nakon roka za narudžbu") if delivery.when && (valid_until > delivery.when)
       end
     end
   end
-    
+
+  validate :valid_until_cannot_be_less_than_valid_from_plus_24_hours
+  def valid_until_cannot_be_less_than_valid_from_plus_24_hours
+    if valid_until.present?
+      errors.add(:valid_until, "period između vremena objave i roka za narudžbu ne smije biti manji od 24 sata") if valid_from && (valid_until < (valid_from + 24.hours))
+    end
+  end
+  
   has_many :offer_items, inverse_of: :offer, dependent: :delete_all  # foreign_key: "offer_id"
   accepts_nested_attributes_for :offer_items, 
     allow_destroy: true, 
@@ -39,18 +48,18 @@ class Offer < ActiveRecord::Base
   end
   
   def expired?
-    valid_until && (valid_until < Time.now)
+    status == :finished
   end
   
   def editable?
-    valid_from && (valid_from > Time.now)
+    status == :draft
   end
   
   def status
     case
-    when valid_from && valid_from <= Time.now && valid_until > Time.now
+    when valid_from.present? && (valid_from <= Time.now) && valid_until.present? && (valid_until >= Time.now)
       :active
-    when valid_until && valid_until <= Time.now
+    when (valid_until.present?) && (valid_until < Time.now)
       :finished
     else
       :draft

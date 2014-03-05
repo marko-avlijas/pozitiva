@@ -62,14 +62,19 @@ module ApplicationHelper
     end
   end
   
-  def badge_important(offer_status)
+  def badge_status(offer)
+    offer_status = offer.status
     case offer_status
     when :draft
       content_tag :span, t(offer_status), class: "badge important"
+    when :active
+      # content_tag :span, t(offer_status), class: "badge"
+      content_tag :span, "još #{distance_of_time_in_words_to_now offer.valid_until}" , class: "badge"
+      
     when :finished
       content_tag :span, t(offer_status), class: "badge grey"
     else
-      content_tag :span, t(offer_status), class: "badge"
+      content_tag :span, t(offer_status), class: "badge grey"
     end
   end
   
@@ -190,13 +195,15 @@ module ApplicationHelper
   end
   
   def display_order(order)
-    "#{order.user.name} (#{order.user.group.title}) isporuka #{display_delivery order}"
+    "#{order.user.name} (#{order.user.group.title}) isporuka #{badge_delivery order}"
   end
   
-  def display_delivery(order)
+  def badge_delivery(order)
     location = order.delivery.location.title if order && order.try(:delivery) && order.delivery.try(:location)
     time = "u #{formatted_delivery_when order.delivery}" if order.try(:delivery) && order.delivery.try(:when)
-    "#{location} #{time}"
+    grey = "grey" if order.delivery.when && order.delivery.when < Time.now
+    blue = "blue" if order.delivery.when.blank?
+    content_tag :span, "#{location} #{time}" , class: "badge #{grey} #{blue}"
   end
   
 end

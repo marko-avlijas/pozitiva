@@ -2,50 +2,7 @@
 
 <div class="panel-body">
   <div class="row">
-    <div class="col-md-6">
-      <div class="offer-details">
-        <label>Rok za narudžbu:</label>
-        <ul>
-          <li>
-            <span class="glyphicon glyphicon-record"></span> <%= formatted_valid_until @offer %> 
-            <% if @offer.valid_until && @offer.valid_until > Time.now %>
-            &nbsp;
-            <span class="badge">još <%= distance_of_time_in_words_to_now @offer.valid_until %></span>
-            <% end %>
-          </li>
-        </ul>
-      </div>
-      <div class="offer-details">
-        <label>Isporuke:</label>
-        <ul>
-          <% @offer.deliveries.each do |delivery| %>        
-          <li>
-            <span class="glyphicon glyphicon-calendar"></span> 
-            <%= formatted_delivery_when_date(delivery) %> &nbsp;
-            <span class="glyphicon glyphicon-time"></span> 
-            <%= formatted_delivery_when_time(delivery) %> 
-          
-            <%= link_to delivery.location.map_url, target: "_blank" do %>&nbsp;
-            <span class="glyphicon glyphicon-map-marker"></span> 
-            <%= delivery.location.title %>
-            <% end %>
-          </li>
-          <% end %>
-        </ul>
-      </div>
-      <div class="offer-details">
-        <label>Objavljeno:</label>
-        <ul><li><%= formatted_valid_from @offer %></li></ul>
-      </div>
-      <div class="offer-details">
-        <label>Dostupno u grupama:</label>
-        <ul>    
-          <% @offer.groups.each do |group| %>
-          <li> <%= group.title %></li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
+   
     <div class="col-md-6">
       <div class="focus">
         <div class="focus-header">
@@ -71,7 +28,8 @@
         </div>
         <div class="focus-footer">
           <div class="footer-links">
-            <a href="#">Uredi proizvode</a> &nbsp; <a href="#">Promijeni redoslijed</a> ako je user vlasnik ponude i ako ponuda još nije objavljena
+            <%= link_to('Uredi proizvode', edit_offer_path(@offer) ) if @offer.editable? %> &nbsp; 
+            <%#= link_to('Uredi proizvode', edit_offer_path(@offer) ) if @offer.editable? %>
           </div>
         </div>
       </div>

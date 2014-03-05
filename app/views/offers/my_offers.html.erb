@@ -32,7 +32,7 @@
                   <% end %>
               </td>
               <td><%= offer.title %></td>
-              <td><%= badge_important(offer.status) %></td>
+              <td><%= badge_status(offer) %></td>
               <td class="hidden-xs">
                 <%= formatted_valid_from offer %><br/>
                 <%= "(počinje za #{distance_of_time_in_words_to_now offer.valid_from})" if offer.valid_from && offer.valid_from > Time.now %> 
@@ -43,12 +43,12 @@
               <td class="hidden-xs"><%= link_to 'Kalkulacija', offer_orders_path(offer) %></td>
               <td class="visible-xs">
                 <%= link_to offer do %>
-                <span class="glyphicon glyphicon-search"></span> 
+                <span class="glyphicon glyphicon-file"></span> 
                 <% end %>
               </td>
               <td class="visible-xs">
                 <%= link_to offer_orders_path(offer) do %>
-                <span class="glyphicon glyphicon-folder-open"></span> 
+                <span class="glyphicon glyphicon-list-alt"></span> 
                 <% end %>
               </td>
               <!-- <td><%#= link_to '', edit_offer_path(offer),  class: "link glyphicon glyphicon-pencil"%></td> -->
