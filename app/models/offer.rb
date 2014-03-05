@@ -5,7 +5,9 @@ class Offer < ActiveRecord::Base
   
   belongs_to :user
   
-  has_many :group_offerings, dependent: :delete_all 
+  has_many :group_offerings, dependent: :delete_all
+  validates :group_offerings, presence: true
+  
   has_many :groups, through: :group_offerings
   
   has_many :deliveries, inverse_of: :offer, dependent: :destroy 
