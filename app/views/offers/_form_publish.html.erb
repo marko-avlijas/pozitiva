@@ -1,8 +1,13 @@
 
 <div class="col-md-6 offer-details">
   <% if @offer.editable? %>
+  <% if @offer.valid_from && @offer.valid_from > Time.now %>
+  <h3 style="color: #EE932E"><i class="fa fa-exclamation-circle"></i> &nbsp;Ponuda je objavljena s vremenskom odgodom</h3>
+  <p>Vrijeme objave: <strong><%= formatted_valid_from @offer %></strong></p> 
+  <% else %>
   <h3><i class="fa fa-exclamation-circle"></i> &nbsp;Ponuda još nije objavljena</h3>
   <p>Provjerite jesu li podaci o proizvodima koje ste unijeli ispravni i zatim unesite još ove informacije:</p>
+  <% end %>
   <hr/>
   <%= form_for @offer, html: { role: "form"} do |f| %>
   <% if @offer.errors.any? %>
@@ -79,7 +84,7 @@
         <div class="modal-body">
             <label>Odaberi datum i vrijeme objave:</label>
             <div class="input-group date datetimepicker" style="float: left; margin-right: 10px">
-              <%= f.text_field :valid_from, value: dt_picker(f.object.valid_from), class: "form-control" %>
+              <%= f.text_field :valid_from, value: dt_picker(f.object.valid_from || Time.now), class: "form-control" %>
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar">
                 </span>

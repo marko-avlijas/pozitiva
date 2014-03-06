@@ -22,6 +22,7 @@ class Offer < ActiveRecord::Base
   
   validates :title, presence: true
   validates :valid_until, presence: true, if: lambda{ |object| object.publishing_offer.present? }
+  validates :valid_from, presence: true, if: lambda{ |object| object.publishing_offer.present? }
 
   validate :valid_until_cannot_be_greater_than_delivery_date
   def valid_until_cannot_be_greater_than_delivery_date
@@ -75,11 +76,12 @@ class Offer < ActiveRecord::Base
   
   def duplicate
     kopy = self.dup
-    kopy.title = "#{kopy.title} #{Time.now.to_i}"
+    kopy.title = "Kopija ponude #{kopy.title}"
     kopy.valid_from = nil
+    kopy.valid_until = nil
     kopy.offer_items << self.offer_items.collect{ |offer_item| offer_item.dup }
-    kopy.deliveries << self.deliveries.collect{ |delivery| delivery.dup }
-    kopy.group_offerings << self.group_offerings.collect{ |group_offering| group_offering.dup }
+    # kopy.deliveries << self.deliveries.collect{ |delivery| delivery.dup }
+    # kopy.group_offerings << self.group_offerings.collect{ |group_offering| group_offering.dup }
     kopy.save ? kopy : nil
   end
   
