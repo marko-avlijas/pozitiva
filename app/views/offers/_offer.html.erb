@@ -1,39 +1,33 @@
-<%= render :partial => 'offers/offer_heading' %>
-
-<div class="panel-body">
-  <div class="row">
-   
-    <div class="col-md-6">
-      <div class="focus">
-        <div class="focus-header">
-          <h4><%= image_tag("notepad.png") %> Proizvodi</h4>
-        </div>
-        <div class="focus-body">
-          <table class="table">
-          <thead>
-            <tr>
-              <th align="left">Proizvod</th>
-              <th>Cijena</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @offer.offer_items.each do |offer_item| %>
-            <tr>
-              <td align="left"><strong><%= offer_item.title %></strong><br/><span style="font-size: 12px"><%= offer_item.note %></span></td>
-              <td ><%= offer_item_quantity_for_price(offer_item) %></td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-        </div>
-        <div class="focus-footer">
-          <div class="footer-links">
-            <%= link_to('Uredi proizvode', edit_offer_path(@offer) ) if @offer.editable? %> &nbsp; 
-            <%#= link_to('Uredi proizvode', edit_offer_path(@offer) ) if @offer.editable? %>
-          </div>
-        </div>
+<div class="col-md-6">
+  <div class="focus">
+    <div class="focus-header">
+      <h4><%= image_tag("notepad.png") %> Ponuđeni proizvodi</h4>
+    </div>
+    <div class="focus-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th align="left">Proizvod</th>
+            <th>Cijena</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @offer.offer_items.each do |offer_item| %>
+          <tr>
+            <td align="left"><strong><%= offer_item.title %></strong><br/><%= offer_item.note %></td>
+            <td ><%= offer_item_quantity_for_price(offer_item) %></td>
+            <td><%= offer_item_packaging_icon(offer_item.packaging) %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="focus-footer">
+      <div class="footer-links">
+        <%= link_to('Uredi proizvode', edit_offer_path(@offer) ) if @offer.editable? %> &nbsp; 
+        <%#= link_to('Uredi proizvode', edit_offer_path(@offer) ) if @offer.editable? %>
       </div>
     </div>
-    
   </div>
-</div>
+</div> 

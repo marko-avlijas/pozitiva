@@ -2,7 +2,8 @@
 // All this logic will automatically be available in application.js.
 
 function setPackaging(e){
-  var $div_row = e.parent().parent().parent();
+  // var $div_row = e.parent().parent().parent();
+  var $div_row = e.closest('div.duplicatable_nested_form');
   
   var $rinfuza = $div_row.find('div.form-rinfuza');
   var $paket = $div_row.find('div.form-paket');
@@ -38,7 +39,7 @@ function zebra() {
   $('.duplicatable_nested_form:even').css('background-color', '#EFF1E8');
 }
 
-$(document).on('change', '.packaging', function(e)  { setPackaging($(this)) });
+$(document).on('change', '.packaging', function(e)  { setPackaging($(this)); });
 $(document).on('change', '.form-unit', function(e) {
   var unit_val = $(this).val();
   $(this).parent().parent().find(".price-unit").text("kn/" + unit_val);

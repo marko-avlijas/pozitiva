@@ -22,6 +22,11 @@ ul{
 	padding-left: 20px;
 }
 
+h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+font-weight: 500;
+}
+
+
 #wrap {
   margin: 0 auto -250px;
   padding: 0 0 250px;
@@ -116,6 +121,11 @@ max-height: 500px;
 .dropdown-menu .divider{
 	background-color: #d4d6cd;
 }
+.navbar-brand{
+  font-family: 'Viga', sans-serif;
+  font-size: 22px;
+}
+
 
 /*--------------------------- TABS ------------------------------*/
 
@@ -147,6 +157,7 @@ text-align: center;
 vertical-align: middle;
 cursor: pointer;
 color: #59603E;
+font-size: 16px;
 text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
 background-color: #E2E5D7;
 background-image: -moz-linear-gradient(top, #ebede3, #d5d9c4);
@@ -202,8 +213,8 @@ box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),0 1px 2px rgba(0, 0, 0, 0.05)
   transition: background-position 0.1s linear;
   border-color:transparent;
 }
-.btn-primary:active,.btn-primary.active{
-  background-color:#565951
+.btn-primary:active, .btn-primary.active{
+  background-color:#617c28;
 }
 .btn-xs{
 	padding: 3px 6px;
@@ -380,7 +391,7 @@ padding: 10px 10px 10px 15px;
 font-size: 12px;
 margin: -7px;
 margin-bottom: 0px;
-background-color: #DB706E;
+background-color: #EC5A5A;
 color: #FFF;
 }
 
@@ -404,6 +415,9 @@ select.form-control {
 	width: auto;
 	height: 32px;
 	padding: 0;
+}
+select.packaging {
+	margin-bottom: 10px;
 }
 .input-group.date{
   width: 250px;
@@ -447,10 +461,11 @@ border-bottom: 2px solid #DAD6C9;
 /*------------------------------ HOMESCREEN -------------------*/
 
 .home h3{
-	margin: 0 20px 20px 20px;
+	margin: 10px 20px 20px 20px;
 	text-align: center;
-	font-size: 20px;
+	font-size: 18px;
   font-weight: normal;
+  font-family: 'Viga', sans-serif;
 }
 .home p{
 	text-align: center;
@@ -518,7 +533,9 @@ a.white-card.home:hover, a.white-card.home:active {
   padding: 18px 30px;
 
 }
-
+.offer-title h4{
+  font-size: 22px;
+}
 .offer-new h4{
 	padding: 10px 20px;
 
@@ -529,20 +546,19 @@ span.inline{
 	display:inline-block;
 	margin-bottom: 10px;
 }
-.delivery-row, .offer_items{
-	padding: 10px 0 0 10px;
-	background-color: #FAFCF5;
-	border: 1px dashed #CCC;
+.offer_items, .deliveries{
+	padding: 10px 40px 10px 10px;
+	background-color: #F6F5F1;
+	border: 1px dashed #E0DED5;
 	margin-bottom: 10px;
 	position: relative;
-	padding-right: 20px;
   overflow: auto;
-}
-.offer_items{
-	padding-right: 40px;
-	overflow: auto;
+  border-radius: 4px;
 }
 
+.deliveries{
+  padding-bottom: 0;
+}
 .offer_items label{
 	font-weight: 500;
   color: #555;
@@ -663,9 +679,8 @@ min-width: 175px;
   font-size: 16px;
 }
 .order-legend span{
-  color: #777; 
-  font-size: 13px; 
-  line-height: 20px
+  line-height: 20px;
+  font-weight: 300;
 }
 .row-submit{
   padding-top: 20px;
@@ -723,6 +738,16 @@ text-shadow: 1px 2px 3px #F6F8EF, 0 0 0 #666, 1px 2px 3px #F6F8EF;
   margin: 10px 0 20px 0;
   position: relative;
 }
+.offer-details h3{
+  color: #3492AF;
+  margin-top: 0;
+}
+.offer-details h4{
+  margin-top: 30px;
+}
+.offer-details h4 img{
+  width: 30px;
+}
 .offer-details ul li{
   line-height: 26px;
   position: relative;
@@ -732,20 +757,26 @@ text-shadow: 1px 2px 3px #F6F8EF, 0 0 0 #666, 1px 2px 3px #F6F8EF;
   display:block;
   font-weight: 600;
 }
-.order .group{
+.order .group, .offer .group{
   border: 1px solid #CFCBBA;
   margin-bottom: 20px;
   border-radius: 4px;
 }
-.order .group h4{
+.order .group h4, .offer .group h4{
   margin: 0;
   padding: 15px 20px;
   background-color: #F6F5F1;
   border-radius: 4px 4px 0 0;
   border-bottom: 1px solid #E2E0D5;
 }
-.order .group .content{
+.order .group .content, .offer .group .content{
   padding: 20px;
+}
+.offer .group .group-footer{
+  padding: 15px 20px;
+  background-color: #F6F5F1;
+  border-radius: 0 0 4px 4px;
+  border-top: 1px solid #E2E0D5;
 }
 
 

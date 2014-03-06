@@ -1,9 +1,9 @@
-<div class="panel-body <%= "offer-publish" if @offer.valid_from.blank? %>">
-  
+
+<div class="col-md-6 offer-details">
   <% if @offer.editable? %>
-  <h4><i class="fa fa-exclamation-circle"></i> &nbsp;Ponuda još nije objavljena</h4>
-
-
+  <h3><i class="fa fa-exclamation-circle"></i> &nbsp;Ponuda još nije objavljena</h3>
+  <p>Provjerite jesu li podaci o proizvodima koje ste unijeli ispravni i zatim unesite još ove informacije:</p>
+  <hr/>
   <%= form_for @offer, html: { role: "form"} do |f| %>
   <% if @offer.errors.any? %>
   <div id="error_explanation">
@@ -18,81 +18,87 @@
   
   <%= f.hidden_field :publishing_offer, value: true %>
   
+  <h4><i class="fa fa-users"></i> &nbsp;Vidljivost ponude po grupama</h4>
   <div class="form-group" style="overflow: auto;">
-  
-    <div class="row">
-      <div class="col-lg-12">
-        <h4><i class="fa fa-users"></i> &nbsp;Vidljivost ponude po grupama <i class="fa fa-asterisk"></i> </h4>
-        <%# http://railscasts.com/episodes/17-habtm-checkboxes-revised %>
-        <%= hidden_field_tag "offer[group_ids][]", nil %>
-        <% Group.all.each do |group| %>
-        <div class="checkbox" style="padding-left: 35px">
-          <% check_box_selected = (@offer.new_record? && group.id == 1) ? true : @offer.group_ids.include?(group.id) %>
-          <%= check_box_tag "offer[group_ids][]", group.id, check_box_selected, id: dom_id(group) %>
-          <%= label_tag dom_id(group), group.title %>
-        </div>
-        <% end %>
+    <%# http://railscasts.com/episodes/17-habtm-checkboxes-revised %>
+    <%= hidden_field_tag "offer[group_ids][]", nil %>
+    <% Group.all.each do |group| %>
+    <div class="checkbox" style="padding-left: 35px">
+      <% check_box_selected = (@offer.new_record? && group.id == 1) ? true : @offer.group_ids.include?(group.id) %>
+      <%= check_box_tag "offer[group_ids][]", group.id, check_box_selected, id: dom_id(group) %>
+      <%= label_tag dom_id(group), group.title %>
+    </div>
+    <% end %>
+<hr/>
+    <h4><i class="fa fa-clock-o"></i> &nbsp;Rok za narudžbu</h4>
+    <div class="form-group">
+      <div class="input-group date datetimepicker">
+        <%= f.text_field :valid_until, value: dt_picker(f.object.valid_until), class: "form-control" %>
+        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-lg-12">
-        <h4><i class="fa fa-clock-o"></i> &nbsp;Rok za narudžbu <i class="fa fa-asterisk"></i> </h4>
-        <div class="form-group col-lg-12">
-          <div class="input-group date datetimepicker">
-            <%= f.text_field :valid_until, value: dt_picker(f.object.valid_until), class: "form-control" %>
-            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-12">
-        <h4><i class="fa fa-truck"></i> &nbsp;Mjesto i vrijeme isporuke</h4>
-        <div class="form-group">
-          <%# always have one empty %>
-          <% f.object.deliveries.build %>
-          <%= f.fields_for :deliveries do |deliveries_form| %>
-          <div class="duplicatable_nested_form deliveries">
-            <%= deliveries_form.hidden_field :id %>       
-            <div class="delivery-row">
-              <div style="float: left; margin: 0 10px 10px 0"><i class="fa fa-asterisk"></i>  <%= deliveries_form.collection_select :location_id, Location.all.to_a, 'id', 'title', {include_blank: 'odaberite lokaciju'}, class: "form-control" %></div>
-              <div style="float: left;">
-                <div class="form-group">
-                  <div class="input-group date datetimepicker">
-                    <%= deliveries_form.text_field :when, value: dt_picker(deliveries_form.object.when), class: "form-control" %>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                  </div>
-                </div>
+<hr/>
+    <h4><i class="fa fa-truck"></i> &nbsp;Mjesto i vrijeme isporuke</h4>
+    <div class="form-group">
+      <%# always have one empty %>
+      <% f.object.deliveries.build if f.object.deliveries.blank? %>
+      <%= f.fields_for :deliveries do |deliveries_form| %>
+      <div class="duplicatable_nested_form deliveries">
+        <%= deliveries_form.hidden_field :id %>       
+        <div class="delivery-row">
+          <div style="float: left; margin: 0 10px 10px 0"><%= deliveries_form.collection_select :location_id, Location.all.to_a, 'id', 'title', {include_blank: 'odaberite lokaciju'}, class: "form-control" %></div>
+          <div style="float: left;">
+            <div class="form-group">
+              <div class="input-group date datetimepicker">
+                <%= deliveries_form.text_field :when, value: dt_picker(deliveries_form.object.when), class: "form-control" %>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
               </div>
-              <%= link_to '', '', class: 'remove_nested_form glyphicon glyphicon-trash', data: {fields: "deliveries"} %>
-              <%#= deliveries_form.check_box :_destroy %> <%#= deliveries_form.label :_destroy, "Remove" %>
-              <%#= hidden_field_tag nil, "0", id: "offer_deliveries_attributes_#{deliveries_form.index}__destroy", name: "offer[deliveries_attributes][#{deliveries_form.index}][_destroy]" %>
             </div>
           </div>
-          <% end %>
+          <%= link_to '', '', class: 'remove_nested_form glyphicon glyphicon-trash', data: {fields: "deliveries"} %>
+          <%#= deliveries_form.check_box :_destroy %> <%#= deliveries_form.label :_destroy, "Remove" %>
+          <%#= hidden_field_tag nil, "0", id: "offer_deliveries_attributes_#{deliveries_form.index}__destroy", name: "offer[deliveries_attributes][#{deliveries_form.index}][_destroy]" %>
         </div>
-        <p class="col-lg-12"><%= link_to 'Dodaj lokaciju', '', class: 'duplicate_nested_form delivery', data: {fields: "deliveries"} %> </p>
       </div>
+      <% end %>
     </div>
-    
-        
-    <h5>Prilagodi vrijeme objave:</h5>
-    <div>
-      <div class="input-group date datetimepicker" style="float: left; margin-right: 10px">
-        <%= f.text_field :valid_from, value: dt_picker(f.object.valid_from || Time.now), class: "form-control" %>
-        <span class="input-group-addon" style="background-color: #ddd">
-          <span class="glyphicon glyphicon-calendar">
-          </span>
-        </span>
-      </div>
-    </div>
-    <%= f.submit "Objavi", class: "btn btn-primary" %>
+    <p><%= link_to 'Dodaj lokaciju', '', class: 'duplicate_nested_form delivery', data: {fields: "deliveries"} %> </p>
+<hr/>
+    <%= f.submit "Objavi ponudu odmah!", class: "btn btn-primary" %>
+    <button class="btn" data-toggle="modal" data-target="#modal-publish-future" > Objavi ponudu s odgodom</button>
+    <!-- gumb za otvaranje modala -->
   </div>
-  <% end %>
+  
+  <div class="modal fade" id="modal-publish-future">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"> Vrijeme objave ponude</h4>
+        </div>
+        <div class="modal-body">
+            <label>Odaberi datum i vrijeme objave:</label>
+            <div class="input-group date datetimepicker" style="float: left; margin-right: 10px">
+              <%= f.text_field :valid_from, value: dt_picker(f.object.valid_from), class: "form-control" %>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar">
+                </span>
+              </span>
+            </div>
+            </br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+          <%= f.submit "Objavi ponudu", class: "btn btn-primary" %>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  
+  <% end # end of form %>
   
   <% else %>
-    <%= render 'offer_publish_details' %>
+  <%= render 'offer_publish_details' %>
   <% end %>
 </div>
+

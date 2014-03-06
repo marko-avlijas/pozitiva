@@ -6,7 +6,7 @@ class Offer < ActiveRecord::Base
   belongs_to :user
   
   has_many :group_offerings, dependent: :delete_all
-  validates :group_offerings, presence: true
+  validates :group_offerings, presence: true, if: lambda{ |object| object.publishing_offer.present? }
   
   has_many :groups, through: :group_offerings
   

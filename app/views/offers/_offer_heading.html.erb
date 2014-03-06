@@ -1,8 +1,4 @@
-<div class="panel-heading">
-  <!-- ako je current user ujedno i autor ponude, prikazati ovo:
-    <a href="" class="nav-link">&laquo; Moje ponude</a>
-    inače prikazati ovo dolje (što je u h5)
-    -->
+<div class="panel-heading offer-author">
   <h5>
     <%= link_to profile_path(@offer.user) do %>
     <%= gravatar_image_tag(@offer.user.email) %>
@@ -12,6 +8,7 @@
 </div>
 
 <div class="panel-heading offer-title" style="border-top: 1px solid #E0DED5;">
+
   <div class="row">
     <div class="col-lg-12">
       <h3><%= @offer.title %>

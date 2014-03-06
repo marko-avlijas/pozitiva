@@ -1,29 +1,19 @@
 
-<div class="offer-edit">
-  <div class="row">
-    <div class="col-md-12">
-      <%= link_to "&laquo; Moje ponude".html_safe, my_offers_path, class: "nav-link" %>
-      <div class="panel panel-offer">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-lg-12">
-          <h3>Nova ponuda</h3>
-            </div>
-          </div>
-        </div>
-        
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-lg-12">
-              
-
-        <%= render 'form' %>
-      </div></div></div>
-        <div class="panel-footer" style="padding: 30px">
-          <%#= render(partial: 'form_publish') %>
-          <%= link_to 'Back', offers_path %>
-        </div>
+<%= link_to "&laquo; Moje ponude".html_safe, my_offers_path, class: "nav-link" %>
+<div class="panel panel-offer">
+  <div class="panel-heading offer-title">
+    <div class="row">
+      <div class="col-lg-12">
+        <h3><%= image_tag("notepad.png") %> Nova ponuda</h3>
       </div>
     </div>
-  </div>  
+  </div>
+  <div class="panel-body offer">
+    <%= render 'form' %>
+  </div>
+  <div class="panel-footer" style="padding: 30px">
+    <%#= render(partial: 'form_publish') %>
+    <%= link_to 'Back', offers_path %>
+  </div>
 </div>
+

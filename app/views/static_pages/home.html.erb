@@ -8,14 +8,6 @@
       <h3>Sve ponude</h3>
     <% end %>
   </div>
-  
-  <div class="col-md-3 col-sm-6">
-    <%= link_to my_orders_path, class: "white-card home" do %>
-      <p><%= image_tag("bag.png") %></p>
-      <h3>Moje narudžbe</h3>
-    <% end %>
-  </div>
-  
   <div class="col-md-3 col-sm-6">
   <a href="" class="white-card home" >
     <div >
@@ -25,11 +17,17 @@
     </a>
   </div>
   
+  <div class="col-md-3 col-sm-6">
+    <%= link_to my_orders_path, class: "white-card home" do %>
+      <p><%= image_tag("bag.png") %></p>
+      <h3>Moje narudžbe</h3>
+    <% end %>
+  </div>
   
   <% if current_user.is_producer %>
   <div class="col-md-3 col-sm-6 ">
   <%= link_to my_offers_path, class: "white-card home" do %>
-      <p><%= image_tag("comments.png") %></p>
+      <p><%= image_tag("notepad.png") %></p>
       <h3>Moje ponude</h3>
     <% end %>
   </div>

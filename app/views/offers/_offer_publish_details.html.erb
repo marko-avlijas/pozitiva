@@ -1,44 +1,44 @@
-    <div class="col-md-6">
-      <div class="offer-details">
-        <label>Rok za narudžbu:</label>
-        <ul>
-          <li>
-            <span class="glyphicon glyphicon-record"></span> <%= formatted_valid_until @offer %> 
-            <% if @offer.valid_until && @offer.valid_until > Time.now %>
-            &nbsp;
-            <%= badge_status(@offer) %>
-            <% end %>
-          </li>
-        </ul>
-      </div>
-      <div class="offer-details">
-        <label>Isporuke:</label>
-        <ul>
-          <% @offer.deliveries.each do |delivery| %>        
-          <li>
-            <span class="glyphicon glyphicon-calendar"></span> 
-            <%= formatted_delivery_when_date(delivery) %> &nbsp;
-            <span class="glyphicon glyphicon-time"></span> 
-            <%= formatted_delivery_when_time(delivery) %> 
+<div class="col-md-6">
+  <div class="offer-details">
+    <label>Rok za narudžbu:</label>
+    <ul>
+      <li>
+        <span class="glyphicon glyphicon-record"></span> <%= formatted_valid_until @offer %> 
+        <% if @offer.valid_until && @offer.valid_until > Time.now %>
+        &nbsp;
+        <%= badge_status(@offer) %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+  <div class="offer-details">
+    <label>Isporuke:</label>
+    <ul>
+      <% @offer.deliveries.each do |delivery| %>        
+      <li>
+        <span class="glyphicon glyphicon-calendar"></span> 
+        <%= formatted_delivery_when_date(delivery) %> &nbsp;
+        <span class="glyphicon glyphicon-time"></span> 
+        <%= formatted_delivery_when_time(delivery) %> 
           
-            <%= link_to delivery.location.map_url, target: "_blank" do %>&nbsp;
-            <span class="glyphicon glyphicon-map-marker"></span> 
-            <%= delivery.location.title %>
-            <% end %>
-          </li>
-          <% end %>
-        </ul>
-      </div>
-      <div class="offer-details">
-        <label>Objavljeno:</label>
-        <ul><li><%= formatted_valid_from @offer %></li></ul>
-      </div>
-      <div class="offer-details">
-        <label>Dostupno u grupama:</label>
-        <ul>    
-          <% @offer.groups.each do |group| %>
-          <li> <%= group.title %></li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
+        <%= link_to delivery.location.map_url, target: "_blank" do %>&nbsp;
+        <span class="glyphicon glyphicon-map-marker"></span> 
+        <%= delivery.location.title %>
+        <% end %>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="offer-details">
+    <label>Objavljeno:</label>
+    <ul><li><%= formatted_valid_from @offer %></li></ul>
+  </div>
+  <div class="offer-details">
+    <label>Dostupno u grupama:</label>
+    <ul>    
+      <% @offer.groups.each do |group| %>
+      <li> <%= group.title %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
