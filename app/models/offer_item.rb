@@ -39,7 +39,7 @@ class OfferItem < ActiveRecord::Base
   end
 
   # override setter to accept comma for decimal point
-  def min_qty_per_order=(value)
+  def min_qty_per_order=(input_value)
     write_attribute :min_qty_per_order, fcomma(input_value)
     # this is same as self[:attribute_name] = value
   end
