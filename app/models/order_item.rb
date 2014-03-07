@@ -47,7 +47,7 @@ class OrderItem < ActiveRecord::Base
   # override setter (accept comma for decimal point)
   def qty=(value)
     if qty_have_to_be_integer?
-      super
+      write_attribute(:qty, value.to_s.to_i)
     else
       write_attribute(:qty, value.to_s.gsub(',', '.').to_d)
       # this is same as self[:qty] = value

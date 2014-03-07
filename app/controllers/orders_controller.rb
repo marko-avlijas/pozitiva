@@ -106,8 +106,8 @@ class OrdersController < ApplicationController
     current_user.orders.exists?(id: params[:id])
   end
 
-  def current_user_is_admin
-    raise "[OrdersController#admin] current_user is not admin" unless current_user.admin
+  def current_user_is_admin?
+    !!current_user.admin
   end
 
   def current_user_can_see_orders
@@ -120,7 +120,7 @@ class OrdersController < ApplicationController
     # Rails.logger.info "offer_from_current_user: #{offer_from_current_user?}"
     # Rails.logger.info "order_from_current_user: #{order_from_current_user?}"
     
-    raise "[OrdersController#current_user_can_see_order]" unless (current_user_is_admin || offer_from_current_user? || order_from_current_user?)
+    raise "[OrdersController#current_user_can_see_order]" unless (current_user_is_admin? || offer_from_current_user? || order_from_current_user?)
   end
 
   def current_user_can_write

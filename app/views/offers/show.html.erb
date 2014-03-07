@@ -44,7 +44,7 @@
         
 
       <% else %>
-        <%= link_to 'Naruči', new_offer_order_path(@offer), class: "btn btn-primary btn-xs", style: "float: right;margin-left: 10px" %>
+        <%= link_to 'Naruči', new_offer_order_path(@offer), class: "btn btn-primary" %>
         <% if @current_user_has_orders %>
           <%= link_to "Vidi moje narudžbe", my_orders_path, class: "btn btn-primary btn-xs", style: "float: right" %>
         <% end %>

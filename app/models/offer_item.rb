@@ -40,12 +40,12 @@ class OfferItem < ActiveRecord::Base
 
   # override setter to accept comma for decimal point
   def min_qty_per_order=(value)
-    write_attribute(:min_qty_per_order, value.to_s.gsub(',', '.').to_d)
+    write_attribute :min_qty_per_order, fcomma(input_value)
     # this is same as self[:attribute_name] = value
   end
     
   def decimal_price
-    self.send("decimal_price_#{packaging}") unless packaging.blank?
+    self.send("decimal_price_#{packaging}")
   end
   
   def decimal_price_bulk
@@ -53,7 +53,7 @@ class OfferItem < ActiveRecord::Base
   end
 
   def decimal_price_bulk=(input_value)
-    self.price_bulk = input_value.to_s.gsub(',', '.').to_d * 100 if input_value.present?
+    self.price_bulk = fcomma(input_value)
   end
 
   def decimal_price_package
@@ -61,7 +61,7 @@ class OfferItem < ActiveRecord::Base
   end
 
   def decimal_price_package=(input_value)
-    self.price_package = input_value.to_s.gsub(',', '.').to_d * 100 if input_value.present?
+    self.price_package = fcomma(input_value)
   end
 
   def decimal_price_vario
@@ -69,11 +69,18 @@ class OfferItem < ActiveRecord::Base
   end
 
   def decimal_price_vario=(input_value)
-    self.price_vario = input_value.to_s.gsub(',', '.').to_d * 100 if input_value.present?
+    self.price_vario = fcomma(input_value)
   end
   
   def total_available_qty=(input_value)
-    write_attribute(:total_available_qty, input_value.to_s.gsub(',', '.').to_d)
+    write_attribute :total_available_qty, fcomma(input_value)
   end
   
+  def fcomma(value)
+    if value.present?
+      value.to_s.gsub(',', '.').to_d * 100
+    else
+      nil
+    end
+  end
 end

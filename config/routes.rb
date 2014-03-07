@@ -21,7 +21,9 @@ Pozitiva::Application.routes.draw do
       get 'delete_attach'
       post 'message_to_orderers'
     end
-    resources :orders
+    resources :orders do
+      resources :order_items, only: :destroy
+    end
   end
   
   get 'my_orders'    => 'orders#my_orders'
