@@ -40,7 +40,12 @@
             <% if offer_item.packaging != "vario" %>   
             <div class="col-lg-2 col-md-3 col-sm-3 qty">
               <div class="input-group">
-                <%= order_item_form.text_field :qty, value: order_item_form.object.qty.to_s.gsub('.', ','), class: "form-control", placeholder: "količina", style: "color: #cc2200; font-weight: bold" %><%= offer_item_packaging_unit(offer_item) %> 
+                <% val = sprintf("%.2f", order_item_form.object.qty).gsub('.', ',') if order_item_form.object.qty   %>
+                <% val = order_item_form.object.qty.to_i if order_item_form.object.qty_have_to_be_integer? %>
+                
+                <%= order_item_form.text_field :qty, 
+                value: val, 
+                class: "form-control", placeholder: "količina", style: "color: #cc2200; font-weight: bold" %><%= offer_item_packaging_unit(offer_item) %> 
                 
               </div>
               <% unless order_item_form.object.new_record?  %>
@@ -74,7 +79,7 @@
       <div class="col-md-6">
         <p class="order-legend">
           <i class="fa fa-tachometer"></i> &nbsp;<span>Rinfuza - moguć je unos decimalnih brojeva - obratite pažnju na minimalnu količinu koju je potrebno naručiti.</span><br/>
-          <i class="fa fa-gift"></i> &nbsp;<span>Pakiranje - naručuje se po komadu (i cijene su izražene po komadu), pa je moguć unos samo cijelih brojeva.</span>
+          <i class="fa fa-gift"></i> &nbsp;<span>Pakiranje - naručuje se po komadu/paketu i cijene su izražene po komadu/paketu, pa je moguć unos samo cijelih brojeva.</span>
         </div>
         <div class="col-md-6">
           <p class="order-legend">

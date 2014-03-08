@@ -15,6 +15,8 @@ class OfferItem < ActiveRecord::Base
   validates_presence_of :decimal_price_package, if: :packaging_package?
   validates_presence_of :decimal_price_vario, if: :packaging_vario?
   
+  # include ActionView::Helpers::NumberHelper
+  
   def packaging_bulk?
     packaging == 'bulk'
   end
@@ -38,49 +40,55 @@ class OfferItem < ActiveRecord::Base
     self.send("unit_#{packaging}") unless packaging.blank?
   end
 
-  # override setter to accept comma for decimal point
-  def min_qty_per_order=(input_value)
-    write_attribute :min_qty_per_order, fcomma(input_value)
-    # this is same as self[:attribute_name] = value
-  end
     
   def decimal_price
     self.send("decimal_price_#{packaging}")
   end
   
   def decimal_price_bulk
-    price_bulk.nil? ? 0.0 : price_bulk.to_d/100 
+    price_bulk.nil? ? 0.0 : (price_bulk / 100.0)
   end
 
   def decimal_price_bulk=(input_value)
-    self.price_bulk = fcomma(input_value)
+    self.price_bulk = fcomma(input_value) * 100
   end
 
   def decimal_price_package
-    price_package.nil? ? 0.0 : price_package.to_d/100
+    price_package.nil? ? 0.0 : (price_package / 100.0)
   end
 
-  def decimal_price_package=(input_value)
-    self.price_package = fcomma(input_value)
+  def decimal_price_package=(input_value)    
+    self.price_package = (fcomma(input_value) * 100)
   end
 
   def decimal_price_vario
-    price_vario.nil? ? 0.0 : price_vario.to_d / 100    
+    price_vario.nil? ? 0.0 : (price_vario / 100.0) 
   end
-
+  
   def decimal_price_vario=(input_value)
-    self.price_vario = fcomma(input_value)
+    self.price_vario = (fcomma(input_value) * 100)
+  end
+  
+  # override setter to accept comma for decimal point
+  def min_qty_per_order=(input_value)
+    write_attribute :min_qty_per_order, fcomma(input_value)
+    # this is same as self[:attribute_name] = value
   end
   
   def total_available_qty=(input_value)
     write_attribute :total_available_qty, fcomma(input_value)
   end
   
+  # format number with comma as decimal separator to decimal number
   def fcomma(value)
     if value.present?
-      value.to_s.gsub(',', '.').to_d * 100
+      value.to_s.gsub(',', '.').to_d
+      
+      # ne hvata točku kao separator decimala
+      # number_with_delimiter(value.to_s, delimiter: "", separator: ",").to_d
     else
       nil
     end
   end
+  
 end

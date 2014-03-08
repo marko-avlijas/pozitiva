@@ -2,6 +2,10 @@ class OfferItemCalculator
   
   def initialize(offer_item)
     if offer_item.total_available_qty
+      
+      # TODO ako je @total_available_qty / @order_items.size manje od min_qty return error "solidarizacija nije moguća jer u prvoj iteraciji je količina ispod minimalne"
+      # TODO ili stavit minimalne količine prema redosljedu nardžbi
+      
       @total_available_qty = @remain_qty = offer_item.total_available_qty
       @order_items = offer_item.order_items
       @order_items.each{ |order_item| order_item.corrected_qty = 0 }

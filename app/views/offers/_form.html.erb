@@ -75,7 +75,7 @@
           <div class="form-group col-xs-11 col-md-4">
             <%= offer_items_form.label :min_qty_per_order, "Minimalna količina:" %>
             <div class="input-group">
-              <%= offer_items_form.text_field :min_qty_per_order, class: "form-control" %>
+              <%= offer_items_form.text_field :min_qty_per_order, value: sprintf("%.2f", offer_items_form.object.min_qty_per_order.to_s.to_d).gsub('.', ','), class: "form-control" %>
               <span class="input-group-addon min-qty-unit">mj. jedinica</span> 
             </div>
             <span class="help-block">upišite min. količinu po narudžbi, u mj. jedinici koju ste naveli (decimalna točka umjesto zareza)</span>
@@ -123,7 +123,7 @@
       <div class="col-md-6">
         <p class="order-legend">
           <span><strong>Rinfuza</strong> - omogućuje unos decimalnih brojeva u narudžbu - možete odrediti minimalnu količinu za naručivanje. </span><br/>
-          <span><strong>Pakiranje</strong> - cijene se izražavaju za pakiranje, i naručuje se po komadu, pa je u narudžbi moguć unos samo cijelih brojeva. U polje "način pakiranja" upišite ukratko od čega se sastoji paket, npr. za jaja ćete upisati 10 komada, za sok 1 litra, za rukolu 100g, za košaricu komad, za peršin vezica... polje "opis" iskoristite za dodatne informacije.</span>
+          <span><strong>Pakiranje</strong> - cijene se izražavaju za komad/paket, i naručuje se po komadu/paketu, pa je u narudžbi moguć unos samo cijelih brojeva. U polje "način pakiranja" upišite ukratko od čega se sastoji paket, npr. za jaja ćete upisati 10 komada, za sok 1 litra, za rukolu 100g, za košaricu komad, za peršin vezica... polje "opis" iskoristite za dodatne informacije.</span>
         </div>
         <div class="col-md-6">
           <p class="order-legend">
