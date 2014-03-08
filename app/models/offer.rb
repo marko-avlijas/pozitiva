@@ -69,9 +69,11 @@ class Offer < ActiveRecord::Base
     end
   end
   
+  # TODO - new field "deactivated"
   def deactivate
+    self.valid_from = Time.now - 48.hours
     self.valid_until = Time.now
-    self.save!
+    self.save!      
   end
   
   def duplicate

@@ -56,12 +56,14 @@
               <% end %>
             </div>
             <% else %>
+            
+            <%# can't create order without qty (db constraint) %>
             <%= order_item_form.hidden_field :qty, value: "0" %>        
             <div class="col-lg-2 col-sm-3 qty">
-              <div class="">
-              <%= order_item_form.text_field :qty_description, class: "form-control", placeholder: "opisna količina", style: "color: #cc2200; font-weight: bold" %>
-              
-            </div>
+              <div>
+                <%= order_item_form.text_field :qty_description, class: "form-control", placeholder: "opisna količina", style: "color: #cc2200; font-weight: bold" %>
+              </div>
+            
             <% unless order_item_form.object.new_record?  %>
             <%= link_to( offer_order_order_item_path(order_item_form.object.order.offer, order_item_form.object.order, order_item_form.object), method: :delete, data: { confirm: 'Are you sure?' }) do %>
             <span class="glyphicon glyphicon-trash remove_order_item"></span>

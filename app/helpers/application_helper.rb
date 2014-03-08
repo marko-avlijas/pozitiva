@@ -105,7 +105,7 @@ module ApplicationHelper
     else
       out = "#{formatted_qty item.qty} x #{item.offer_item.unit}"
     end
-    item.corrected_qty.present? ? "(#{out})" : out
+    item.corrected_qty.present? ? content_tag(:span, "(#{out})", style: 'text-decoration: line-through') : out
   end
   
   def formatted_item_corrected_qty_unit(item)
