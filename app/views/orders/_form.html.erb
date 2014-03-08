@@ -40,11 +40,12 @@
             <% if offer_item.packaging != "vario" %>   
             <div class="col-lg-2 col-md-3 col-sm-3 qty">
               <div class="input-group">
-                <% val = sprintf("%.2f", order_item_form.object.qty).gsub('.', ',') if order_item_form.object.qty   %>
-                <% val = order_item_form.object.qty.to_i if order_item_form.object.qty_have_to_be_integer? %>
-                
+                <% if order_item_form.object.qty  %>
+                  <% qty_val = sprintf("%.2f", order_item_form.object.qty).gsub('.', ',') %>
+                  <% qty_val = order_item_form.object.qty.to_i if order_item_form.object.qty_have_to_be_integer? %>
+                <% end %>
                 <%= order_item_form.text_field :qty, 
-                value: val, 
+                value: qty_val, 
                 class: "form-control", placeholder: "količina", style: "color: #cc2200; font-weight: bold" %><%= offer_item_packaging_unit(offer_item) %> 
                 
               </div>

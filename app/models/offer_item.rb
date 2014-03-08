@@ -87,7 +87,7 @@ class OfferItem < ActiveRecord::Base
       # ne hvata točku kao separator decimala
       # number_with_delimiter(value.to_s, delimiter: "", separator: ",").to_d
     else
-      nil
+      0.0
     end
   end
   
