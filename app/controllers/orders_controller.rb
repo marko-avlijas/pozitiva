@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
   def index
     @offer = Offer.find(params[:offer_id])
     @offer_items = @offer.offer_items
-    @orders = @offer.orders.order("orders.delivery_id, orders.user_id")
+    @orders = @offer.orders.joins(:user).order("orders.delivery_id, users.name")
     @offer_items_sum = OfferItemOrders.new(@offer, @orders).get_sum_hash
 
     @offer.company_name = @offer.user.company_name if @offer.user.try(:company_name).present?

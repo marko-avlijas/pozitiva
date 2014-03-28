@@ -416,9 +416,6 @@ select.form-control {
 	height: 32px;
 	padding: 0;
 }
-select.packaging {
-	margin-bottom: 10px;
-}
 .input-group.date{
   width: 250px;
 }
@@ -449,12 +446,17 @@ border-bottom: 2px solid #DAD6C9;
   border-radius: 4px;
   border-left: 1px solid #DAD6C9;
   border-right: 1px solid #DAD6C9;
+  margin-bottom: 5px;
 }
 .table .table thead{
   background-color: #EBE7DC;
 }
 .table .table th{
   font-weight: normal;
+  
+}
+.table .table > thead:first-child > tr:first-child > th{
+  border-top: 1px solid #DAD6C9;
 }
 
 
@@ -515,15 +517,13 @@ a.white-card.home:hover, a.white-card.home:active {
   font-size:14px;
 }
 
-.badge.important{
-  /*background-color: #807E78;*/
-  background-color: #3492AF;
-  font-weight: 600;
-}
 .badge.grey{
 	background-color: #EBE9E0;
   font-weight: 400;
   color:#555;
+}
+.badge.blue{
+  background-color: #76ACCE;
 }
 
 /*--------------------------------- MISC -------------------------------*/
@@ -786,6 +786,31 @@ text-shadow: 1px 2px 3px #F6F8EF, 0 0 0 #666, 1px 2px 3px #F6F8EF;
 .qty div{
   max-width: 85%;
 }
+.document-header{
+  margin-bottom: 20px;
+}
+.document-header p{
+  margin-bottom: 5px;
+}
+p.lead {
+font-size: 18px;
+font-weight: 400;
+}
+.document-download .form-group{
+  margin-bottom: 10px;
+}
+.fa-tachometer{
+  color: #508DB4 ;
+}
+.fa-question-circle{
+  color: #E4345E ;
+}
+.fa-gift{
+  color: #EB7F1C ;
+}
+h3 a, h4 a, h5 a{
+  font-weight: 400;
+}
 
 /*----------------------------- MEDIA QUERIES ----------------------------*/
 
@@ -819,6 +844,46 @@ text-shadow: 1px 2px 3px #F6F8EF, 0 0 0 #666, 1px 2px 3px #F6F8EF;
     color: #F6F8EE;
   }
 
+}
+
+@media print 
+{
+  body{
+    padding-top: 0;
+    font-size: 11px;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    color: #333;
+  }
+  .navbar{
+    display: none;
+  }
+  h3{
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .table .table th{
+    font-weight: normal;
+    font-size: 10px;
+    color: #888;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  .table .table td{
+    padding: 5px;
+  }
+  .table thead > tr > th {
+    border-bottom: 1px solid #ccc !important;
+  }
+  .table .table > thead:first-child > tr:first-child > th {
+    border-top: 1px solid #ccc;
+  }
+  .table td {
+  border-bottom: 1px solid #ccc;
+  }
+  #footer{
+    display: none;
+  }
 }
 
 

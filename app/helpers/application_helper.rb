@@ -66,7 +66,7 @@ module ApplicationHelper
     offer_status = offer.status
     case offer_status
     when :draft
-      content_tag :span, t(offer_status), class: "badge important"
+      content_tag :span, t(offer_status), class: "badge blue"
     when :active
       # content_tag :span, t(offer_status), class: "badge"
       content_tag :span, "još #{distance_of_time_in_words_to_now offer.valid_until}" , class: "badge"
@@ -82,7 +82,7 @@ module ApplicationHelper
     # return "-" if offer_item.min_qty_per_order.blank? || offer_item.min_qty_per_order.to_d == 0.0
     case offer_item.packaging
     when "bulk"
-      "Min. narudžba: #{formatted_qty offer_item.min_qty_per_order} #{offer_item.unit}"
+      "Min. narudžba: #{formatted_qty offer_item.min_qty_per_order} #{offer_item.unit}" if offer_item.min_qty_per_order > 0
     else
       ""
     end if offer_item.min_qty_per_order
@@ -111,7 +111,7 @@ module ApplicationHelper
   def formatted_item_corrected_qty_unit(item)
     if item.corrected_qty.blank? 
       if item.offer_item.packaging == "vario"
-        return content_tag :i, nil, class: "fa fa-question-circle", style: "color: #cc2200"
+        return content_tag :i, nil, class: "fa fa-question-circle"
       else 
         return "-"
       end
@@ -148,7 +148,7 @@ module ApplicationHelper
 
   def vario_price_unknown(order_item)
     if order_item.corrected_qty.blank? && order_item.offer_item.packaging == "vario"
-      content_tag :i, nil, class: "fa fa-question-circle", style: "color: #cc2200"
+      content_tag :i, nil, class: "fa fa-question-circle"
     else 
       formatted_price(order_item.item_price)
     end
@@ -156,7 +156,7 @@ module ApplicationHelper
 
   def vario_qty_unknown(order_item)
     if order_item.corrected_qty.blank? && order_item.offer_item.packaging == "vario"
-      content_tag :i, nil, class: "fa fa-question-circle", style: "color: #cc2200"
+      content_tag :i, nil, class: "fa fa-question-circle"
     else 
       order_item.corrected_qty
     end

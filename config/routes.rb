@@ -20,6 +20,7 @@ Pozitiva::Application.routes.draw do
       get 'attach'
       get 'delete_attach'
       get 'print_orders'
+      get 'print_orders_per_item'
       get 'print_dispatch_notes'
       post 'message_to_orderers'
     end

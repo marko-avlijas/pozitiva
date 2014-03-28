@@ -17,12 +17,19 @@ class OffersController < ApplicationController
 
   def print_orders
     @offer = Offer.find(params[:id])
-    @orders = @offer.orders.order("orders.delivery_id, orders.user_id")
+    @orders = @offer.orders.joins(:user).order("orders.delivery_id, users.name")    
+  end
+
+  def print_orders_per_item
+    @offer = Offer.find(params[:id])
+    @offer_items = @offer.offer_items
+    @orders = @offer.orders.joins(:user).order("orders.delivery_id, users.name")
+    @offer_items_sum = OfferItemOrders.new(@offer, @orders).get_sum_hash
   end
 
   def print_dispatch_notes
     @offer = Offer.find(params[:id])
-    @orders = @offer.orders.order("orders.delivery_id, orders.user_id")
+    @orders = @offer.orders.joins(:user).order("orders.delivery_id, users.name")    
   end
 
   # GET /offers/1

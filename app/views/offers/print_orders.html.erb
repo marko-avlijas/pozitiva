@@ -1,10 +1,10 @@
-<h1>Otpremnica</h1>
-
-<%= @offer.company_name %>
-<%= @offer.company_address %>
-<%= @offer.company_oib %>
-<%= @offer.dispatch_place %>
-<%= @offer.dispatch_date %>
+<h3>Narudžbenice</h3>
+<p class="lead">Prema ponudi br. <%= @offer.id %> (<%= @offer.title %>)</p>
+<div class="document-header">
+<p><strong><%= @offer.company_name %></strong></p>
+<p>Adresa: <%= @offer.company_address %></p>
+<p>OIB: <%= @offer.company_oib %></p>
+</div>
 
 <table class="table">
   <thead>
@@ -12,9 +12,8 @@
       <th>ID</th>
       <th>Isporuka</th>
       <th>Naručitelj</th>
-      <th>Poruka naručitelja</th>
       <th>Narudžba</th>
-      <th>Ukupna cijena</th>
+      <th>Ukupno</th>
     </tr>
   </thead>
   <tbody>
@@ -24,7 +23,6 @@
       <td><%= order.id %></td>
       <td><strong><%= order.delivery.location.title %></strong> <br/><%= short_dt order.delivery.when %></td>
       <td><strong><%= order.user.buyer_tag %> <%= order.user.name %></strong><br/><%= order.user.try(:group) ? order.user.group.title : '-' %><br/>Tel: <%= order.user.phone %><br/><%= order.user.email %></td>
-      <td><%= truncate(order.note, length: 500) if order.note %></td>
       <td>
         <table class="table">
           <thead>
@@ -54,6 +52,7 @@
             <% end %>
           </tbody>
         </table>
+        <%= truncate(order.note, length: 500) if order.note %>
       </td>
       <td><strong><%= formatted_price total %></strong></td>
     </tr>

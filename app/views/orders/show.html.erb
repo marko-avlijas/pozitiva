@@ -4,8 +4,8 @@
   <div class="panel-heading offer-title">
 
         <h3>Narudžba br. <%= @order.id %> </h3>
-        <h4><%= link_to @offer.title, @offer, target: '_blank' %> - <%= link_to @offer.user.name, profile_path(@offer.user), target: '_blank' %></h4>
-        <p><%= @offer.note %></p>
+        <p class="lead" style="margin-bottom: 10px"><%= link_to @offer.title, @offer, target: '_blank' %> - <%= link_to @offer.user.name, profile_path(@offer.user), target: '_blank' %></p>
+        <%= @offer.note %>
 
   </div>
   
@@ -53,9 +53,8 @@
             </tfoot>
           </table>
           <p>
-            <span class="badge important" >Isporuka:
-              <%= "#{@order.delivery.location.title} - #{formatted_delivery_when @order.delivery}" %>
-            </span>
+            Isporuka:
+              <span style="position: relative; top: 2px"><%= badge_delivery @order %></span>
           </p>
           <% if @order.note? %>
           <p><strong>Poruka proizvođaču:</strong> <%= @order.note %></p>

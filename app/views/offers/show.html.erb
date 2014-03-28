@@ -22,6 +22,7 @@
         <div class="form-group">
           <%= f.label :note, "Izmijeni napomenu:" %>
           <%= f.text_area :note,  class: "form-control", placeholder: "Napomena" %>
+          <span class="help-block">Nakon objave ponude više je ne možete uređivati, no na ovaj način možete obavijestiti buduće naručitelje ukoliko imate dodatne upute.<br/>One koji su već naručili o promjenama možete obavijestiti koristeći mogućnost "Pošalji poruku svim naručiteljima" na stranici <%= link_to 'Kalkulacija', offer_orders_path(@offer), style: "text-decoration: underline" %></span>
         </div>
         <%= f.submit "Spremi", class: 'btn btn-primary btn-xs' %>
       </div>
@@ -37,6 +38,8 @@
         <%= link_to('Deaktiviraj ponudu', deactivate_offer_path(@offer)) if @offer.status == :active %> 
         &nbsp; &nbsp; 
         <%= link_to 'Kopiraj ponudu', duplicate_offer_path(@offer) %> 
+        &nbsp; &nbsp; 
+        <%= link_to 'Vidi kalkulaciju', offer_orders_path(@offer) %>
         &nbsp; &nbsp; 
         <%= link_to('Naruči', new_offer_order_path(@offer)) if @offer.status == :active %>
         &nbsp; &nbsp;

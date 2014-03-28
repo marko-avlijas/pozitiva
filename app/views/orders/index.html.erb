@@ -1,7 +1,7 @@
 <%= link_to "&laquo; Pregled ponude".html_safe, @offer, class: "nav-link"%>
 <div class="panel panel-offer">
   <div class="panel-heading offer-title">
-    <h2><%= @offer.title %> - kalkulacija</h2>
+    <h3><%= @offer.title %> - kalkulacija</h3>
     <p>
       <strong>Napomena:</strong>
       <%= @offer.note %>
@@ -57,9 +57,8 @@
               <th>ID</th>
               <th>Isporuka</th>
               <th>Naručitelj</th>
-              <th>Poruka naručitelja</th>
               <th>Narudžba</th>
-              <th>Ukupna cijena</th>
+              <th>Ukupno</th>
               <!-- <th>Status</th> -->
               <th></th>
               <!-- <th></th> -->
@@ -73,7 +72,7 @@
               <td><%= order.id %></td>
               <td><strong><%= order.delivery.location.title %></strong> <br/><%= short_dt order.delivery.when %></td>
               <td><strong><%= order.user.buyer_tag %> <%= order.user.name %></strong><br/><%= order.user.try(:group) ? order.user.group.title : '-' %><br/>Tel: <%= order.user.phone %><br/><%= order.user.email %></td>
-              <td><%= truncate(order.note, length: 500) if order.note %></td>
+              
               <td>
                 <table class="table">
                   <thead>
@@ -103,6 +102,7 @@
                     <% end %>
                   </tbody>
                 </table>
+                <%= truncate(order.note, length: 500) if order.note %>
               </td>
               <td><strong><%= formatted_price total %></strong></td>
               <!-- <td><%#= order.status %></td> -->
@@ -119,20 +119,20 @@
       </div>
 
       <div id="calculation-tab-3" class="tab-pane">
-        <h3>Narudžbe prema proizvodu</h3><br/>
+        <h3>Narudžbe prema proizvodu &nbsp; <%= link_to 'verzija za ispis', print_orders_per_item_offer_path(@offer), style: "font-size: 16px; font-weight: 400; text-decoration: underline" %></h3><br/>
 
         <table class="table">
           <thead>
             <tr>
               <th>ID</th>
-              <th></th>
               <th>Proizvod</th>
               <th>Pakiranje</th>
               <th>Jed. cijena</th>
-              <th>Naručena količina</th>
+              <th>Ukupno</th>
+              <th>Naručeno</th>
               <th>Količine po narudžbama</th>
-              <th>Korigirana ukupna cijena</th>
-              <th>Isporučena količina</th>
+              
+              <th>Isporučeno</th>
             </tr>
           </thead>
           <tbody>
@@ -141,17 +141,17 @@
             <% if @offer_items_sum[id] %>
             <tr>
               <td><%= id %></td>
-              <td><%= offer_item_packaging_icon @offer_items_sum[id][:icon] %></td>
-              <td><strong><%= @offer_items_sum[id][:title] %></strong></td>
+              <td><%= offer_item_packaging_icon @offer_items_sum[id][:icon] %> &nbsp;<strong><%= @offer_items_sum[id][:title] %></strong></td>
               <td><%= @offer_items_sum[id][:unit] %></td>
               <td><%= formatted_price @offer_items_sum[id][:price] %></td>
-              <td><strong><%= formatted_qty @offer_items_sum[id][:qty_sum] %></strong></td>
+              <td><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></td>
+              <td><strong><%= formatted_qty @offer_items_sum[id][:qty_sum] %> <%= @offer_items_sum[id][:unit] %></strong></td>
               <td>
                 <table class="table">
                   <thead>
                     <th>Naručitelj</th>
-                    <th>Naručena kol.</th>
-                    <th>Korigirana kol.</th>
+                    <th>Naručeno</th>
+                    <th>Korigirano</th>
                   </thead>
                   <tbody>
                     <% offer_item.order_items.each do |order_item| %> 
@@ -164,8 +164,8 @@
                   </tbody>
                 </table>
               </td>
-              <td><strong><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></strong></td>
-              <td><strong><%= @offer_items_sum[id][:numeric_qty_sum] %></strong></td>
+              
+              <td><strong><%= @offer_items_sum[id][:numeric_qty_sum] %> <%= @offer_items_sum[id][:unit] %></strong></td>
             </tr>
             <% end %>
             <% end %>
@@ -259,47 +259,73 @@
   </div>
   <div class="panel-footer">
     <div class="footer-links">
-      <%= link_to "download csv", offer_orders_path(@offer, format: :csv) %>
-      <%= link_to "preuzmi dokumente", nil %>
+      <%= link_to "Preuzimanje tablice (.csv)", offer_orders_path(@offer, format: :csv), class: "btn btn-primary" %>
+      <button class="btn btn-primary" data-toggle="modal" data-target="#document-download">
+        Kreiranje dokumenata
+      </button>
     </div>
   </div>
 </div>
 
-<%= form_for @offer, html: { role: "form"} do |f| %>
-<% if @offer.errors.any? %>
-<div id="error_explanation">
-  <h2><%= pluralize(@offer.errors.count, "error") %> prohibited this post from being saved:</h2>
-  <ul>
-    <% @offer.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
 
-<div>
-  <div class="form-group">
-    <%= f.label :company_name, "Naziv OPG-a ili Tvrtke", class: "col-lg-4 control-label" %>
-    <div class="col-lg-8"><%= f.text_field :company_name, class: "form-control" %></div>
-  </div>
-  <div class="form-group">
-    <%= f.label :company_address, "Adresa sjedišta", class: "col-lg-4 control-label" %>
-    <div class="col-lg-8"><%= f.text_field :company_address, class: "form-control" %></div>
-  </div>
-  <div class="form-group">
-    <%= f.label :company_oib, "OIB", class: "col-lg-4 control-label" %>
-    <div class="col-lg-8"><%= f.text_field :company_oib, class: "form-control" %></div>
-  </div>
-  <div class="form-group">
-    <%= f.label :dispatch_place, "Mjesto", class: "col-lg-4 control-label" %>
-    <div class="col-lg-8"><%= f.text_field :dispatch_place, class: "form-control" %></div>
-  </div>
-  <div class="form-group">
-    <%= f.label :dispatch_date, "Datum", class: "col-lg-4 control-label" %>
-    <div class="col-lg-8"><%= f.text_field :dispatch_date, class: "form-control" %></div>
-  </div>
-</div>
 
-<%= f.submit "Preuzmi Otpremnice", name: 'print_orders', class: "btn btn-primary" %>
-<%= f.submit "Preuzmi Narudžbenice",   name: 'print_dispatch_notes', class: "btn btn-primary" %>
-<% end %>
+
+<div id="document-download" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Unesite podatke potrebne za željeni dokument</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for @offer, html: { role: "form", class: "form-horizontal"} do |f| %>
+        <% if @offer.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@offer.errors.count, "error") %> prohibited this post from being saved:</h2>
+          <ul>
+            <% @offer.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+        <% end %>
+
+        <div class="form-group">
+          <div class="col-lg-12"><h5>Podaci potrebni za Narudžbenice i Otpremnice:</h5></div>
+        </div>
+        <div class="form-group">
+          <%= f.label :company_name, "Naziv OPG-a ili Tvrtke", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><%= f.text_field :company_name, class: "form-control" %></div>
+        </div>
+        <div class="form-group">
+          <%= f.label :company_address, "Adresa sjedišta", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><%= f.text_field :company_address, class: "form-control" %></div>
+        </div>
+        <div class="form-group">
+          <%= f.label :company_oib, "OIB", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><%= f.text_field :company_oib, class: "form-control" %></div>
+        </div>
+        <div class="form-group">
+          <div class="col-lg-12"><h5>Podaci potrebni za Otpremnice:</h5></div>
+        </div>
+        <div class="form-group">
+          <%= f.label :dispatch_place, "Mjesto", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><%= f.text_field :dispatch_place, class: "form-control" %></div>
+        </div>
+        <div class="form-group">
+          <%= f.label :dispatch_date, "Datum", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><%= f.text_field :dispatch_date, class: "form-control" %></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+        <%= f.submit "Kreiraj Narudžbenice", name: 'print_orders', class: "btn btn-primary"  %>
+        <%= f.submit "Kreiraj Otpremnice",   name: 'print_dispatch_notes', class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+

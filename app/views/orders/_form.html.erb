@@ -26,11 +26,10 @@
         <div class="form-group order-row"> 
           <div class="row">
             <div class="col-lg-4 col-md-3 col-sm-3">
-              <strong><%= offer_item.title %></strong>
+              <strong><%= offer_item.title %>&nbsp; <%= offer_item_packaging_icon(offer_item.packaging) %></strong>
               <span style="display:block; margin-bottom: 5px; font-size: 13px"><%= offer_item.note %></span>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3">
-              <%= offer_item_packaging_icon(offer_item.packaging) %> &nbsp;
               <%= "1" unless offer_item.packaging %><%= offer_item.unit %> = <%= formatted_price offer_item.decimal_price %>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3">

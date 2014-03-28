@@ -17,7 +17,7 @@
     <div class="row">
       <div class="col-lg-5 col-sm-6">
         <div class="form-group">
-          <%= f.label :title, "Naziv ponude:" %>
+          <span style="color: #cc2200">* </span><%= f.label :title, "Naziv ponude:" %>
           <%= f.text_field :title, class: "form-control", placeholder: "Naziv ponude" %>
         </div>
         <div class="form-group">
@@ -46,7 +46,7 @@
           <%= offer_items_form.hidden_field :id %>
           <%= offer_items_form.hidden_field :position %>
           <div class="form-group col-xs-11 col-md-4 <%= "alooo" if offer_items_form.object.status == "alert"  %>">
-            <%= offer_items_form.label :title, "Naziv proizvoda:" %>
+            <span style="color: #cc2200">*</span> <%= offer_items_form.label :title, "Naziv proizvoda:" %>
             <%= offer_items_form.text_field :title, class: "form-control", style: "margin-bottom: 10px; font-weight: bold; color: #cc2200" %>
           </div>
           
@@ -55,8 +55,9 @@
             <%= offer_items_form.text_area :note, class: "form-control item-description" %>
           </div>
           <div class="form-group col-xs-11 col-md-4">
-            <%= offer_items_form.label :packaging, "Način prodaje (obračuna cijene):" %>
+            <span style="color: #cc2200">*</span> <%= offer_items_form.label :packaging, "Način prodaje (obračuna cijene):" %>
             <%= offer_items_form.select :packaging, options_for_select(OfferItem::PACKAGING, offer_items_form.object.packaging),{ include_blank: true },{ class: "form-control packaging", style: "width: 100%" } %>
+            <span class="help-block">vidi legendu ispod</span>
           </div>
         </div>
         <div class="row form-rinfuza packaging-details">
@@ -70,7 +71,7 @@
             <div class="input-group">
               <%= offer_items_form.text_field :decimal_price_bulk, class: "form-control", style: " font-weight: bold; color: #333", value: sprintf("%.2f", offer_items_form.object.decimal_price_bulk).gsub('.', ',') %><span class="input-group-addon price-unit">kn/mj. jedinica</span>
             </div>
-            <span class="help-block">upišite cijenu za mjernu jedinicu koju ste naveli</span> 
+            <span class="help-block">cijena za mjernu jedinicu koju ste naveli (2 decimale, točka ili zarez)</span> 
           </div>
           <div class="form-group col-xs-11 col-md-4">
             <%= offer_items_form.label :min_qty_per_order, "Minimalna količina:" %>
@@ -78,7 +79,7 @@
               <%= offer_items_form.text_field :min_qty_per_order, value: sprintf("%.2f", offer_items_form.object.min_qty_per_order.to_s.to_d).gsub('.', ','), class: "form-control" %>
               <span class="input-group-addon min-qty-unit">mj. jedinica</span> 
             </div>
-            <span class="help-block">upišite min. količinu po narudžbi, u mj. jedinici koju ste naveli (decimalna točka umjesto zareza)</span>
+            <span class="help-block">minimalna količina po narudžbi, u mj. jedinici koju ste naveli (2 decimale, točka ili zarez)</span>
           </div>      
         </div>
         <div class="row form-paket packaging-details">
@@ -92,7 +93,7 @@
             <div class="input-group">
               <%= offer_items_form.text_field :decimal_price_package, class: "form-control", style: " font-weight: bold; color: #333", value: sprintf("%.2f", offer_items_form.object.decimal_price_package).gsub('.', ',') %><span class="input-group-addon">kn/paket</span>
             </div>
-            <span class="help-block">upišite cijenu za mjernu jedinicu koju ste naveli</span> 
+            <span class="help-block">cijena za pakiranje koje ste naveli (2 decimale, točka ili zarez)</span> 
           </div>      
         </div>
         <div class="row form-vario packaging-details">
@@ -106,10 +107,10 @@
             <div class="input-group">
               <%= offer_items_form.text_field :decimal_price_vario, class: "form-control", style: " font-weight: bold; color: #333", value: sprintf("%.2f", offer_items_form.object.decimal_price_vario).gsub('.', ',') %><span class="input-group-addon price-unit">kn/kg</span>
             </div>
-            <span class="help-block">upišite cijenu za mjernu jedinicu koju ste naveli</span> 
+            <span class="help-block">cijena za mjernu jedinicu koju ste naveli (2 decimale, točka ili zarez)</span> 
           </div>
           <div class="form-group col-xs-11 col-md-4">
-            <span class="help-block">U polje za opis upišite koje su dostupne veličine/količine komada, koja je minimalna narudžba i sl.</span>
+            <span class="help-block"><br/>Iskoristite polje "Opis" (gore lijevo) i navedite više detalja o dostupnim veličinama/količinama komada, minimalnoj narudžbi i sl.</span>
           </div>     
         </div>
         <%= link_to '', '', class: 'remove_nested_form glyphicon glyphicon-trash', "data-fields" => "offer_items" %>   

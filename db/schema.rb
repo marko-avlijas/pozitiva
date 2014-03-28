@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20140328101057) do
     t.string   "company_address"
     t.string   "company_oib"
     t.string   "dispatch_place"
-    t.datetime "dispatch_date"
+    t.string   "dispatch_date"
   end
 
   add_index "offers", ["user_id"], name: "index_offers_on_user_id", using: :btree

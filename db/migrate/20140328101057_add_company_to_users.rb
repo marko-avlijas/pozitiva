@@ -8,6 +8,6 @@ class AddCompanyToUsers < ActiveRecord::Migration
     add_column :offers, :company_address, :string
     add_column :offers, :company_oib, :string
     add_column :offers, :dispatch_place, :string
-    add_column :offers, :dispatch_date, :datetime
+    add_column :offers, :dispatch_date, :string
   end
 end
