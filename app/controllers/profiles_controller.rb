@@ -36,7 +36,7 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1
   def update
     respond_to do |format|
-      if @user.update(profile_params.slice(:about_text, :about_url, :phone)) && @user.handle_about_attach(profile_params[:about_attach])
+      if @user.update(profile_params.except(:about_attach)) && @user.handle_about_attach(profile_params[:about_attach])
         format.html { redirect_to my_profile_path, notice: 'Profile was successfully updated.' }
         # format.json { head :no_content }
       else
@@ -75,7 +75,7 @@ class ProfilesController < ApplicationController
   end
   
   def profile_params
-    params.require(:user).permit(:about_text, :about_url, :phone, :about_attach) # can't change email, name
+    params.require(:user).permit(:about_text, :about_url, :phone, :about_attach, :company_name, :company_address, :company_oib) # can't change email, name
   end  
 
 end

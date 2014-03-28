@@ -19,6 +19,8 @@ Pozitiva::Application.routes.draw do
       get 'deactivate'
       get 'attach'
       get 'delete_attach'
+      get 'print_orders'
+      get 'print_dispatch_notes'
       post 'message_to_orderers'
     end
     resources :orders do

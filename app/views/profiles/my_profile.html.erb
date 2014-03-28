@@ -52,6 +52,21 @@
           </div>
         </div>		
         <br/>
+
+        <div class="form-group">
+          <%= f.label :company_name, "Naziv OPG-a ili Tvrtke", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><%= f.text_field :company_name, class: "form-control" %></div>
+        </div>
+        <div class="form-group">
+          <%= f.label :company_address, "Adresa sjedišta", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><%= f.text_field :company_address, class: "form-control" %></div>
+        </div>
+        <div class="form-group">
+          <%= f.label :company_oib, "OIB", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><%= f.text_field :company_oib, class: "form-control" %></div>
+        </div>
+        
+        
         <div class="form-group">
           <div class="col-lg-offset-4 col-lg-8">
             <%= f.submit "Spremi promjene", class: "btn btn-primary" %>

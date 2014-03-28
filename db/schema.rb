@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140111160118) do
+ActiveRecord::Schema.define(version: 20140328101057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,11 @@ ActiveRecord::Schema.define(version: 20140111160118) do
     t.binary   "attach"
     t.string   "attach_mime_type"
     t.integer  "attach_file_size"
+    t.string   "company_name"
+    t.string   "company_address"
+    t.string   "company_oib"
+    t.string   "dispatch_place"
+    t.datetime "dispatch_date"
   end
 
   add_index "offers", ["user_id"], name: "index_offers_on_user_id", using: :btree
@@ -164,6 +169,9 @@ ActiveRecord::Schema.define(version: 20140111160118) do
     t.binary   "about_attach"
     t.string   "about_attach_mime_type"
     t.integer  "about_attach_file_size"
+    t.string   "company_name"
+    t.string   "company_address"
+    t.string   "company_oib"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

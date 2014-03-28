@@ -7,21 +7,21 @@
       <%= @offer.note %>
     </p>
     <p>
-        <strong>Rok za narudžbu:</strong>
-        <% if @offer.valid_until %>
-        <%= formatted_valid_until @offer %> 
-        <% if @offer.valid_until && @offer.valid_until > Time.now %>
-        <span class="badge">još <%= distance_of_time_in_words_to_now @offer.valid_until if @offer.valid_until > Time.now %> </span>
-        <% end %>
-        <% else %>
-        nije određeno
-        <% end %>
-      </p>
+      <strong>Rok za narudžbu:</strong>
+      <% if @offer.valid_until %>
+      <%= formatted_valid_until @offer %> 
+      <% if @offer.valid_until && @offer.valid_until > Time.now %>
+      <span class="badge">još <%= distance_of_time_in_words_to_now @offer.valid_until if @offer.valid_until > Time.now %> </span>
+      <% end %>
+      <% else %>
+      nije određeno
+      <% end %>
+    </p>
 
-      <p>
-        <strong>Status:</strong>
-        <span class="badge"><%= @offer.status %></span>
-      </p>
+    <p>
+      <strong>Status:</strong>
+      <span class="badge"><%= @offer.status %></span>
+    </p>
 
     <button class="btn btn-primary btn-absolute topright" data-toggle="modal" data-target="#message_to_orederers">
       <i class="fa fa-envelope"></i> Pošalji e-mail naručiteljima
@@ -32,7 +32,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Poruka svim natručiteljima</h4>
+            <h4 class="modal-title">Poruka svim naručiteljima</h4>
           </div>
           <%= render 'shared/contact_form' %>
         </div><!-- /.modal-content -->
@@ -90,175 +90,216 @@
                         <strong><%= order_item.offer_item.title %></strong>
                       </td>
                       <td>
-                        <strong><%= formatted_item_numeric_qty_unit order_item %><strong>
-                        </td>
-                        <td>
-                          <%= formatted_price order_item.offer_item.decimal_price %>
-                        </td>
-                        <td>
-                          <%= vario_price_unknown(order_item) %>
-                        </td>
-                      </tr>
-                      <% total += order_item.item_price %>
-                      <% end %>
-                    </tbody>
-                  </table>
-                </td>
-                <td><strong><%= formatted_price total %></strong></td>
-                <!-- <td><%#= order.status %></td> -->
-                <td><%= link_to 'Show', offer_order_path(@offer, order) %></td>
-                <!-- <td><%#= link_to 'Edit', edit_offer_order_path(@offer, order) %></td> -->
-                <!-- <td><%#= link_to 'Destroy', offer_order_path(@offer, order), method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
-              </tr>
-              <% end %>
-              <% end %>
-            </tbody>
-          </table>
-          <br/>
-        </div>
+                        <strong><%= formatted_item_numeric_qty_unit order_item %></strong>
+                      </td>
+                      <td>
+                        <%= formatted_price order_item.offer_item.decimal_price %>
+                      </td>
+                      <td>
+                        <%= vario_price_unknown(order_item) %>
+                      </td>
+                    </tr>
+                    <% total += order_item.item_price %>
+                    <% end %>
+                  </tbody>
+                </table>
+              </td>
+              <td><strong><%= formatted_price total %></strong></td>
+              <!-- <td><%#= order.status %></td> -->
+              <td><%= link_to 'Show', offer_order_path(@offer, order) %></td>
+              <!-- <td><%#= link_to 'Edit', edit_offer_order_path(@offer, order) %></td> -->
+              <!-- <td><%#= link_to 'Destroy', offer_order_path(@offer, order), method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+            </tr>
+            <% end %>
+            <% end %>
+          </tbody>
+            
+        </table>
+        <br/>
+      </div>
 
-        <div id="calculation-tab-3" class="tab-pane">
-          <h3>Narudžbe prema proizvodu</h3><br/>
+      <div id="calculation-tab-3" class="tab-pane">
+        <h3>Narudžbe prema proizvodu</h3><br/>
 
-          <table class="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th></th>
-                <th>Proizvod</th>
-                <th>Pakiranje</th>
-                <th>Jed. cijena</th>
-                <th>Naručena količina</th>
-                <th>Količine po narudžbama</th>
-                <th>Korigirana ukupna cijena</th>
-                <th>Isporučena količina</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @offer_items.each do |offer_item| %>
-              <% id = offer_item.id %>
-              <% if @offer_items_sum[id] %>
-              <tr>
-                <td><%= id %></td>
-                <td><%= offer_item_packaging_icon @offer_items_sum[id][:icon] %></td>
-                <td><strong><%= @offer_items_sum[id][:title] %></strong></td>
-                <td><%= @offer_items_sum[id][:unit] %></td>
-                <td><%= formatted_price @offer_items_sum[id][:price] %></td>
-                <td><strong><%= formatted_qty @offer_items_sum[id][:qty_sum] %></strong></td>
-                <td>
-                  <table class="table">
-                    <thead>
-                      <th>Naručitelj</th>
-                      <th>Naručena kol.</th>
-                      <th>Korigirana kol.</th>
-                    </thead>
-                    <tbody>
-                      <% offer_item.order_items.each do |order_item| %> 
-                      <tr>
-                        <td><%= order_item.order.user.buyer_tag %> <%= order_item.order.user.name %></td>
-                        <td><%= formatted_item_qty_unit order_item %></td>
-                        <td><%= vario_qty_unknown(order_item) %></td>
-                      </tr>
-                      <% end %>
-                    </tbody>
-                  </table>
-                </td>
-                <td><strong><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></strong></td>
-                <td><strong><%= @offer_items_sum[id][:numeric_qty_sum] %></strong></td>
-              </tr>
-              <% end %>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th></th>
+              <th>Proizvod</th>
+              <th>Pakiranje</th>
+              <th>Jed. cijena</th>
+              <th>Naručena količina</th>
+              <th>Količine po narudžbama</th>
+              <th>Korigirana ukupna cijena</th>
+              <th>Isporučena količina</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @offer_items.each do |offer_item| %>
+            <% id = offer_item.id %>
+            <% if @offer_items_sum[id] %>
+            <tr>
+              <td><%= id %></td>
+              <td><%= offer_item_packaging_icon @offer_items_sum[id][:icon] %></td>
+              <td><strong><%= @offer_items_sum[id][:title] %></strong></td>
+              <td><%= @offer_items_sum[id][:unit] %></td>
+              <td><%= formatted_price @offer_items_sum[id][:price] %></td>
+              <td><strong><%= formatted_qty @offer_items_sum[id][:qty_sum] %></strong></td>
+              <td>
+                <table class="table">
+                  <thead>
+                    <th>Naručitelj</th>
+                    <th>Naručena kol.</th>
+                    <th>Korigirana kol.</th>
+                  </thead>
+                  <tbody>
+                    <% offer_item.order_items.each do |order_item| %> 
+                    <tr>
+                      <td><%= order_item.order.user.buyer_tag %> <%= order_item.order.user.name %></td>
+                      <td><%= formatted_item_qty_unit order_item %></td>
+                      <td><%= vario_qty_unknown(order_item) %></td>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </td>
+              <td><strong><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></strong></td>
+              <td><strong><%= @offer_items_sum[id][:numeric_qty_sum] %></strong></td>
+            </tr>
+            <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
         
-        <div id="calculation-tab-2" class="tab-pane">
-          <h3>Korekcija količina</h3><br/>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th></th>
-                <th>Proizvod</th>
-                <th>Pakiranje</th>
-                <th>Naručena količina</th>
-                <th>Količine po narudžbama</th>
-                <th>Dostupna količina</th>
-                <th>Korigirana kol.</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @offer_items.each do |offer_item| %>
-              <% id = offer_item.id %>
-              <% if @offer_items_sum[id] %>
-              <tr>
-                <td><%= id %></td>
-                <td><%= offer_item_packaging_icon @offer_items_sum[id][:icon] %></td>
-                <td><strong><%= @offer_items_sum[id][:title] %></strong></td>
-                <td><%= @offer_items_sum[id][:unit] %></td>
-                <td><strong>
-                  <%= formatted_qty(@offer_items_sum[id][:qty_sum]) unless offer_item.packaging == 'vario' %>
-                </strong></td>
-                <td>
-                  <table class="table">
-                    <thead>
-                      <th>Naručitelj</th>
-                      <th>Naručena kol.</th>
-                      <th>Korigirana kol.</th>
-                    </thead>
-                    <tbody>
-                      <% offer_item.order_items.each do |order_item| %>
-                      <% @order = order_item.order %>
-                      <%= form_for [@offer, @order], html: {role: "form"}  do |f| %>
-                      <%= f.fields_for :order_items, @order.find_or_build_order_item_for(offer_item) do |order_item_form| %>
-                      <%#= order_item_form.hidden_field :offer_item_id %>
-                      <% order_item = order_item_form.object %>
-                      <tr>
-                        <td><%= @order.user.buyer_tag %> <%= @order.user.name %></td>
-                        <td><%= formatted_item_qty_unit order_item %></td>
-                        <td>
-                          <% if offer_item.packaging == "vario" %>
-                          <% if @offer.expired? %>
-                          <%= order_item_form.text_field :corrected_qty, class: "xs-form-input" %>
-                          <%= f.submit "Spremi", class: "btn btn-xs btn-primary" %>
-                          <% else %>
-                          ponuda nije istekla
-                          <% end %>
-                          <% elsif order_item.corrected_qty.present? %>
-                            <%= formatted_qty order_item.corrected_qty %>
-                          <% end %>
-                        </td>
-                      </tr>
-                      <% end # f.fields_for :order_items %>
-                      <% end # form_for [@offer, @order]%>
-                      <% end # offer_item.order_items.each%>
-                    </tbody>
-                  </table>
-                </td>
-                <td>
-                  <% if offer_item.packaging == "bulk" %>
-                    <%= form_for @offer, html: {role: "form"} do |f| %>
-                      <%= f.fields_for :offer_items do |f_offer_item| %>
-                        <% if offer_item.id == f_offer_item.object.id %>
-                        <%= f_offer_item.text_field :total_available_qty, value: f_offer_item.object.total_available_qty.to_s.gsub('.', ','), class: "xs-form-input" %>
-                        <%= f.submit "Solidariziraj", class: "btn btn-xs btn-primary" %>
+      <div id="calculation-tab-2" class="tab-pane">
+        <h3>Korekcija količina</h3><br/>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th></th>
+              <th>Proizvod</th>
+              <th>Pakiranje</th>
+              <th>Naručena količina</th>
+              <th>Količine po narudžbama</th>
+              <th>Dostupna količina</th>
+              <th>Korigirana kol.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @offer_items.each do |offer_item| %>
+            <% id = offer_item.id %>
+            <% if @offer_items_sum[id] %>
+            <tr>
+              <td><%= id %></td>
+              <td><%= offer_item_packaging_icon @offer_items_sum[id][:icon] %></td>
+              <td><strong><%= @offer_items_sum[id][:title] %></strong></td>
+              <td><%= @offer_items_sum[id][:unit] %></td>
+              <td><strong>
+                <%= formatted_qty(@offer_items_sum[id][:qty_sum]) unless offer_item.packaging == 'vario' %>
+              </strong></td>
+              <td>
+                <table class="table">
+                  <thead>
+                    <th>Naručitelj</th>
+                    <th>Naručena kol.</th>
+                    <th>Korigirana kol.</th>
+                  </thead>
+                  <tbody>
+                    <% offer_item.order_items.each do |order_item| %>
+                    <% @order = order_item.order %>
+                    <%= form_for [@offer, @order], html: {role: "form"}  do |f| %>
+                    <%= f.fields_for :order_items, @order.find_or_build_order_item_for(offer_item) do |order_item_form| %>
+                    <%#= order_item_form.hidden_field :offer_item_id %>
+                    <% order_item = order_item_form.object %>
+                    <tr>
+                      <td><%= @order.user.buyer_tag %> <%= @order.user.name %></td>
+                      <td><%= formatted_item_qty_unit order_item %></td>
+                      <td>
+                        <% if offer_item.packaging == "vario" %>
+                        <% if @offer.expired? %>
+                        <%= order_item_form.text_field :corrected_qty, class: "xs-form-input" %>
+                        <%= f.submit "Spremi", class: "btn btn-xs btn-primary" %>
+                        <% else %>
+                        ponuda nije istekla
                         <% end %>
-                      <% end # fields_for :offer_items %>
-                    <% end # form_for %>
-                  <% end # unless %>
-                </td>
-                <td><%= @offer_items_sum[id][:numeric_qty_sum].to_s.gsub('.', ',') %></td>
-              </tr>
-              <% end # if @offer_items_sum[id] %>
-              <% end # @offer_items.each %>
-            </tbody>
-          </table>
-        </div>
+                        <% elsif order_item.corrected_qty.present? %>
+                        <%= formatted_qty order_item.corrected_qty %>
+                        <% end %>
+                      </td>
+                    </tr>
+                    <% end # f.fields_for :order_items %>
+                    <% end # form_for [@offer, @order]%>
+                    <% end # offer_item.order_items.each%>
+                  </tbody>
+                </table>
+              </td>
+              <td>
+                <% if offer_item.packaging == "bulk" %>
+                <%= form_for @offer, html: {role: "form"} do |f| %>
+                <%= f.fields_for :offer_items do |f_offer_item| %>
+                <% if offer_item.id == f_offer_item.object.id %>
+                <%= f_offer_item.text_field :total_available_qty, value: f_offer_item.object.total_available_qty.to_s.gsub('.', ','), class: "xs-form-input" %>
+                <%= f.submit "Solidariziraj", class: "btn btn-xs btn-primary" %>
+                <% end %>
+                <% end # fields_for :offer_items %>
+                <% end # form_for %>
+                <% end # unless %>
+              </td>
+              <td><%= @offer_items_sum[id][:numeric_qty_sum].to_s.gsub('.', ',') %></td>
+            </tr>
+            <% end # if @offer_items_sum[id] %>
+            <% end # @offer_items.each %>
+          </tbody>
+        </table>
       </div>
     </div>
-    <div class="panel-footer">
-      <div class="footer-links">
+  </div>
+  <div class="panel-footer">
+    <div class="footer-links">
       <%= link_to "download csv", offer_orders_path(@offer, format: :csv) %>
-    </div>
+      <%= link_to "preuzmi dokumente", nil %>
     </div>
   </div>
+</div>
+
+<%= form_for @offer, html: { role: "form"} do |f| %>
+<% if @offer.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@offer.errors.count, "error") %> prohibited this post from being saved:</h2>
+  <ul>
+    <% @offer.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<div>
+  <div class="form-group">
+    <%= f.label :company_name, "Naziv OPG-a ili Tvrtke", class: "col-lg-4 control-label" %>
+    <div class="col-lg-8"><%= f.text_field :company_name, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :company_address, "Adresa sjedišta", class: "col-lg-4 control-label" %>
+    <div class="col-lg-8"><%= f.text_field :company_address, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :company_oib, "OIB", class: "col-lg-4 control-label" %>
+    <div class="col-lg-8"><%= f.text_field :company_oib, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :dispatch_place, "Mjesto", class: "col-lg-4 control-label" %>
+    <div class="col-lg-8"><%= f.text_field :dispatch_place, class: "form-control" %></div>
+  </div>
+  <div class="form-group">
+    <%= f.label :dispatch_date, "Datum", class: "col-lg-4 control-label" %>
+    <div class="col-lg-8"><%= f.text_field :dispatch_date, class: "form-control" %></div>
+  </div>
+</div>
+
+<%= f.submit "Preuzmi Otpremnice", name: 'print_orders', class: "btn btn-primary" %>
+<%= f.submit "Preuzmi Narudžbenice",   name: 'print_dispatch_notes', class: "btn btn-primary" %>
+<% end %>
