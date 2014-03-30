@@ -1,13 +1,11 @@
-<div class="row">
-  <div class="col-lg-12">
+
     <%= content_tag :h4, "Trenutno nema niti jedne ponude" if @offers.blank? %>
-  </div>
-</div>
+
 
 <div class="row">
   <% @offers.each_with_index do |offer, i| %>
   <div class="col-md-4">
-    <div class="panel panel-offer">
+    <div class="panel">
       <div class="panel-heading">
         <h5>
           <%= link_to profile_path(offer.user) do %>
@@ -16,19 +14,20 @@
           <% end %>
         </h5>
       </div>
-      <div class="panel-heading offer-title">
+      <div class="panel-heading offer-title" style="border-top: 1px solid #E0DED5;">
         <h4><%= link_to offer.title, offer_path(offer) %></h4>
-        <p><%= truncate offer.offer_items.map{|item| item.title.downcase }.join(', ').to_s, length: 60 %></p>
+        <p style="font-weight: 600"><%= truncate offer.offer_items.map{|item| item.title.downcase }.join(', ').to_s, length: 60 %></p>
       </div>
       <div class="panel-body">
-        <p style="padding-bottom: 20px; border-bottom: 1px solid #ddd">
-          Rok za narudžbu:<br/>
+        <div class="offer-details">
+        <label>Rok za narudžbu:</label>
           <strong style="line-height: 26px"><span class="glyphicon glyphicon-record"></span> <%= "#{formatted_valid_until offer}" if offer.valid_until %></strong>
           <% if offer.valid_until && offer.valid_until > Time.now %>
-          <span class="badge"><%= "još #{distance_of_time_in_words_to_now offer.valid_until}" if offer.valid_until && offer.valid_until > Time.now %></span>
+          <%= badge_status(offer) %>
           <% end %>
-        </p>
-        <p style="margin-bottom: 5px">Isporuka:</p>
+        </div>
+        <div class="offer-details">
+        <label>Isporuka:</label>
         <ul style="padding-left: 0">
           <% offer.deliveries.each do |delivery| %>
           <li style="line-height: 26px">
@@ -44,15 +43,16 @@
           <% end %>
         </ul>
       </div>
-      <div class="panel-footer offer-footer">
-        <%= link_to "Vidi više".html_safe, offer_path(offer) %> | 
+      </div>
+      <div class="panel-footer" style="padding: 20px 10px; background-color: #F6F5F1">
+        <%= link_to "Vidi više".html_safe, offer_path(offer) %>&nbsp; &nbsp;
         <%= link_to "Naruči", new_offer_order_path(offer) %>
         <% if @current_user_order_in_offer_ids.include?(offer.id) %>
         <i class="fa fa-check-circle ordered"></i>
         <%#= link_to "Vidi moje narudžbe", my_orders_path, class: "btn btn-primary btn-xs", style: "float: right" %>
         <% end %>
+
       </div>
-      
     </div>
   </div>
     <% if (i+1)%3 == 0 %>

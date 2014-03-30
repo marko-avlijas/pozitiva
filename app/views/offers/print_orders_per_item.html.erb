@@ -1,0 +1,54 @@
+<h3>Narudžbe prema proizvodima</h3>
+<p class="lead">Prema ponudi br. <%= @offer.id %> (<%= @offer.title %>)</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Proizvod</th>
+              <th>Pakiranje</th>
+              <th>Jed. cijena</th>
+              <th>Ukupno</th>
+              <th>Naručeno</th>
+              <th>Količine po narudžbama</th>
+              
+              <th>Isporučeno</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @offer_items.each do |offer_item| %>
+            <% id = offer_item.id %>
+            <% if @offer_items_sum[id] %>
+            <tr>
+              <td><%= id %></td>
+              <td><%= offer_item_packaging_icon @offer_items_sum[id][:icon] %> &nbsp;<strong><%= @offer_items_sum[id][:title] %></strong></td>
+              <td><%= @offer_items_sum[id][:unit] %></td>
+              <td><%= formatted_price @offer_items_sum[id][:price] %></td>
+              <td><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></td>
+              <td><strong><%= formatted_qty @offer_items_sum[id][:qty_sum] %> <%= @offer_items_sum[id][:unit] %></strong></td>
+              <td>
+                <table class="table">
+                  <thead>
+                    <th>Naručitelj</th>
+                    <th>Naručeno</th>
+                    <th>Korigirano</th>
+                  </thead>
+                  <tbody>
+                    <% offer_item.order_items.each do |order_item| %> 
+                    <tr>
+                      <td><%= order_item.order.user.buyer_tag %> <%= order_item.order.user.name %></td>
+                      <td><%= formatted_item_qty_unit order_item %></td>
+                      <td><%= vario_qty_unknown(order_item) %></td>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </td>
+              
+              <td><strong><%= @offer_items_sum[id][:numeric_qty_sum] %> <%= @offer_items_sum[id][:unit] %></strong></td>
+            </tr>
+            <% end %>
+            <% end %>
+          </tbody>
+        </table>
+
+        

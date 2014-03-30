@@ -1,19 +1,10 @@
 <div class="row">
   <div class="col-lg-12">
+    <%= link_to "&laquo; Aktualne ponude".html_safe, offers_path, class: "nav-link"%>
     <div class="panel panel-offer">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-lg-12">
-              <%= link_to "&laquo; Aktualne ponude".html_safe, offers_path, class: "nav-link"%>
-            </div>
-          </div>
-        </div>
         <div class="panel-heading offer-title">
-          <div class="row">
-            <div class="col-lg-12">
-              <h3><%= my_gravatar_image_tag %> Moje ponude</h3>
-            </div>
-          </div>
+              <h3><span class="hidden-xs"><%= my_gravatar_image_tag %></span> Moje ponude</h3>
+              <%= link_to 'Nova ponuda', new_offer_path, class: "btn btn-primary btn-absolute topright" %>
         </div>
       <div class="panel-body">
         <table class="table">
@@ -28,8 +19,6 @@
               <th class="hidden-xs">Broj narudžbi</th>
               <th></th>
               <th></th>
-              <!-- <th></th> -->
-              <!-- <th></th> -->
             </tr>
           </thead>
 
@@ -43,15 +32,25 @@
                   <% end %>
               </td>
               <td><%= offer.title %></td>
-              <td><%= badge_important(offer.status) %></td>
+              <td><%= badge_status(offer) %></td>
               <td class="hidden-xs">
                 <%= formatted_valid_from offer %><br/>
                 <%= "(počinje za #{distance_of_time_in_words_to_now offer.valid_from})" if offer.valid_from && offer.valid_from > Time.now %> 
               </td>
               <td class="hidden-xs"><%= formatted_valid_until offer %></td>
               <td class="hidden-xs"><%= offer.orders.count %></td>
-              <td><%= link_to 'Detaljnije', offer %></td>
-              <td><%= link_to 'Kalkulacija', offer_orders_path(offer) %></td>
+              <td class="hidden-xs"><%= link_to 'Detaljnije', offer %></td>
+              <td class="hidden-xs"><%= link_to 'Kalkulacija', offer_orders_path(offer) %></td>
+              <td class="visible-xs">
+                <%= link_to offer do %>
+                <span class="glyphicon glyphicon-file"></span> 
+                <% end %>
+              </td>
+              <td class="visible-xs">
+                <%= link_to offer_orders_path(offer) do %>
+                <span class="glyphicon glyphicon-list-alt"></span> 
+                <% end %>
+              </td>
               <!-- <td><%#= link_to '', edit_offer_path(offer),  class: "link glyphicon glyphicon-pencil"%></td> -->
               <!-- <td><%#= link_to '', offer, method: :delete, data: { confirm: 'Are you sure?' }, class: "link glyphicon glyphicon-trash" %></td> -->
             </tr>

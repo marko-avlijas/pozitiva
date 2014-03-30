@@ -11,8 +11,12 @@ class OrdersController < ApplicationController
   def index
     @offer = Offer.find(params[:offer_id])
     @offer_items = @offer.offer_items
-    @orders = @offer.orders.order("orders.delivery_id, orders.user_id")
+    @orders = @offer.orders.joins(:user).order("orders.delivery_id, users.name")
     @offer_items_sum = OfferItemOrders.new(@offer, @orders).get_sum_hash
+
+    @offer.company_name = @offer.user.company_name if @offer.user.try(:company_name).present?
+    @offer.company_address = @offer.user.company_address if @offer.user.try(:company_address).present?
+    @offer.company_oib = @offer.user.company_oib if @offer.user.try(:company_oib).present?
     
     @contact_form_url = message_to_orderers_offer_path(@offer)
     
@@ -106,8 +110,8 @@ class OrdersController < ApplicationController
     current_user.orders.exists?(id: params[:id])
   end
 
-  def current_user_is_admin
-    raise "[OrdersController#admin] current_user is not admin" unless current_user.admin
+  def current_user_is_admin?
+    !!current_user.admin
   end
 
   def current_user_can_see_orders
@@ -120,7 +124,7 @@ class OrdersController < ApplicationController
     # Rails.logger.info "offer_from_current_user: #{offer_from_current_user?}"
     # Rails.logger.info "order_from_current_user: #{order_from_current_user?}"
     
-    raise "[OrdersController#current_user_can_see_order]" unless (current_user_is_admin || offer_from_current_user? || order_from_current_user?)
+    raise "[OrdersController#current_user_can_see_order]" unless (current_user_is_admin? || offer_from_current_user? || order_from_current_user?)
   end
 
   def current_user_can_write

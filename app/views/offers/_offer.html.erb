@@ -1,61 +1,33 @@
-<%= render :partial => 'offers/offer_heading' %>
-
-<div class="panel-body">
-  <div class="row">
-    <div class="col-md-6">
-      <p style="padding-bottom: 20px; border-bottom: 1px solid #ddd">Rok za narudžbu:<br/>
-        <strong style="padding-left: 20px; display: inline-block; margin-top: 10px"><span class="glyphicon glyphicon-record"></span> <%= formatted_valid_until @offer %></strong>
-        <% if @offer.valid_until && @offer.valid_until > Time.now %>
-        <span class="badge">još <%= distance_of_time_in_words_to_now @offer.valid_until %></span>
-        <% end %>
-      </p>
-      Isporuke:<br/>
-      <ul style="padding: 5px 20px 20px 20px; border-bottom: 1px solid #ddd">
-        <% @offer.deliveries.each do |delivery| %>        
-        <li style="line-height: 26px">
-          <span class="glyphicon glyphicon-calendar"></span> 
-          <%= formatted_delivery_when_date(delivery) %> &nbsp;
-          <span class="glyphicon glyphicon-time"></span> 
-          <%= formatted_delivery_when_time(delivery) %> 
-          
-          <%= link_to delivery.location.map_url, target: "_blank" do %>&nbsp;
-            <span class="glyphicon glyphicon-map-marker"></span> 
-            <%= delivery.location.title %>
-          <% end %>
-        </li>
-        <% end %>
-      </ul>
-      <p>
-        Objavljeno:
-        <%= formatted_valid_from @offer %>
-      </p>
-      <p style="padding-bottom: 20px; border-bottom: 1px solid #ddd">
-        Dostupno u grupama: 
-        <% @offer.groups.each do |group| %>
-        <%= group.title %>,
-        <% end %>
-      </p>
-      
+<div class="col-md-6">
+  <div class="focus">
+    <div class="focus-header">
+      <h4><%= image_tag("notepad.png") %> Ponuđeni proizvodi</h4>
     </div>
-    <div class="col-md-6">
-      <div class="focus" style="margin-top: 10px">
+    <div class="focus-body">
       <table class="table">
         <thead>
           <tr>
             <th align="left">Proizvod</th>
             <th>Cijena</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <% @offer.offer_items.each do |offer_item| %>
           <tr>
-            <td align="left"><strong><%= offer_item.title %></strong><br/><span style="font-size: 12px"><%= offer_item.note %></span></td>
+            <td align="left"><strong><%= offer_item.title %>&nbsp; <%= offer_item_packaging_icon(offer_item.packaging) %></strong><br/><%= offer_item.note %></td>
             <td ><%= offer_item_quantity_for_price(offer_item) %></td>
+            <td><%= offer_item_packaging_min_qty(offer_item) %></td>
           </tr>
           <% end %>
         </tbody>
       </table>
     </div>
+    <div class="focus-footer">
+      <div class="footer-links">
+        <%= link_to('Uredi proizvode', edit_offer_path(@offer) ) if @offer.editable? %> &nbsp; 
+        <%#= link_to('Uredi proizvode', edit_offer_path(@offer) ) if @offer.editable? %>
+      </div>
     </div>
   </div>
-</div>
+</div> 

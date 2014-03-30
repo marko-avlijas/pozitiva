@@ -11,88 +11,34 @@
 </div>
 <% end %>
 
-<div class="row">
-  <div class="col-lg-12">
-    <h4><span class="glyphicon glyphicon-bullhorn"></span> &nbsp;Osnovne informacije o ponudi</h4>
-    <div class="col-lg-5 col-sm-6">
-      <div class="form-group">
-        <i class="fa fa-asterisk"></i> <%= f.label :title, "Naziv ponude:" %>
-        <%= f.text_field :title, class: "form-control", placeholder: "Naziv ponude" %>
-      </div>
-      <div class="form-group">
-        <%= f.label :attach, "PDF s više informacija o ponudi:" %>
-        <%= f.file_field :attach, class: "form-control", placeholder: "PDF" %>
-      </div>
-    </div>
-    <div class="col-lg-7 col-sm-6">
-      <div class="form-group">
-        <%= f.label :note, "Napomena:" %>
-        <%= f.text_area :note,  class: "form-control", placeholder: "Napomena", style: "min-height: 109px" %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-12">
-    <h4><i class="fa fa-users"></i> &nbsp;Vidljivost ponude po grupama <i class="fa fa-asterisk"></i> </h4>
-    <%# http://railscasts.com/episodes/17-habtm-checkboxes-revised %>
-    <%= hidden_field_tag "offer[group_ids][]", nil %>
-    <% Group.all.each do |group| %>
-
-    <div class="checkbox" style="padding-left: 35px">
-      <% check_box_selected = (@offer.new_record? && group.id == 1) ? true : @offer.group_ids.include?(group.id) %>
-      <%= check_box_tag "offer[group_ids][]", group.id, check_box_selected, id: dom_id(group) %>
-      <%= label_tag dom_id(group), group.title %>
-    </div>
-
-    <% end %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-12">
-    <h4><i class="fa fa-clock-o"></i> &nbsp;Rok za narudžbu <i class="fa fa-asterisk"></i> </h4>
-    <div class="form-group col-lg-12">
-      <div class="input-group date datetimepicker">
-        <%= f.text_field :valid_until, value: dt_picker(f.object.valid_until), class: "form-control" %>
-        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-12">
-    <h4><i class="fa fa-truck"></i> &nbsp;Mjesto i vrijeme isporuke</h4>
-    <div class="form-group">
-      <%= f.fields_for :deliveries do |deliveries_form| %>
-      <div class="duplicatable_nested_form deliveries">
-        <%= deliveries_form.hidden_field :id %>       
-        <div class="delivery-row">
-          <div style="float: left; margin: 0 10px 10px 0"><i class="fa fa-asterisk"></i>  <%= deliveries_form.collection_select :location_id, Location.all.to_a, 'id', 'title', {include_blank: 'odaberite lokaciju'}, class: "form-control" %></div>
-          <div style="float: left;">
-            <div class="form-group">
-              <div class="input-group date datetimepicker">
-                <%= deliveries_form.text_field :when, value: dt_picker(deliveries_form.object.when), class: "form-control" %>
-                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-              </div>
-            </div>
-          </div>
-          <%= link_to '', '', class: 'remove_nested_form glyphicon glyphicon-trash', data: {fields: "deliveries"} %>
-          <%#= deliveries_form.check_box :_destroy %> <%#= deliveries_form.label :_destroy, "Remove" %>
-          <%#= hidden_field_tag nil, "0", id: "offer_deliveries_attributes_#{deliveries_form.index}__destroy", name: "offer[deliveries_attributes][#{deliveries_form.index}][_destroy]" %>
+<div class="group">
+  <h4><span class="glyphicon glyphicon-bullhorn"></span> &nbsp;Osnovne informacije o ponudi</h4>
+  <div class="content">
+    <div class="row">
+      <div class="col-lg-5 col-sm-6">
+        <div class="form-group">
+          <span style="color: #cc2200">* </span><%= f.label :title, "Naziv ponude:" %>
+          <%= f.text_field :title, class: "form-control", placeholder: "Naziv ponude" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :attach, "PDF s više informacija o ponudi:" %>
+          <%= f.file_field :attach, class: "form-control", placeholder: "PDF" %>
         </div>
       </div>
-      <% end %>
+
+      <div class="col-lg-7 col-sm-6">
+        <div class="form-group">
+          <%= f.label :note, "Napomena:" %>
+          <%= f.text_area :note,  class: "form-control", placeholder: "Napomena", style: "min-height: 109px" %>
+        </div>
+      </div>
     </div>
-    <p class="col-lg-12"><%= link_to 'Dodaj lokaciju', '', class: 'duplicate_nested_form delivery', data: {fields: "deliveries"} %> </p>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-lg-12">
-    <h4><i class="fa fa-th-list"></i> &nbsp;Proizvodi</h4>
+<div class="group">
+  <h4><i class="fa fa-th-list"></i> &nbsp;Proizvodi</h4>
+  <div class="content">
     <div class="form-group" >
       <%= f.fields_for :offer_items do |offer_items_form| %>
       <div class="duplicatable_nested_form offer_items">
@@ -100,65 +46,56 @@
           <%= offer_items_form.hidden_field :id %>
           <%= offer_items_form.hidden_field :position %>
           <div class="form-group col-xs-11 col-md-4 <%= "alooo" if offer_items_form.object.status == "alert"  %>">
-            <%= offer_items_form.label :title, "Naziv proizvoda:" %>
+            <span style="color: #cc2200">*</span> <%= offer_items_form.label :title, "Naziv proizvoda:" %>
             <%= offer_items_form.text_field :title, class: "form-control", style: "margin-bottom: 10px; font-weight: bold; color: #cc2200" %>
-            <%#= offer_items_form.select :status, options_for_select([["", nil], ["Alert", "alert"]], offer_items_form.object.status),{},{class: "form-control"} %> 
-  
           </div>
+          
           <div class="form-group col-xs-11 col-md-4" >
             <%= offer_items_form.label :note, "Opis:" %>
             <%= offer_items_form.text_area :note, class: "form-control item-description" %>
           </div>
           <div class="form-group col-xs-11 col-md-4">
-            <%= offer_items_form.label :packaging, "Način prodaje (obračuna cijene):" %>
+            <span style="color: #cc2200">*</span> <%= offer_items_form.label :packaging, "Način prodaje (obračuna cijene):" %>
             <%= offer_items_form.select :packaging, options_for_select(OfferItem::PACKAGING, offer_items_form.object.packaging),{ include_blank: true },{ class: "form-control packaging", style: "width: 100%" } %>
+            <span class="help-block">vidi legendu ispod</span>
           </div>
         </div>
-        
-        
-        
         <div class="row form-rinfuza packaging-details">
           <div class="form-group col-xs-11 col-md-4">
             <%= offer_items_form.label :unit_bulk, "Mjerna jedinica:" %>
             <%= offer_items_form.text_field :unit_bulk, class: "form-control form-unit" %>
-            <span class="help-block">kg, g, l...</span>
+            <span class="help-block">kg, g, l... (bez broja ispred)</span>
           </div>
           <div class="form-group col-xs-11 col-md-4">
             <%= offer_items_form.label :decimal_price_bulk, "Cijena:" %>
             <div class="input-group">
-              <%= offer_items_form.text_field :decimal_price_bulk, class: "form-control", style: " font-weight: bold; color: #333", value: sprintf("%.2f", offer_items_form.object.decimal_price_bulk).gsub('.', ',') %><span class="input-group-addon price-unit">kn/kg</span>
+              <%= offer_items_form.text_field :decimal_price_bulk, class: "form-control", style: " font-weight: bold; color: #333", value: sprintf("%.2f", offer_items_form.object.decimal_price_bulk).gsub('.', ',') %><span class="input-group-addon price-unit">kn/mj. jedinica</span>
             </div>
-            <span class="help-block">upišite cijenu za mjernu jedinicu koju ste naveli</span> 
+            <span class="help-block">cijena za mjernu jedinicu koju ste naveli (2 decimale, točka ili zarez)</span> 
           </div>
           <div class="form-group col-xs-11 col-md-4">
             <%= offer_items_form.label :min_qty_per_order, "Minimalna količina:" %>
             <div class="input-group">
-              <%= offer_items_form.text_field :min_qty_per_order, class: "form-control" %>
-              <span class="input-group-addon min-qty-unit">kg</span> 
+              <%= offer_items_form.text_field :min_qty_per_order, value: sprintf("%.2f", offer_items_form.object.min_qty_per_order.to_s.to_d).gsub('.', ','), class: "form-control" %>
+              <span class="input-group-addon min-qty-unit">mj. jedinica</span> 
             </div>
-            <span class="help-block">upišite min. količinu po narudžbi, u mj. jedinici koju ste naveli (decimalna točka umjesto zareza)</span>
+            <span class="help-block">minimalna količina po narudžbi, u mj. jedinici koju ste naveli (2 decimale, točka ili zarez)</span>
           </div>      
         </div>
-
-
-
         <div class="row form-paket packaging-details">
           <div class="form-group col-xs-11 col-md-4">
-            <%= offer_items_form.label :unit_package, "Način pakiranja i količina po paketu:" %>
+            <%= offer_items_form.label :unit_package, "Način pakiranja:" %>
             <%= offer_items_form.text_field :unit_package, class: "form-control" %>
-            <span class="help-block">paket od 200g, staklena boca od 0,5l, kutija 10kom, vezica...</span>
+            <span class="help-block">npr. 200g, 0,5l, kom, vezica...</span>
           </div>
           <div class="form-group col-xs-11 col-md-4">
             <%= offer_items_form.label :decimal_price_package, "Cijena po paketu:" %>
             <div class="input-group">
               <%= offer_items_form.text_field :decimal_price_package, class: "form-control", style: " font-weight: bold; color: #333", value: sprintf("%.2f", offer_items_form.object.decimal_price_package).gsub('.', ',') %><span class="input-group-addon">kn/paket</span>
             </div>
-            <span class="help-block">upišite cijenu za mjernu jedinicu koju ste naveli</span> 
+            <span class="help-block">cijena za pakiranje koje ste naveli (2 decimale, točka ili zarez)</span> 
           </div>      
         </div>
-  
-  
-        
         <div class="row form-vario packaging-details">
           <div class="form-group col-xs-11 col-md-4">
             <%= offer_items_form.label :unit_vario, "Mjerna jedinica:" %>
@@ -170,54 +107,38 @@
             <div class="input-group">
               <%= offer_items_form.text_field :decimal_price_vario, class: "form-control", style: " font-weight: bold; color: #333", value: sprintf("%.2f", offer_items_form.object.decimal_price_vario).gsub('.', ',') %><span class="input-group-addon price-unit">kn/kg</span>
             </div>
-            <span class="help-block">upišite cijenu za mjernu jedinicu koju ste naveli</span> 
+            <span class="help-block">cijena za mjernu jedinicu koju ste naveli (2 decimale, točka ili zarez)</span> 
           </div>
-
           <div class="form-group col-xs-11 col-md-4">
-            <span class="help-block">U polje za opis upišite koje su dostupne veličine/količine komada, koja je minimalna narudžba i sl.</span>
+            <span class="help-block"><br/>Iskoristite polje "Opis" (gore lijevo) i navedite više detalja o dostupnim veličinama/količinama komada, minimalnoj narudžbi i sl.</span>
           </div>     
         </div>
-  
-  
-        <%#= offer_items_form.check_box :_destroy %> <%#= offer_items_form.label :_destroy, "Remove" %>     
-        <%#= hidden_field_tag nil, "0", name: "#{offer_items_form.object_name}[_destroy]", id:  "#{offer_items_form.object_name.parameterize.underscore}__destroy" %>
-       <%= link_to '', '', class: 'remove_nested_form glyphicon glyphicon-trash', "data-fields" => "offer_items" %>   
+        <%= link_to '', '', class: 'remove_nested_form glyphicon glyphicon-trash', "data-fields" => "offer_items" %>   
       </div>
       <% end %>
     </div>
-    <p>
-      <%= link_to 'Dodaj proizvod', '', class: 'duplicate_nested_form', "data-fields" => "offer_items" %>
-    </p>
-    <p class="row-submit">
-      <%= f.submit "Spremi promjene", class: "btn btn-primary btn-lg" %>
-    </p>
-  </div>          
-
-  <% end %>
+    <p><%= link_to 'Dodaj proizvod', '', class: 'duplicate_nested_form', "data-fields" => "offer_items" %></p>
+  </div>
+  <div class="group-footer">
+    <div class="row">
+      <div class="col-md-6">
+        <p class="order-legend">
+          <span><strong>Rinfuza</strong> - omogućuje unos decimalnih brojeva u narudžbu - možete odrediti minimalnu količinu za naručivanje. </span><br/>
+          <span><strong>Pakiranje</strong> - cijene se izražavaju za komad/paket, i naručuje se po komadu/paketu, pa je u narudžbi moguć unos samo cijelih brojeva. U polje "način pakiranja" upišite ukratko od čega se sastoji paket, npr. za jaja ćete upisati 10 komada, za sok 1 litra, za rukolu 100g, za košaricu komad, za peršin vezica... polje "opis" iskoristite za dodatne informacije.</span>
+        </div>
+        <div class="col-md-6">
+          <p class="order-legend">
+            <span><strong>Komad varijabilne težine</strong> - koristi se kada se cijena izražava po mjernoj jedinici (npr. kg), a proizvod se prodaje po komadu, čija točna cijena (zbog nepoznate težine) će biti poznata tek prilikom prodaje (npr. tikva, lubenica, glavica zelja, pile i sl.)<br/>Kupac će upisati opisno koliko želi naručiti (npr. 3 manje glavice), a vi ćete po isteku roka za narudžbu moći upisati točnu isporučenu količinu.</span>
+          </p>
+        </div>
+      </div>
+  </div>
 </div>
+    
+
+<p class="row-submit"><%= f.submit "Spremi promjene", class: "btn btn-primary btn-lg" %></p>
+<% end %>
 
 
 
-<!-- <p>
-  <i class="fa fa-tachometer"></i> kod narudžbe se omogućuje unos decimalnih brojeva, možete odrediti minimalnu količinu po narudžbi<br/>
-  <i class="fa fa-gift"></i> kod narudžbe je moguć unos samo cijelih brojeva<br/>
-  <i class="fa fa-question-circle"></i> namijenjeno za proizvode varijabilne težine kao što su tikve, lubenice, riba - kupac unosi približnu težinu koju želi, a ponuđač sam unosi isporučenu količinu - sukladno stvarnoj težini isporučenog proizvoda.
-</p> -->
-<!-- <div class="radio">
-  <label>
-  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="checked" >
-  <i class="fa fa-tachometer"></i> Rinfuza
-  </label>
-  </div>
-  <div class="radio">
-  <label>
-  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-  <i class="fa fa-gift"></i> Paket
-  </label>
-  </div>
-  <div class="radio">
-  <label>
-  <input type="radio" name="optionsRadios" id="optionsRadios3" value="option2">
-  <i class="fa fa-question-circle"></i> Kombo
-  </label>
-  </div> -->
+

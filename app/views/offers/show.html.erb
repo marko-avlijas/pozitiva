@@ -1,48 +1,57 @@
 <div class="panel panel-offer">
-  <%= render :partial => 'offer' %>
-  <%= render(partial: 'form_publish') if (@offer.user == current_user) %>
-  <div class="panel-footer">
+  
+  <%= render partial: 'offer_heading' %>
+  
+  <div class="panel-body">
     <div class="row">
-      <div class="offer-footer">
-        <% if (@offer.user == current_user) && (@offer.status == :active)  %>
-          <%= form_for @offer, html: {role: "form"} do |f| %>
-          <div class="form-group">
-            <%= f.label :note, "Napomena:" %>
-            <%= f.text_area :note,  class: "form-control", placeholder: "Napomena", style: "min-height: 109px" %>
-          </div>
-          <%= f.submit "Spremi", class: 'btn' %>
-          <% end %>
-        <% end %>
-        <br/><br/>
-        <% if (@offer.user == current_user) %>
-        
-          <% if @offer.editable? || @offer.status == :draft %>
-
-          <%= link_to('Uredi ponudu', edit_offer_path(@offer))  %> &nbsp;|&nbsp;
-          <% end %>
-          
-          <% if @offer.status == :active  %>
-          <%= link_to('Deaktiviraj ponudu', deactivate_offer_path(@offer)) %> &nbsp;|&nbsp; 
-          <% end %>
-          
-          <%= link_to 'Kopiraj ponudu', duplicate_offer_path(@offer) %> 
-          
-          <% if @offer.status == :active %>
-          &nbsp;|&nbsp; 
-          <%= link_to('Naruči', new_offer_order_path(@offer))  %>
-          <% end %>
-          <%#= link_to 'Poništi objavu ponude', @offer, method: :delete, data: { confirm: 'Are you sure?' } %>
-          
-          
-          
-        <% else %>
-          <%= link_to 'Naruči', new_offer_order_path(@offer), class: "btn btn-primary btn-xs", style: "float: right;margin-left: 10px" %>
-          <% if @current_user_has_orders %>
-          <%= link_to "Vidi moje narudžbe", my_orders_path, class: "btn btn-primary btn-xs", style: "float: right" %>
-          <% end %>
-        <% end %>
+      <%= render partial: 'offer' %>
+      <% if (@offer.user == current_user) && (@offer.status == :draft) %>
+        <%= render(partial: 'form_publish')  %>
+      <% else %>
+        <%= render partial: 'offer_publish_details'  %>
+      <% end %>      
+      
+      
+    </div>
+  </div>
+  
+  <% if (@offer.user == current_user) && (@offer.status == :active)  %>
+    <%= form_for @offer, html: {role: "form"} do |f| %>
+  
+      <div class="panel-body" style="background-color: #FAF7EA; border-top: 1px solid #ddd" >
+        <div class="form-group">
+          <%= f.label :note, "Izmijeni napomenu:" %>
+          <%= f.text_area :note,  class: "form-control", placeholder: "Napomena" %>
+          <span class="help-block">Nakon objave ponude više je ne možete uređivati, no na ovaj način možete obavijestiti buduće naručitelje ukoliko imate dodatne upute.<br/>One koji su već naručili o promjenama možete obavijestiti koristeći mogućnost "Pošalji poruku svim naručiteljima" na stranici <%= link_to 'Kalkulacija', offer_orders_path(@offer), style: "text-decoration: underline" %></span>
+        </div>
+        <%= f.submit "Spremi", class: 'btn btn-primary btn-xs' %>
       </div>
+    
+    <% end # form_for %>
+  <% end # if %>
+  
+  <div class="panel-footer">
+    <div class="footer-links">
+      <% if (@offer.user == current_user) %>
+        <%= link_to('Uredi ponudu', edit_offer_path(@offer)) if @offer.editable? %> 
+        &nbsp; &nbsp;
+        <%= link_to('Deaktiviraj ponudu', deactivate_offer_path(@offer)) if @offer.status == :active %> 
+        &nbsp; &nbsp; 
+        <%= link_to 'Kopiraj ponudu', duplicate_offer_path(@offer) %> 
+        &nbsp; &nbsp; 
+        <%= link_to 'Vidi kalkulaciju', offer_orders_path(@offer) %>
+        &nbsp; &nbsp; 
+        <%= link_to('Naruči', new_offer_order_path(@offer)) if @offer.status == :active %>
+        &nbsp; &nbsp;
+        <%= link_to('Izbriši ponudu',  @offer, method: :delete, data: { confirm: 'Jeste li sigurni da želite izbrisati ponudu?' }) if @offer.editable? %> 
+        
+
+      <% else %>
+        <%= link_to 'Naruči', new_offer_order_path(@offer), class: "btn btn-primary" %>
+        <% if @current_user_has_orders %>
+          <%= link_to "Vidi moje narudžbe", my_orders_path, style: "float: right" %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>
-

@@ -15,9 +15,26 @@ class OffersController < ApplicationController
     @current_user_order_in_offer_ids = @offers.map{ |offer| offer.id if  offer.orders_count_from_user(current_user) > 0 }.compact
   end
 
+  def print_orders
+    @offer = Offer.find(params[:id])
+    @orders = @offer.orders.joins(:user).order("orders.delivery_id, users.name")    
+  end
+
+  def print_orders_per_item
+    @offer = Offer.find(params[:id])
+    @offer_items = @offer.offer_items
+    @orders = @offer.orders.joins(:user).order("orders.delivery_id, users.name")
+    @offer_items_sum = OfferItemOrders.new(@offer, @orders).get_sum_hash
+  end
+
+  def print_dispatch_notes
+    @offer = Offer.find(params[:id])
+    @orders = @offer.orders.joins(:user).order("orders.delivery_id, users.name")    
+  end
+
   # GET /offers/1
   # GET /offers/1.json
-  def show
+  def show    
     @show_delete = (@offer.user == current_user)
     @my_orders = @offer.orders.where(user_id: current_user.id)
     @current_user_has_orders = @offer.orders_count_from_user(current_user) > 0
@@ -27,7 +44,6 @@ class OffersController < ApplicationController
   def new
     @offer = Offer.new
     @offer.offer_items.build #if @offer.offer_items.empty?
-    @offer.deliveries.build #if @offer.offer_delieveries.empty?
   end
 
   # GET /offers/1/edit
@@ -61,19 +77,32 @@ class OffersController < ApplicationController
   # PATCH/PUT /offers/1.json
   def update    
     respond_to do |format|      
-      if @offer.update(offer_params.except(:attach)) && @offer.handle_attach(offer_params[:attach])
+      if @offer.update(offer_params.except(:attach)) and @offer.handle_attach(offer_params[:attach])
+        
         format.html { 
-          flash[:notice] = 'Offer was successfully updated'
-          if offer_params_include_total_available_qty?
-            flash[:notice] += ' and orders quantity solidarized'
-            redirect_to offer_orders_path(@offer)
+          if params[:print_orders].present? 
+            redirect_to print_orders_offer_path(@offer)
+          elsif params[:print_dispatch_notes].present? 
+            redirect_to print_dispatch_notes_offer_path(@offer)
           else
-            redirect_to @offer
+            flash[:notice] = 'Offer was successfully updated'
+            if offer_params_include_total_available_qty?
+              flash[:notice] += ' and orders quantity solidarized'
+              redirect_to offer_orders_path(@offer)
+            else
+              redirect_to @offer
+            end
           end
         }
         # format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html { 
+          if offer_params[:publishing_offer].present?
+            render action: 'show'
+          else
+            render action: 'edit' 
+          end
+        }
         # format.json { render json: @offer.errors, status: :unprocessable_entity }
       end
     end
@@ -192,7 +221,7 @@ class OffersController < ApplicationController
     offer_item_fields = [:id, :_destroy, :position,  :title, :unit, :decimal_price, :note, :packaging, :total_available_qty, :status, :min_qty_per_order, :packaging_description, :unit_bulk, :decimal_price_bulk, :unit_package, :decimal_price_package, :unit_vario, :decimal_price_vario]
     delivery_fields = [:id, :_destroy, :location_id, :when]
     
-    params.require(:offer).permit(:user_id, :title, :note, :valid_from, :valid_until, :delivered_at, :status, :attach, { group_ids: [] }, 
+    params.require(:offer).permit(:user_id, :title, :note, :publishing_offer, :valid_from, :valid_until, :delivered_at, :status, :company_name, :company_address, :company_oib, :dispatch_place, :dispatch_date, :attach, { group_ids: [] }, 
       offer_items_attributes: offer_item_fields, offer_items: offer_item_fields, 
       deliveries: delivery_fields, deliveries_attributes: delivery_fields)
   end

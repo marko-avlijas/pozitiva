@@ -3,10 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/touch-icon-iphone.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/touch-icon-ipad.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/touch-icon-iphone-retina.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/touch-icon-ipad-retina.png">
   <title>PozitivaHub</title>
   <%= stylesheet_link_tag "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", media: "all" %>
-  
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,400italic,600italic,700italic,900italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Viga&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
   <%#= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%#= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= stylesheet_link_tag    "application", media: "all" %>
@@ -33,9 +38,9 @@
       <%= yield %>
     </div> <!-- /container -->
   </div> <!-- /wrap -->
-
+  <div class="povrce"></div>
   <div id="footer">
-      <p class="text-muted credit">&copy; 2013 PozitivaHub</p>
+      <p class="text-muted credit">&copy; 2013 PozitivaHub &nbsp; <%= link_to "Uvjeti korištenja", manifest_path, target: "_blank" %></p>
     </div>
 </body>
 </html>

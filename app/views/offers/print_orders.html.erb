@@ -1,0 +1,62 @@
+<h3>Narudžbenice</h3>
+<p class="lead">Prema ponudi br. <%= @offer.id %> (<%= @offer.title %>)</p>
+<div class="document-header">
+<p><strong><%= @offer.company_name %></strong></p>
+<p>Adresa: <%= @offer.company_address %></p>
+<p>OIB: <%= @offer.company_oib %></p>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Isporuka</th>
+      <th>Naručitelj</th>
+      <th>Narudžba</th>
+      <th>Ukupno</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+    <% if order.delivery %>
+    <tr>
+      <td><%= order.id %></td>
+      <td><strong><%= order.delivery.location.title %></strong> <br/><%= short_dt order.delivery.when %></td>
+      <td><strong><%= order.user.buyer_tag %> <%= order.user.name %></strong><br/><%= order.user.try(:group) ? order.user.group.title : '-' %><br/>Tel: <%= order.user.phone %><br/><%= order.user.email %></td>
+      <td>
+        <table class="table">
+          <thead>
+            <th>Proizvod</th>
+            <th>Količina</th>
+            <th>Jed. cijena</th>
+            <th>Ukupno</th>
+          </thead>
+          <tbody>
+            <% total = 0 %>
+            <% order.order_items.each do |order_item| %>
+            <tr>
+              <td>
+                <strong><%= order_item.offer_item.title %></strong>
+              </td>
+              <td>
+                <strong><%= formatted_item_numeric_qty_unit order_item %></strong>
+              </td>
+              <td>
+                <%= formatted_price order_item.offer_item.decimal_price %>
+              </td>
+              <td>
+                <%= vario_price_unknown(order_item) %>
+              </td>
+            </tr>
+            <% total += order_item.item_price %>
+            <% end %>
+          </tbody>
+        </table>
+        <%= truncate(order.note, length: 500) if order.note %>
+      </td>
+      <td><strong><%= formatted_price total %></strong></td>
+    </tr>
+    <% end %>
+    <% end %>
+  </tbody>     
+</table>

@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby "2.0.0"
+ruby "2.1.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.3'
+gem 'rails', '4.0.4'
 
 group :development do
   # gem 'sqlite3'
@@ -10,7 +10,7 @@ group :development do
   gem 'quiet_assets'
   # gem 'thin'
   # gem 'grizzled-rails-logger'
-  gem 'rails-erd'
+  # gem 'rails-erd'
   gem 'pry-rails'
 end
 

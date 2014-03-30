@@ -1,75 +1,85 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-
-    <div class="panel white-card">
-      <div class="panel-heading">
-        <h3 class="panel-title text-center">Moj profil</h3>
+    <div class="panel panel-offer">
+      <div class="panel-heading offer-title">
+        <h3>Moj profil</h3>
       </div>
       <div class="panel-body">
         <%= form_for(@user, url: profile_path(@user), html: {:method => :put, role: "form", class: "form-horizontal" }) do |f| %>
         <% if @user.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@user.errors.count, "error") %> prohibited this post from being saved:</h2>
-            <ul>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this post from being saved:</h2>
+          <ul>
             <% @user.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
+            <li><%= msg %></li>
             <% end %>
-            </ul>
-          </div>
+          </ul>
+        </div>
         <% end %>
-        
         <div class="form-group">
-          <div class= "col-lg-4 control-label">
-            <label>Avatar</label>
-          </div>
+          <label class="col-lg-4 control-label">Avatar</label>
           <div class="col-lg-8">
-            <%= gravatar_image_tag(@user.email) %> <%= link_to "Promijeni", "http://en.gravatar.com", target: "_blank" %>
+            <%= gravatar_image_tag(@user.email) %><br/><%= link_to "Promijeni", "http://en.gravatar.com", target: "_blank" %>
           </div>
         </div>
-				<div class="form-group" style="margin-bottom: 5px">
-        </i> <%= f.label :name, "Ime i prezime:", class: "col-lg-4 control-label" %>
-					<div class="col-lg-8"><p style="line-height: 35px; margin-bottom: 0"><%= @user.name %></p></div>
-				</div>
-				<div class="form-group">
-          <%= f.label :email, "E-mail:", class: "col-lg-4 control-label" %>
-					<div class="col-lg-8"><p style="line-height: 35px; margin-bottom: 0"><%= @user.email %></p></div>
-				</div>
-				<div class="form-group">
-					<%= f.label :phone, "Telefon:", class: "col-lg-4 control-label" %>
-					<div class="col-lg-8"><%= f.text_field :phone, class: "form-control" %></div>
-				</div>
-				
+        <div class="form-group" style="margin-bottom: 5px">
+          <%= f.label :name, "Ime i prezime", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><p style="line-height: 35px; margin-bottom: 0"><%= @user.name %></p></div>
+        </div>
         <div class="form-group">
-          <%= f.label :about_text, "Opis:", class: "col-lg-4 control-label" %>
+          <%= f.label :email, "E-mail", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><p style="line-height: 35px; margin-bottom: 0"><%= @user.email %></p></div>
+        </div>
+        <div class="form-group">
+          <%= f.label :phone, "Telefon*", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><%= f.text_field :phone, class: "form-control" %></div>
+        </div>				
+        <div class="form-group">
+          <%= f.label :about_text, "Opis", class: "col-lg-4 control-label" %>
           <div class="col-lg-8"><%= f.text_area :about_text, class: "form-control" %></div>
         </div>
-    
         <div class="form-group">
-          <%= f.label :about_url, "URL:", class: "col-lg-4 control-label" %>
+          <%= f.label :about_url, "URL", class: "col-lg-4 control-label" %>
           <div class="col-lg-8"><%= f.text_field :about_url, class: "form-control" %></div>
         </div>
-    
         <div class="form-group">
-          <%= f.label :about_attach, "PDF:", class: "col-lg-4 control-label" %>
+          <%= f.label :about_attach, "PDF", class: "col-lg-4 control-label" %>
           <div class="col-lg-8">
             <%= f.file_field :about_attach, class: "form-control" %>
             <% if @user.about_attach.present? %>
-              <%= link_to "Download (#{number_to_human_size @user.about_attach_file_size.to_i})", about_attach_profile_path(@user) %>
+            <%= link_to "Download (#{number_to_human_size @user.about_attach_file_size.to_i})", about_attach_profile_path(@user) %>
             <% end %>
           </div>
         </div>		
-		    
+        <br/>
+
+        <div class="form-group">
+          <%= f.label :company_name, "Naziv OPG-a ili Tvrtke", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><%= f.text_field :company_name, class: "form-control" %></div>
+        </div>
+        <div class="form-group">
+          <%= f.label :company_address, "Adresa sjedišta", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><%= f.text_field :company_address, class: "form-control" %></div>
+        </div>
+        <div class="form-group">
+          <%= f.label :company_oib, "OIB", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><%= f.text_field :company_oib, class: "form-control" %></div>
+        </div>
+        
+        
         <div class="form-group">
           <div class="col-lg-offset-4 col-lg-8">
             <%= f.submit "Spremi promjene", class: "btn btn-primary" %>
           </div>
         </div>
-
         <% end %>
       </div>
-      <div class="panel-footer"><%= link_to "Back", :back %></div>
+      <div class="panel-footer">
+        <div class="footer-links">
+          <%= link_to "Back", :back %>
+        </div>
+      </div>
     </div>
-
   </div>
 </div>
 	

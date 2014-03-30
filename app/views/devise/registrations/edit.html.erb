@@ -1,9 +1,8 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-
-    <div class="panel white-card">
-      <div class="panel-heading">
-        <h3 class="panel-title text-center">Promjena lozinke</h3>
+    <div class="panel panel-offer">
+      <div class="panel-heading offer-title">
+        <h3>Promjena lozinke</h3>
       </div>
       <div class="panel-body">
         <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: {:method => :put, role: "form", class: "form-horizontal" }) do |f| %>
@@ -12,7 +11,6 @@
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
         <% end %>
-
         <div class="form-group">
           <%= f.label :password, "Nova lozinka", class: "col-lg-4 control-label" %>
           <div class="col-lg-8"><%= f.password_field :password, :autocomplete => "off", class: "form-control" %>
@@ -30,7 +28,6 @@
             <span class="help-block"><small>we need your current password to confirm your changes</small></span>
           </div>
         </div>
-        
         <%#= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>
 		
         <div class="form-group">
@@ -38,11 +35,13 @@
             <%= f.submit "Promijeni lozinku", class: "btn btn-primary" %>
           </div>
         </div>
-
         <% end %>
       </div>
-      <div class="panel-footer"><%= link_to "Back", :back %></div>
+      <div class="panel-footer">
+        <div class="footer-links">
+        <%= link_to "Back", :back %>
+        </div>
+      </div>
     </div>
-
   </div>
 </div>

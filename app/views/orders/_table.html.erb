@@ -1,17 +1,17 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Br.</th>
-      <th>Status ponude</th>
-      <th>Iz ponude</th>
-      <th>Ponuđač</th>
-      <th>Dostava</th>
-
-      <th width="300">Narudžba</th>
+      <th class="hidden-xs hidden-sm">Br.</th>
+      <th class="hidden-xs hidden-sm" >Status ponude</th>
+      <th >Iz ponude</th>
+      <th class="hidden-xs" >Ponuđač</th>
+      <th class="hidden-xs" >Dostava</th>
+      <th class="hidden-sm hidden-md hidden-lg" >Dostava</th>
+      <th width="25%" class="hidden-xs hidden-sm" >Narudžba</th>
       <th>Ukupan iznos</th>
       <!-- <th>Status</th> -->
       <th></th>
-      <!-- <th></th> -->
+      <th></th>
       <!-- <th></th> -->
     </tr>
   </thead>
@@ -19,18 +19,13 @@
   <tbody>
     <% @my_orders.each do |order| %>
     <tr>
-      <td><%= order.id %> <%#= order.user.email %></td>
-      <td>
-        <% if order.offer.status == :active %>
-          <span class="badge">još <%= distance_of_time_in_words_to_now order.offer.valid_until %></span>
-        <% elsif order.offer.status == :finished %>
-          Istekla
-        <% end %>
-      </td>
-      <td><%= link_to order.offer.title, order.offer %></td>
-      <td><%= link_to order.offer.user.name, profile_path(order.offer.user), target: '_blank' %></td>
-      <td><span class="badge important"><%= display_delivery order%></span></td>
-      <td>
+      <td class="hidden-xs hidden-sm"><%= order.id %> <%#= order.user.email %></td>
+      <td class="hidden-xs hidden-sm" ><%= badge_status(order.offer) %></td>
+      <td style="max-width: 200px"><%= link_to order.offer.title, order.offer %></td>
+      <td class="hidden-xs"><%= link_to order.offer.user.name, profile_path(order.offer.user), target: '_blank' %></td>
+      <td class="hidden-xs" ><%= badge_delivery order %></td>
+      <td class="hidden-sm hidden-md hidden-lg" ><%= badge_delivery order %></td>
+      <td class="hidden-xs hidden-sm" >
         <table class="table">
           
         <% total = 0 %>
@@ -40,7 +35,7 @@
               <td>
                 <%= order_item.offer_item.title %>
               </td>
-              <td>
+              <td width="40%">
                 <%= formatted_item_numeric_qty_unit(order_item) %>
               </td>
             </tr>
@@ -52,7 +47,12 @@
       </td>
       <td><strong><%= formatted_price total %></strong></td>
       <!-- <td><%#= order.status %></td> -->
-      <td><%= link_to 'Detaljnije', offer_order_path(order.offer, order) %></td>
+      <td class="hidden-xs"><%= link_to 'Detaljnije', offer_order_path(order.offer, order) %></td>
+      <td class="hidden-sm hidden-md hidden-lg">
+        <%= link_to offer_order_path(order.offer, order) do %>
+          <span class="glyphicon glyphicon-file"></span> 
+        <% end %>
+      </td>
       <!-- <td><%#= link_to('', edit_offer_order_path(order.offer, order), class: "link glyphicon glyphicon-pencil") unless order.offer.expired? %></td> -->
       <!-- <td><%#= link_to '', offer_order_path(order.offer, order), method: :delete, data: { confirm: 'Jeste li sigurni da želite obrisati narudžbu?' }, class: "link glyphicon glyphicon-trash" unless expired %></td> -->
     </tr>
