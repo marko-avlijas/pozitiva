@@ -17,3 +17,4 @@ tmp
 .env
 
 logfile
+config/initializers/app_env.rb
