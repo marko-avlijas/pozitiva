@@ -54,7 +54,8 @@ module Pozitiva
     }
     
     config.action_mailer.default_url_options = {
-      :host => "pozitiva.herokuapp.com"
+      # :host => "pozitiva.herokuapp.com"
+      host: ENV['SITE_HOST']
     }
   end
 end
