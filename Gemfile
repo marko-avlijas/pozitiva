@@ -10,7 +10,7 @@ group :development do
   gem 'quiet_assets'
   # gem 'thin'
   # gem 'grizzled-rails-logger'
-  # gem 'rails-erd'
+  gem 'rails-erd'
   gem 'pry-rails'
   
   gem 'capistrano', '~> 3.1'
