@@ -30,10 +30,7 @@ class OfferItem < ActiveRecord::Base
   end
   
   after_save do
-    if changed_attributes.slice("total_available_qty").any?
-      OfferItemCalculator.new(self).calculate_corrected_qty_for_order_items
-      self.order_items.each{ |order_item| order_item.save! if order_item.changed? }
-    end
+    OrderQtyCorrector.new(self) if changed_attributes.slice("total_available_qty").any?
   end
 
   def unit

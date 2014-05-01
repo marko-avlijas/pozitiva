@@ -24,7 +24,7 @@ class OffersController < ApplicationController
     @offer = Offer.find(params[:id])
     @offer_items = @offer.offer_items
     @orders = @offer.orders.joins(:user).order("orders.delivery_id, users.name")
-    @offer_items_sum = OfferItemOrders.new(@offer, @orders).get_sum_hash
+    @offer_items_sum = OfferItemSummator.new(@offer, @orders).get_sum_hash
   end
 
   def print_dispatch_notes

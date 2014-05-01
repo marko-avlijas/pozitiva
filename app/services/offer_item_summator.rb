@@ -1,4 +1,4 @@
-class OfferItemOrders
+class OfferItemSummator
   
   def initialize(offer, orders)
     @offer = offer

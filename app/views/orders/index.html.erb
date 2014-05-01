@@ -237,7 +237,7 @@
                 </table>
               </td>
               <td>
-                <% if offer_item.packaging == "bulk" %>
+                <% if offer_item.packaging_bulk? || offer_item.packaging_package? %>
                 <%= form_for @offer, html: {role: "form"} do |f| %>
                 <%= f.fields_for :offer_items do |f_offer_item| %>
                 <% if offer_item.id == f_offer_item.object.id %>
