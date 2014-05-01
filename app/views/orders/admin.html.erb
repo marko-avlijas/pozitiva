@@ -22,7 +22,11 @@
               <!-- <th></th> -->
             </tr>
           </thead>
-
+          <tfoot>
+            <tr>
+              <td colspan="8"><%= paginate @orders %></td>
+            </tr>
+          </tfoot>
           <tbody>
             <% @orders.each do |order| %>
             <tr>

@@ -21,7 +21,11 @@
               <th></th>
             </tr>
           </thead>
-
+          <tfoot>
+            <tr>
+              <td colspan="8"><%= paginate @my_offers %></td>
+            </tr>
+          </tfoot>
           <tbody>
             <% @my_offers.each do |offer| %>
             <tr>

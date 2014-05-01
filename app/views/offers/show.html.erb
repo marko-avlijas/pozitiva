@@ -47,7 +47,7 @@
         
 
       <% else %>
-        <%= link_to 'Naruči', new_offer_order_path(@offer), class: "btn btn-primary" %>
+        <%= link_to('Naruči', new_offer_order_path(@offer), class: "btn btn-primary") if @offer.status == :active %>
         <% if @current_user_has_orders %>
           <%= link_to "Vidi moje narudžbe", my_orders_path, style: "float: right" %>
         <% end %>

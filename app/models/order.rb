@@ -26,7 +26,7 @@ class Order < ActiveRecord::Base
 
   def self.to_csv(options = {})
     
-    header_cols = ["order_item_id", "offer_item_id",  "title", "pakiranje", "jed.cijena_kn", "NARUČENA KOL", "opis_vario", "ISPORUČENA KOL", "NARUČITELJ_grupa", "NARUČITELJ_tag", "NARUČITELJ_ime"]
+    header_cols = ["offer_id", "offer.valid_from", "offer.valid_until", "order_item_id", "offer_item_id",  "title", "pakiranje", "jed.cijena_kn", "NARUCENA KOL", "opis_vario", "ISPORUCENA KOL", "NARUCITELJ_grupa", "NARUCITELJ_broj", "NARUCITELJ_ime"]
     
     require 'csv'
     CSV.generate(options) do |csv|
@@ -34,6 +34,9 @@ class Order < ActiveRecord::Base
       all.each do |order|
         order.order_items.each do |order_item|
           csv << [
+            order_item.offer_item.offer_id, 
+            order_item.offer_item.offer.valid_from, 
+            order_item.offer_item.offer.valid_until, 
             order_item.id, 
             order_item.offer_item_id, 
             order_item.offer_item.title, 

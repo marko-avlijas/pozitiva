@@ -159,12 +159,12 @@ class OffersController < ApplicationController
   
   # GET /my_offers
   def my_offers
-    @my_offers = current_user.offers.order('updated_at DESC')
+    @my_offers = current_user.offers.order('updated_at DESC').page(params[:page]).per(10)
   end
   
   # GET /admin_orders
   def admin
-    @offers = Offer.order('updated_at DESC')  
+    @offers = Offer.order('id DESC').page(params[:page]).per(10)
   end
   
   def message_to_orderers

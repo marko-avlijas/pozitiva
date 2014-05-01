@@ -1,6 +1,14 @@
 <div class="panel panel-offer">
   <div class="panel-heading offer-title">
     <h3>Sve ponude</h3>
+    <div class="abs-topright">
+      <%= form_for :cleanup, url: admin_clean_older_than_path, html: {role: "form"} do |f| %>
+      <%= label_tag :older_than, "Ponude starije od:" %>
+      <%= select_tag :older_than, options_for_select(1..6) %> mjeseci 
+      <%= submit_tag "Izbriši", class: "btn btn-primary", data: { confirm: 'Are you sure?' } %>
+      <% end %>
+    </div>
+
   </div>
   <div class="panel-body">
     <div class="row">
@@ -21,7 +29,11 @@
               <!-- <th></th> -->
             </tr>
           </thead>
-
+          <tfoot>
+            <tr>
+              <td colspan="8"><%= paginate @offers %></td>
+            </tr>
+          </tfoot>
           <tbody>
             <% @offers.each do |offer| %>
             <tr>

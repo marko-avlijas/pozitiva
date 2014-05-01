@@ -15,7 +15,11 @@
       <!-- <th></th> -->
     </tr>
   </thead>
-
+  <tfoot>
+    <tr>
+      <td colspan="8"><%= paginate @my_orders %></td>
+    </tr>
+  </tfoot>
   <tbody>
     <% @my_orders.each do |order| %>
     <tr>

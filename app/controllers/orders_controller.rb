@@ -22,20 +22,20 @@ class OrdersController < ApplicationController
     
     respond_to do |format|
       format.html
-      format.csv { render text: @offer.orders.
+      format.csv { render csv: @offer.orders.
         includes(order_items: :offer_item, order_items: { order: { user: :group }}).
-        references(order_items: :offer_item, order_items: { order: { user: :group }}).to_csv }
+        references(order_items: :offer_item, order_items: { order: { user: :group }}), filename: "Pozitiva_ponuda_#{@offer.id}" }
     end
   end
 
   # GET /my_orders
   def my_orders
-    @my_orders = current_user.orders.order('updated_at DESC')
+    @my_orders = current_user.orders.order('updated_at DESC').page(params[:page]).per(10)
   end
 
   # GET /admin_orders
   def admin
-    @orders = Order.order('updated_at DESC')
+    @orders = Order.order('id DESC').page(params[:page]).per(10)
   end
 
   # GET /orders/1

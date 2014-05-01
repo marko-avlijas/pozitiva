@@ -39,6 +39,7 @@ Pozitiva::Application.routes.draw do
   
   namespace :admin do
     resources :users
+    post 'clean_older_than' => 'cleanup#clean_older_than'  
   end
   
   # get 'how' => 'static_pages#how_it_works'
