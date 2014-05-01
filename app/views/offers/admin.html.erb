@@ -4,7 +4,7 @@
     <div class="abs-topright">
       <%= form_for :cleanup, url: admin_clean_older_than_path, html: {role: "form"} do |f| %>
       <%= label_tag :older_than, "Ponude starije od:" %>
-      <%= select_tag :older_than, options_for_select(1..6) %> mjeseci 
+      <%= select_tag :older_than, options_for_select(2..6) %> mjeseci 
       <%= submit_tag "Izbriši", class: "btn btn-primary", data: { confirm: 'Are you sure?' } %>
       <% end %>
     </div>
