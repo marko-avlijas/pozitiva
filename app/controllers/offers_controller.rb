@@ -5,7 +5,7 @@ class OffersController < ApplicationController
   before_action :current_user_can_read,  only: [:show]
   before_action :current_user_can_write, only: [:edit, :update, :destroy, :duplicate]
   before_action :current_user_can_publish_offer, only: [:edit, :update, :destroy, :duplicate, :new, :my_offers]
-  before_action :set_offer, only: [:show, :edit, :update, :destroy, :duplicate, :deactivate, :attach, :delete_attach, :message_to_orderers]
+  before_action :set_offer, only: [:show, :edit, :update, :destroy, :duplicate, :deactivate, :attach, :delete_attach, :message_to_orderers, :save_sort_order]
   
   # GET /offers
   # GET /offers.json
@@ -177,6 +177,15 @@ class OffersController < ApplicationController
       flash.now.alert = "Please fill all fields."
       render :index
     end
+  end
+  
+  def save_sort_order
+    params["item"] # => ["53", "52"]
+    @offer.offer_items.each do |offer_item|
+      offer_item.position = params["item"].index(offer_item.id.to_s)
+      offer_item.save!
+    end
+    render nothing: true
   end
   
   private

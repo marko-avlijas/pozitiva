@@ -3,7 +3,7 @@ class OfferItem < ActiveRecord::Base
   belongs_to :offer, inverse_of: :offer_items
   has_many :order_items, dependent: :restrict_with_error
     
-  default_scope { order('offer_items.created_at') }
+  default_scope { order('offer_items.position') }
 
   STATUSES = [:available, :out_of_stock, :canceled]
   PACKAGING = [["Rinfuza", :bulk], ["Pakiranje", :package], ["Komad varijabilne težine", :vario]]

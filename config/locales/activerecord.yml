@@ -1,0 +1,29 @@
+# You can use the methods Model.model_name.human and Model.human_attribute_name(attribute) to transparently look up translations for your model and attribute names
+hr:
+  activerecord:
+    models:
+      offer: "Ponuda"
+      order: "Narudžba"
+      delivery: "Mjesto i vrijeme isporuke"
+      location: "Mjesto isporuke"
+    
+    attributes:
+      offer:
+        deliveries: "Mjesto i vrijeme isporuke"
+        group_offerings: "Vidljivost ponude po grupama"
+        valid_until: "Rok za narudžbu"
+        
+      delivery:
+        when: "Vrijeme isporuke"
+
+    errors:
+      header: "Promjene nisu spremljene zbog neodgovarajućih podataka"
+      message: "Provjerite slijedeće:"
+      models:
+        offer:
+          attributes:
+            group_offerings:
+              blank: "- označite barem jednu grupu"
+            deliveries:
+              blank: "- obavezno odaberite lokaciju (vrijeme nije obavezno)"
+              

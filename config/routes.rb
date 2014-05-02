@@ -23,6 +23,7 @@ Pozitiva::Application.routes.draw do
       get 'print_orders_per_item'
       get 'print_dispatch_notes'
       post 'message_to_orderers'
+      post 'save_sort_order'
     end
     resources :orders do
       resources :order_items, only: :destroy

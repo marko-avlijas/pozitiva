@@ -5,7 +5,7 @@
             <tr>
               <th>ID</th>
               <th>Proizvod</th>
-              <th>Pakiranje</th>
+              <th>Jed. mjere</th>
               <th>Jed. cijena</th>
               <th>Ukupno</th>
               <th>Naručeno</th>
@@ -24,7 +24,7 @@
               <td><%= @offer_items_sum[id][:unit] %></td>
               <td><%= formatted_price @offer_items_sum[id][:price] %></td>
               <td><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></td>
-              <td><strong><%= formatted_qty @offer_items_sum[id][:qty_sum] %> <%= @offer_items_sum[id][:unit] %></strong></td>
+              <td><strong><%= formatted_qty @offer_items_sum[id][:qty_sum] %></strong></td>
               <td>
                 <table class="table">
                   <thead>

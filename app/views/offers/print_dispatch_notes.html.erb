@@ -1,6 +1,6 @@
-
-<h3>Otpremnice</h3>
-<p class="lead">Prema ponudi br. <%= @offer.id %> (<%= @offer.title %>)</p>
+<div class="pecat"><small>Mjesto za pečat:</small></div>
+<h3>Otpremnica br. <%= @offer.id %></h3>
+<p class="lead">Prema ponudi br. <%= @offer.id %></p>
 <div class="document-header">
 <p><strong><%= @offer.company_name %></strong></p>
 <p>Adresa: <%= @offer.company_address %></p>
@@ -13,7 +13,7 @@
       <th>ID</th>
       <th>Isporuka</th>
       <th>Naručitelj</th>
-      <th>Narudžba</th>
+      <th>Proizvodi</th>
       <th>Ukupno</th>
     </tr>
   </thead>
@@ -61,5 +61,13 @@
     <% end %>
   </tbody>     
 </table>
+<br/>
+<p>Primjedba: ____________________________________________________________</p>
+<p>Kupci: razni kupci</p>
+<p> Način otpreme:<br/>
+  <input type="checkbox"/> &nbsp; vlastiti prijevoz<br/>
+  <input type="checkbox"/> &nbsp; drugo: _________________________________</p>
+<br/><br/>
+<p>Potpis OPGa: _______________________________</p>
 <p><%= @offer.dispatch_place %>, <%= @offer.dispatch_date %></p>
 
