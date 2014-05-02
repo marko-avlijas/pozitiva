@@ -1,15 +1,6 @@
 <div class="panel-body">
   <%= form_for [:admin, @user], html: {role: "form"} do |f| %>
-  <% if @user.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this post from being saved:</h2>
-    <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-  <% end %>
+  <%= error_messages_for @user %>
   <p>Ime i prezime: <strong><%= link_to @user.name, profile_path(@user) %></strong></p>
   <p>E-mail adresa: <strong><%= @user.email %></strong></p>
   <p>Telefon: <strong><%= @user.phone %></strong></p>

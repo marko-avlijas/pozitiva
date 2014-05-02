@@ -60,7 +60,7 @@ class Offer < ActiveRecord::Base
   
   def status
     case
-    when valid_from.present? && (valid_from <= Time.now) && valid_until.present? && (valid_until >= Time.now)
+    when valid_from.present? && (valid_from <= Time.now) && valid_until.present? && (valid_until >= Time.now) && self.group_offerings.present? && deliveries.present?
       :active
     when (valid_until.present?) && (valid_until < Time.now)
       :finished

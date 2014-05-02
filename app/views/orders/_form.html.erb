@@ -1,14 +1,5 @@
 <%= form_for [@offer, @order], html: {role: "form"}  do |f| %>
-<% if @order.errors.any? %>
-<div id="error_explanation">
-  <h2><%= pluralize(@order.errors.count, "error") %> prohibited this post from being saved:</h2>
-  <ul>
-    <% @order.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
+<%= error_messages_for @order %>
 <div class="row">
   <div class="col-md-12 order">
     <div class="group">

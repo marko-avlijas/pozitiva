@@ -279,16 +279,8 @@
       </div>
       <div class="modal-body">
         <%= form_for @offer, html: { role: "form", class: "form-horizontal"} do |f| %>
-        <% if @offer.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@offer.errors.count, "error") %> prohibited this post from being saved:</h2>
-          <ul>
-            <% @offer.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-        <% end %>
+        
+        <%= error_messages_for @offer %>
 
         <div class="form-group">
           <div class="col-lg-12"><h5>Podaci potrebni za Narudžbenice i Otpremnice:</h5></div>

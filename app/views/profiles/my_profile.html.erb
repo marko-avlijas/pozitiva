@@ -6,16 +6,7 @@
       </div>
       <div class="panel-body">
         <%= form_for(@user, url: profile_path(@user), html: {:method => :put, role: "form", class: "form-horizontal" }) do |f| %>
-        <% if @user.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this post from being saved:</h2>
-          <ul>
-            <% @user.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-        <% end %>
+        <%= error_messages_for @user %>
         <div class="form-group">
           <label class="col-lg-4 control-label">Avatar</label>
           <div class="col-lg-8">
