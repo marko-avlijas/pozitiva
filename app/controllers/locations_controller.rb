@@ -26,7 +26,7 @@ class LocationsController < ApplicationController
     @location = Location.new(location_params)
 
     if @location.save
-      redirect_to @location, notice: 'Location was successfully created.'
+      redirect_to @location, notice: 'Lokacija je uspješno kreirana.'
     else
       render action: 'new'
     end
@@ -35,7 +35,7 @@ class LocationsController < ApplicationController
   # PATCH/PUT /locations/1
   def update
     if @location.update(location_params)
-      redirect_to @location, notice: 'Location was successfully updated.'
+      redirect_to @location, notice: 'Promjene na lokaciji su uspješno spremljene.'
     else
       render action: 'edit'
     end
@@ -44,7 +44,7 @@ class LocationsController < ApplicationController
   # DELETE /locations/1
   def destroy
     if @location.destroy
-      redirect_to locations_url, notice: 'Location was successfully destroyed.'
+      redirect_to locations_url, notice: 'Lokacija je uspješno izbrisanakreirana.'
     else
       redirect_to locations_url, alert: "Brisanje lokacije nije moguće jer je u upotrebi"
     end

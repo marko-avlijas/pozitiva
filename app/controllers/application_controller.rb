@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   
   def forbidden(exception)
     logger.error "[ApplicationController] Exception: #{exception.inspect}"
-    render text: "Forbbiden", status: 403
+    render text: "Pristup nije dozvoljen", status: 403
     return
   end
   

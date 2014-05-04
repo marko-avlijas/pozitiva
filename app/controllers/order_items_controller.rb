@@ -5,10 +5,10 @@ class OrderItemsController < ApplicationController
   def destroy
     @order_item.destroy
     if @order.order_items.any?
-      redirect_to edit_offer_order_path(@order.offer, @order), notice: 'Order Item was successfully destroyed.'
+      redirect_to edit_offer_order_path(@order.offer, @order), notice: 'Stavka je uspješno izbrisana.'
     else
       @order.destroy
-      redirect_to my_orders_path, notice: 'Brisanjem zadnje stavke izbrisali ste cijelu narudžbu. Ukoliko ipak želite nešto naručiti, možete kreirati novu narudžbu.'
+      redirect_to my_orders_path, notice: 'Brisanjem zadnje stavke izbrisali ste cijelu narudžbu. Ukoliko ipak želite nešto naručiti, morate kreirati novu narudžbu.'
     end
   end
 

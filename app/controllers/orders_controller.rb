@@ -62,7 +62,7 @@ class OrdersController < ApplicationController
     @order.user = current_user
 
     if @order.save
-      redirect_to [@offer,@order], notice: 'Order was successfully created.'
+      redirect_to [@offer,@order], notice: 'Narudžba je uspješno kreirana.'
     else
       render action: 'new'
     end
@@ -72,9 +72,9 @@ class OrdersController < ApplicationController
   def update
     if @order.update(order_params)
       if order_params_include_corrected_qty?
-        redirect_to offer_orders_path(@offer), notice: 'Qty was successfully corrected.'        
+        redirect_to offer_orders_path(@offer), notice: 'Promjene količine su uspješno spremljene.'        
       else
-        redirect_to [@offer, @order], notice: 'Order was successfully updated.'
+        redirect_to [@offer, @order], notice: 'Promjene su uspješno spremljene.'
       end
     else
       render action: 'edit'
@@ -84,7 +84,7 @@ class OrdersController < ApplicationController
   # DELETE /orders/1
   def destroy
     @order.destroy
-    redirect_to my_orders_url, notice: 'Order was successfully destroyed.'
+    redirect_to my_orders_url, notice: 'Ponuda je uspješno izbrisana.'
   end
 
   private

@@ -22,9 +22,9 @@ class ProfilesController < ApplicationController
     
     if message.valid?
       NotificationsMailer.message_to_user(current_user, @user, message).deliver
-      redirect_to(profile_path, notice: "Message was successfully sent.")
+      redirect_to(profile_path, notice: "Poruka je uspješno poslana.")
     else
-      flash.now.alert = "Please fill all fields."
+      flash.now.alert = "Potrebno je popuniti sva polja."
       render :show
     end
   end
@@ -37,7 +37,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(profile_params.except(:about_attach)) && @user.handle_about_attach(profile_params[:about_attach])
-        format.html { redirect_to my_profile_path, notice: 'Profile was successfully updated.' }
+        format.html { redirect_to my_profile_path, notice: 'Promjene na korisničkom profilu su uspješno spremljene.' }
         # format.json { head :no_content }
       else
         format.html { render action: 'my_profile' }
@@ -54,7 +54,7 @@ class ProfilesController < ApplicationController
     @user.about_attach = @user.about_attach_mime_type = nil
     respond_to do |format|
       if @user.save
-        format.html { redirect_to profile_path(@user), notice: 'Profile was successfully updated.' }
+        format.html { redirect_to profile_path(@user), notice: 'Promjene na korisničkom profilu su uspješno spremljene.' }
         # format.json { head :no_content }
       else
         format.html { render action: 'edit' }

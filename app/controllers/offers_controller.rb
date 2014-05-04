@@ -60,7 +60,7 @@ class OffersController < ApplicationController
     
     respond_to do |format|
       if @offer.save && @offer.handle_attach(offer_params[:attach])
-        format.html { redirect_to @offer, notice: 'Offer was successfully created.' }
+        format.html { redirect_to @offer, notice: 'Ponuda je uspješno kreirana.' }
         # format.json { render action: 'show', status: :created, location: @offer }
       else
         format.html { 
@@ -85,9 +85,9 @@ class OffersController < ApplicationController
           elsif params[:print_dispatch_notes].present? 
             redirect_to print_dispatch_notes_offer_path(@offer)
           else
-            flash[:notice] = 'Offer was successfully updated'
+            flash[:notice] = 'Promjene su uspješno spremljene'
             if offer_params_include_total_available_qty?
-              flash[:notice] += ' and orders quantity solidarized'
+              flash[:notice] += ' i naručene količine solidarizirane'
               redirect_to offer_orders_path(@offer)
             else
               redirect_to @offer
@@ -116,7 +116,7 @@ class OffersController < ApplicationController
     @offer.attach = @offer.attach_mime_type = nil
     respond_to do |format|
       if @offer.save
-        format.html { redirect_to @offer, notice: 'Offer was successfully updated.' }
+        format.html { redirect_to @offer, notice: 'Promjene su uspješno spremljene.' }
         # format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -138,10 +138,10 @@ class OffersController < ApplicationController
   def duplicate
     respond_to do |format|
       if @copy = @offer.duplicate
-        format.html { redirect_to edit_offer_path(@copy), notice: 'Offer was successfully duplicated.' }
+        format.html { redirect_to edit_offer_path(@copy), notice: 'Ponuda je uspješno kopirana.' }
         # format.json { head :no_content }
       else
-        format.html { redirect_to @offer, alert: 'Ooops, Offer was not duplicated due to error.' }
+        format.html { redirect_to @offer, alert: 'Ooops, dogodila se greška i ponuda nije kopirana.' }
         # format.json { render json: @offer.errors, status: :unprocessable_entity }
       end
     end
@@ -172,9 +172,9 @@ class OffersController < ApplicationController
     
     if message.valid?
       NotificationsMailer.message_to_orderers(current_user, @offer, message).deliver
-      redirect_to(offer_orders_path(@offer), notice: "Message was successfully sent.")
+      redirect_to(offer_orders_path(@offer), notice: "Poruka je uspješno poslana.")
     else
-      flash.now.alert = "Please fill all fields."
+      flash.now.alert = "Potrebno je popuniti sva polja."
       render :index
     end
   end
