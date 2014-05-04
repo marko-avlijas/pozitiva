@@ -1,2 +1,4 @@
 hr:
   error: greška
+  back: "nazad"
+  accept: "prihvatiti"

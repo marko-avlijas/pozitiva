@@ -5,7 +5,7 @@
     <div class="group">
       <h4><i class="fa fa-truck"></i> &nbsp;Mjesto i vrijeme isporuke<span style="color: #cc2200">*</span> </h4>
       <div class="content">
-        <%= f.select :delivery_id, @offer.deliveries.collect{|p| [ "#{p.location.title} - #{p.when.strftime("%A %d.%m.%Y %k:%M") if p.when.present? }", p.id ] }, {}, class: "form-control" %>
+        <%= f.select :delivery_id, @offer.deliveries.collect{|p| [ "#{p.location.title} - #{p.when.strftime("%A %d.%m.%Y %k:%M") if p.when.present? }", p.id ] }, {prompt: "obavezno odabrati", size: 4}, class: "form-control" %>
       </div>
     </div>
     <div class="group">
@@ -71,12 +71,12 @@
     <div class="row">
       <div class="col-md-6">
         <p class="order-legend">
-          <i class="fa fa-tachometer"></i> &nbsp;<span>Rinfuza - moguć je unos decimalnih brojeva - obratite pažnju na minimalnu količinu koju je potrebno naručiti.</span><br/>
-          <i class="fa fa-gift"></i> &nbsp;<span>Pakiranje - naručuje se po komadu/paketu i cijene su izražene po komadu/paketu, pa je moguć unos samo cijelih brojeva.</span>
+          <i class="fa fa-tachometer"></i> &nbsp;<span>Rinfuza - proizvođač važe prema narudžbi pa je moguć unos decimalnih brojeva - obratite pažnju na minimalnu količinu koju je potrebno naručiti (ukoliko je naznačena).</span><br/>
+          <i class="fa fa-gift"></i> &nbsp;<span>Pakiranje - ovaj proizvod se isporučuje u uniformiranim pakiranjima - naručuje se po komadu/paketu i cijene su izražene po komadu/paketu, pa je moguć unos samo cijelih brojeva.</span>
         </div>
         <div class="col-md-6">
           <p class="order-legend">
-            <i class="fa fa-question-circle"></i> &nbsp;<span>Komad varijabilne težine (npr. tikva, glavice zelja i sl.) - cijena je izražena u mjernoj jedinici (npr. kg) a naručuje se opisno (npr. molim 1 komad od cca. 2 kg). Proizvođač će prilagoditi konačnu cijenu prema stvarnoj težini proizvoda koji vam isporučuje (koja može malo varirati u odnosu na naručenu, ovisno o dostupnim komadima).</span>
+            <i class="fa fa-question-circle"></i> &nbsp;<span>Komad varijabilne težine (npr. tikva, purica i sl.) - cijena je izražena u mjernoj jedinici (npr. kg) a naručuje se opisno (npr. molim 1 komad od cca. 2 kg). Proizvođač će <span style="font-weight: 400">nakon isteka roka za narudžbu</span> prilagoditi konačnu količinu vaše narudžbe prema stvarnoj težini proizvoda koji vam isporučuje (koja može malo varirati u odnosu na naručenu, ovisno o dostupnim komadima) pa ćete tada saznati ukupnu cijenu vaše narudžbe.</span>
           </p>
         </div>
       </div>

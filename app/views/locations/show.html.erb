@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 <div class="panel panel-offer">
   <div class="panel-heading offer-author">
     <h3>Prikaz lokacije</h3>
@@ -22,11 +21,15 @@
           <strong>Description:</strong>
           <%= @location.description %>
         </p>
+        <p>
+          <strong>URL karte:</strong>
+          <%= @location.map_image_url %>
+        </p>
       </div>
     </div>
   </div>
   <div class="panel-footer">
     <%= link_to 'Uredi', edit_location_path(@location) %> |
-    <%= link_to 'Nazad', locations_path %>
+    <%= link_to t(:back), locations_path %>
   </div>
 </div>

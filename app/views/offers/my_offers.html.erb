@@ -19,6 +19,7 @@
               <th class="hidden-xs">Broj narudžbi</th>
               <th></th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tfoot>
@@ -56,7 +57,7 @@
                 <% end %>
               </td>
               <!-- <td><%#= link_to '', edit_offer_path(offer),  class: "link glyphicon glyphicon-pencil"%></td> -->
-              <!-- <td><%#= link_to '', offer, method: :delete, data: { confirm: 'Are you sure?' }, class: "link glyphicon glyphicon-trash" %></td> -->
+              <td><%= link_to('', offer, method: :delete, data: { confirm: 'Jeste li sigurni da želite trajno izbrisati ponudu?' }, class: "link glyphicon glyphicon-trash")  if offer.orders.blank? && current_user.offers.exists?(id: offer.id) %></td>
             </tr>
             <% end %>
           </tbody>

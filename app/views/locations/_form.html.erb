@@ -16,6 +16,10 @@
     <%= f.label :description, "Opis" %>
     <%= f.text_area :description, class: "form-control", placeholder: "Opis" %>
   </div>
+  <div class="form-group">
+    <%= f.label :map_image_url, "URL karte" %>
+    <%= f.text_field :map_image_url, class: "form-control", placeholder: "URL karte" %>
+  </div>
 
   <%= f.submit "Spremi", class: "btn btn-primary" %>
 <% end %>

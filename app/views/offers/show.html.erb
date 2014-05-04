@@ -34,22 +34,22 @@
     <div class="footer-links">
       <% if (@offer.user == current_user) %>
         <%= link_to('Uredi ponudu', edit_offer_path(@offer)) if @offer.editable? %> 
-        &nbsp; &nbsp;
-        <%= link_to('Deaktiviraj ponudu', deactivate_offer_path(@offer)) if @offer.status == :active %> 
-        &nbsp; &nbsp; 
-        <%= link_to 'Kopiraj ponudu', duplicate_offer_path(@offer) %> 
-        &nbsp; &nbsp; 
-        <%= link_to 'Vidi kalkulaciju', offer_orders_path(@offer) %>
-        &nbsp; &nbsp; 
-        <%= link_to('Naruči', new_offer_order_path(@offer)) if @offer.status == :active %>
-        &nbsp; &nbsp;
-        <%= link_to('Izbriši ponudu',  @offer, method: :delete, data: { confirm: 'Jeste li sigurni da želite izbrisati ponudu?' }) if @offer.editable? %> 
+        &nbsp; &nbsp; &nbsp;
+        <%= link_to('Deaktiviraj ponudu &raquo;'.html_safe, deactivate_offer_path(@offer)) if @offer.status == :active %> 
+        &nbsp; &nbsp; &nbsp;
+        <%= link_to 'Kopiraj ponudu &raquo;'.html_safe, duplicate_offer_path(@offer) %> 
+        &nbsp; &nbsp; &nbsp;
+        <%= link_to 'Vidi kalkulaciju &raquo;'.html_safe, offer_orders_path(@offer) %>
+        &nbsp; &nbsp; &nbsp;
+        <%= link_to('Naruči &raquo;'.html_safe, new_offer_order_path(@offer)) if @offer.status == :active %>
+        &nbsp; &nbsp; &nbsp;
+        <%= link_to('Izbriši ponudu &raquo;'.html_safe,  @offer, method: :delete, data: { confirm: 'Jeste li sigurni da želite izbrisati ponudu?' }) if @offer.editable? %> 
         
 
       <% else %>
         <%= link_to('Naruči', new_offer_order_path(@offer), class: "btn btn-primary") if @offer.status == :active %>
         <% if @current_user_has_orders %>
-          <%= link_to "Vidi moje narudžbe", my_orders_path, style: "float: right" %>
+          <%= link_to "Vidi moje narudžbe &raquo;".html_safe, my_orders_path, style: "float: right" %>
         <% end %>
       <% end %>
     </div>

@@ -43,8 +43,12 @@ class LocationsController < ApplicationController
 
   # DELETE /locations/1
   def destroy
-    @location.destroy
-    redirect_to locations_url, notice: 'Location was successfully destroyed.'
+    if @location.destroy
+      redirect_to locations_url, notice: 'Location was successfully destroyed.'
+    else
+      redirect_to locations_url, alert: "Brisanje lokacije nije moguće jer je u upotrebi"
+    end
+    
   end
 
   private
@@ -60,6 +64,6 @@ class LocationsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def location_params
-      params.require(:location).permit(:title, :lat, :lng, :description)
+      params.require(:location).permit(:title, :lat, :lng, :description, :map_image_url)
     end
 end

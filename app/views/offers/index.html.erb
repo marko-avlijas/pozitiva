@@ -15,7 +15,7 @@
         </h5>
       </div>
       <div class="panel-heading offer-title" style="border-top: 1px solid #E0DED5;">
-        <h4><%= link_to offer.title, offer_path(offer) %></h4>
+        <h4 class="index-title"><%= link_to offer.title, offer_path(offer) %></h4>
         <p style="font-weight: 600"><%= truncate offer.offer_items.map{|item| item.title.downcase }.join(', ').to_s, length: 60 %></p>
       </div>
       <div class="panel-body">
@@ -35,18 +35,40 @@
             <%= formatted_delivery_when_date(delivery) %> &nbsp;
             <span class="glyphicon glyphicon-time"></span> 
             <%= formatted_delivery_when_time(delivery) %> 
-            <%= link_to delivery.location.map_url, target: "_blank" do %>&nbsp;
-              <span class="glyphicon glyphicon-map-marker"></span> 
-              <%= delivery.location.title %>
-            <% end %>
+            
+              <a href="#" data-toggle="modal" data-target="#LocationModal<%= delivery.location.id %>">
+                <span class="glyphicon glyphicon-map-marker"></span> 
+                <%= delivery.location.title %>
+              </a>
+              <!-- Modal -->
+              <div class="modal fade" id="LocationModal<%= delivery.location.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title" id="myModalLabel">Mjesto isporuke</h4>
+                    </div>
+                    <div class="modal-body">
+                      <h3><%= delivery.location.title %></h3>
+                      <%= image_tag(delivery.location.map_image_url, style: "max-width: 100%") if delivery.location.map_image_url.present? %>
+                      <p><%= delivery.location.description %></p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                    </div>
+                  </div>
+                </div>
+              </div> <!-- end Modal -->
+            <%#= link_to delivery.location.map_url, target: "_blank" do %>
+            <%# end %>
           </li>
           <% end %>
         </ul>
       </div>
       </div>
-      <div class="panel-footer" style="padding: 20px 10px; background-color: #F6F5F1">
-        <%= link_to "Vidi više".html_safe, offer_path(offer) %>&nbsp; &nbsp;
-        <%= link_to "Naruči", new_offer_order_path(offer) %>
+      <div class="panel-footer" style="padding: 20px 15px; background-color: #F6F5F1">
+        <%= link_to "Vidi više &raquo;".html_safe, offer_path(offer) %>&nbsp; &nbsp;
+        <%= link_to "Naruči &raquo;".html_safe, new_offer_order_path(offer) %>
         <% if @current_user_order_in_offer_ids.include?(offer.id) %>
         <i class="fa fa-check-circle ordered"></i>
         <%#= link_to "Vidi moje narudžbe", my_orders_path, class: "btn btn-primary btn-xs", style: "float: right" %>

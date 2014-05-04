@@ -21,10 +21,29 @@
         <span class="glyphicon glyphicon-time"></span> 
         <%= formatted_delivery_when_time(delivery) %> 
           
-        <%= link_to delivery.location.map_url, target: "_blank" do %>&nbsp;
-        <span class="glyphicon glyphicon-map-marker"></span> 
-        <%= delivery.location.title %>
-        <% end %>
+        
+        <a href="#" data-toggle="modal" data-target="#LocationModal<%= delivery.location.id %>"><span class="glyphicon glyphicon-map-marker"></span><%= delivery.location.title %></a>
+        <!-- Modal -->
+        <div class="modal fade" id="LocationModal<%= delivery.location.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Mjesto isporuke</h4>
+              </div>
+              <div class="modal-body">
+                <h3><%= delivery.location.title %></h3>
+                <%= image_tag("bg_paper.jpg") %>
+                <p><%= delivery.location.description %></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+              </div>
+            </div>
+          </div>
+        </div> <!-- end Modal -->
+        <%#= link_to delivery.location.map_url, target: "_blank" do %>
+        <%# end %>
       </li>
       <% end %>
     </ul>
@@ -42,3 +61,5 @@
     </ul>
   </div>
 </div>
+
+

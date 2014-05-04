@@ -14,7 +14,7 @@
   
   <%= f.hidden_field :publishing_offer, value: true %>
   
-  <h4><i class="fa fa-users"></i> &nbsp;Vidljivost ponude po grupama</h4>
+  <h4><i class="fa fa-users"></i> &nbsp;Vidljivost ponude u grupama <span style="color: #cc2200">*</span></h4>
   <div class="form-group" style="overflow: auto;">
     <%# http://railscasts.com/episodes/17-habtm-checkboxes-revised %>
     <%= hidden_field_tag "offer[group_ids][]", nil %>
@@ -26,15 +26,16 @@
     </div>
     <% end %>
 <hr/>
-    <h4><i class="fa fa-clock-o"></i> &nbsp;Rok za narudžbu</h4>
+    <h4><i class="fa fa-clock-o"></i> &nbsp;Rok za narudžbu <span style="color: #cc2200">*</span></h4>
     <div class="form-group">
       <div class="input-group date datetimepicker">
         <%= f.text_field :valid_until, value: dt_picker(f.object.valid_until), class: "form-control" %>
         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
       </div>
+      <span class="help-block">Od trenutka objave do roka za narudžbu mora proći min. 24h</span>
     </div>
 <hr/>
-    <h4><i class="fa fa-truck"></i> &nbsp;Mjesto i vrijeme isporuke</h4>
+    <h4><i class="fa fa-truck"></i> &nbsp;Mjesto i vrijeme isporuke <span style="color: #cc2200">*</span></h4>
     <div class="form-group">
       <%# always have one empty %>
       <% f.object.deliveries.build if f.object.deliveries.blank? %>
@@ -55,7 +56,9 @@
           <%#= deliveries_form.check_box :_destroy %> <%#= deliveries_form.label :_destroy, "Remove" %>
           <%#= hidden_field_tag nil, "0", id: "offer_deliveries_attributes_#{deliveries_form.index}__destroy", name: "offer[deliveries_attributes][#{deliveries_form.index}][_destroy]" %>
         </div>
+        
       </div>
+      <span class="help-block">Ostavite s dovoljno vremena između roka za narudžbu i termina isporuke za pakiranje, uplate kupaca i sl.<br/>Ukoliko ste fleksibilini oko isporuke, odaberite opciju "prema dogovoru" - u tom slučaju ne morate unijeti ni termin isporuke, nego se dogovarate oko lokacije i termina isporuke direktno s kupcima.</span>
       <% end %>
     </div>
     <p><%= link_to 'Dodaj lokaciju', '', class: 'duplicate_nested_form delivery', data: {fields: "deliveries"} %> </p>
