@@ -33,7 +33,7 @@
               </div>
               <div class="modal-body">
                 <h3><%= delivery.location.title %></h3>
-                <%= image_tag("bg_paper.jpg") %>
+                <%= image_tag(delivery.location.map_image_url, style: "max-width: 100%") if delivery.location.map_image_url.present? %>
                 <p><%= delivery.location.description %></p>
               </div>
               <div class="modal-footer">
