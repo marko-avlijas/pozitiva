@@ -77,8 +77,8 @@
                 <table class="table">
                   <thead>
                     <th>Proizvod</th>
-                    <th>Količina</th>
-                    <th>Jed. cijena</th>
+                    <th>Isporučena kol.</th>
+                    <th>Cijena</th>
                     <th>Ukupno</th>
                   </thead>
                   <tbody>
@@ -92,7 +92,7 @@
                         <strong><%= formatted_item_numeric_qty_unit order_item %></strong>
                       </td>
                       <td>
-                        <%= formatted_price order_item.offer_item.decimal_price %>
+                        <%= offer_item_quantity_for_price(order_item.offer_item) %>
                       </td>
                       <td>
                         <%= vario_price_unknown(order_item) %>
@@ -126,7 +126,7 @@
             <tr>
               <th>ID</th>
               <th>Proizvod</th>
-              <th>Pakiranje</th>
+              <th>Jed. mjera</th>
               <th>Jed. cijena</th>
               <th>Ukupno</th>
               <th>Naručeno</th>
@@ -151,14 +151,14 @@
                   <thead>
                     <th>Naručitelj</th>
                     <th>Naručeno</th>
-                    <th>Korigirano</th>
+                    <th>Isporučeno</th>
                   </thead>
                   <tbody>
                     <% offer_item.order_items.each do |order_item| %> 
                     <tr>
                       <td><%= order_item.order.user.buyer_tag %> <%= order_item.order.user.name %></td>
                       <td><%= formatted_item_qty_unit order_item %></td>
-                      <td><%= vario_qty_unknown(order_item) %></td>
+                      <td><%#= vario_qty_unknown(order_item) %><%= formatted_item_corrected_qty_unit order_item %></td>
                     </tr>
                     <% end %>
                   </tbody>
@@ -181,11 +181,11 @@
               <th>ID</th>
               <th></th>
               <th>Proizvod</th>
-              <th>Pakiranje</th>
+              <th>Jed. mjera</th>
               <th>Naručena količina</th>
               <th>Količine po narudžbama</th>
               <th>Dostupna količina</th>
-              <th>Korigirana kol.</th>
+              <th>Isporučena kol.</th>
             </tr>
           </thead>
           <tbody>
@@ -204,8 +204,8 @@
                 <table class="table">
                   <thead>
                     <th>Naručitelj</th>
-                    <th>Naručena kol.</th>
-                    <th>Korigirana kol.</th>
+                    <th>Naručeno</th>
+                    <th>Isporučeno</th>
                   </thead>
                   <tbody>
                     <% offer_item.order_items.each do |order_item| %>
@@ -237,7 +237,7 @@
                 </table>
               </td>
               <td>
-                <% if offer_item.packaging_bulk? || offer_item.packaging_package? %>
+                <% if (offer_item.packaging_bulk? || offer_item.packaging_package?) && @offer.expired? %>
                 <%= form_for @offer, html: {role: "form"} do |f| %>
                 <%= f.fields_for :offer_items do |f_offer_item| %>
                 <% if offer_item.id == f_offer_item.object.id %>

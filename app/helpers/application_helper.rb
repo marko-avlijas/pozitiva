@@ -127,7 +127,7 @@ module ApplicationHelper
       if item.offer_item.packaging == "vario"
         return content_tag :i, nil, class: "fa fa-question-circle"
       else 
-        return "-"
+        return formatted_item_qty_unit(item)
       end
     end
     case item.offer_item.packaging
