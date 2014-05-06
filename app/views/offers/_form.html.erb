@@ -52,7 +52,7 @@
         </div>
         <div class="row form-rinfuza packaging-details">
           <div class="form-group col-xs-11 col-md-4">
-            <%= offer_items_form.label :unit_bulk, "Mjerna jedinica:" %>
+            <%= offer_items_form.label :unit_bulk, "Jedinična mjera:" %>
             <%= offer_items_form.text_field :unit_bulk, class: "form-control form-unit" %>
             <span class="help-block">kg, g, l... (bez broja ispred)</span>
           </div>
@@ -88,7 +88,7 @@
         </div>
         <div class="row form-vario packaging-details">
           <div class="form-group col-xs-11 col-md-4">
-            <%= offer_items_form.label :unit_vario, "Mjerna jedinica:" %>
+            <%= offer_items_form.label :unit_vario, "Jedinična mjera:" %>
             <%= offer_items_form.text_field :unit_vario, class: "form-control form-unit" %>
             <span class="help-block">npr. kg, g, l... (bez broja ispred)</span>
           </div>
@@ -136,122 +136,212 @@
       </div>
     </div>
     <h3 style="font-size: 18px; margin-bottom: 15px;">Primjeri:</h3>
-    <table class="table" style="border: 1px solid #C2BFB7">
-      <tr style="background-color:#DDDAD0">
-        <th>Proizvod</th>
-        <th width="45%">Uobičajeni način prodaje</th>
-        <th>Jedinična mjera/način pakiranja</th>
-        <th>Cijena se izražava</th>
-      </tr>
-      <tr>
-        <td>košara miješanog povrća</td>
-        <td>pakiranje</td>
-        <td>komad</td>
-        <td>po komadu</td>
-      </tr>
-      <tr>
-        <td>peršin, bosiljak, celer, rotkvice, mladi luk</td>
-        <td>pakiranje</td>
-        <td>vezica</td>
-        <td>po vezici</td>
-      </tr>
-      <tr>
-        <td>tikva</td>
-        <td>komad varijabilne težine</td>
-        <td>kg</td>
-        <td>po kilogramu</td>
-      </tr>
-      <tr>
-        <td>zelje u glavici</td>
-        <td>komad v.t. ili pakiranjet ukoliko su varijacije u težini minimalne</td>
-        <td>kg ili komad</td>
-        <td>po kilogramu ili po komadu</td>
-      </tr>
-      <tr>
-        <td>rukola</td>
-        <td>rinfuza ili pakiranje, ovisno da li važete po narudžbi ili imate uniformirane paketiće od recimo 100g</td>
-        <td>kg ili paket od 100g</td>
-        <td>po kilogramu ili po paketu</td>
-      </tr>
-      <tr>
-        <td>većina voća i povrća</td>
-        <td>rinfuza ili pakiranje, ovisno važete li po narudžbi ili imate uniformirana pakiranja od recimo 500g, 1kg i sl.</td>
-        <td>kg, dkg, g i sl. ili paket od 500g, 1kg i sl.</td>
-        <td>po jediničnoj mjeri ili po paketu</td>
-      </tr>
-      <tr>
-        <td>orasi, lješnjaci i sl.</td>
-        <td>rinfuza ili pakiranje, ovisno da li važete po narudžbi ili imate uniformirane pakete od recimo 500g</td>
-        <td>kg, dkg, g i sl. ili paket</td>
-        <td>po jediničnoj mjeri ili po paketu</td>
-      </tr>
-      <tr>
-        <td>jagode, maline, borovnice</td>
-        <td>pakiranje</td>
-        <td>mjerica od 250g, 500g i sl.</td>
-        <td>po mjerici</td>
-      </tr>
-      <tr>
-        <td>sokovi</td>
-        <td>pakiranje</td>
-        <td>boca od 1l, paket od 3l, 5l i sl.</td>
-        <td>po boci/pakiranju</td>
-      </tr>
-      <tr>
-        <td>zimnica, med i sl.</td>
-        <td>pakiranje</td>
-        <td>npr. teglica 720ml</td>
-        <td>po teglici</td>
-      </tr>
-      <tr>
-        <td>sir</td>
-        <td>pakiranje ukoliko je težina sireva uniformirana pa je cijena za sve ista, ili komad varijabilne težine ukoliko se težina sireva razlikuje, pa im niste uniformirali cijenu nego im cijena ovisi o težini</td>
-        <td>komad, polovica, četvrtina itd.</td>
-        <td>po komadu ili po kg</td>
-      </tr>
-      <tr>
-        <td>mlijeko i drugi mliječni proizvodi (maslac, vrhnje itd)</td>
-        <td>pakiranje</td>
-        <td>boca od 1l, paket od 250g, mjerica i sl.</td>
-        <td>po pakiranju</td>
-      </tr>
-      <tr>
-        <td>jaja</td>
-        <td>pakiranje</td>
-        <td>paket od 10 komada</td>
-        <td>po paketu</td>
-      </tr>
-      <tr>
-        <td>perad</td>
-        <td>komad varijabilne težine</td>
-        <td>kg</td>
-        <td>po kg</td>
-      </tr>
-      <tr>
-        <td>meso sitnije stoke (janjetina, kozlić, odojak)</td>
-        <td>komad varijabilne težine</td>
-        <td>četvrtina, polovica, komad..</td>
-        <td>po kg</td>
-      </tr>
-      <tr>
-        <td>meso krupnije stoke</td>
-        <td>rinfuza ili pakiranje, ovisno da li važete po narudžbi ili imate uniformirane pakete od recimo 10kg</td>
-        <td>kg ili paket od 10kg</td>
-        <td>po kg ili po paketu</td>
-      </tr>
-      <tr>
-        <td>špek</td>
-        <td>rinfuza, paket ili komad v.t. ovisno da li važete po narudžbi, imate uniformirane komade od npr. 500g ili prodajete cijelu tablu koju ne režete, pa svaka ima drugu težinu</td>
-        <td>kg, paket od 500g ili komad</td>
-        <td>po kg ili po paketu</td>
-      </tr>
-      <tr>
-        <td>kobasice</td>
-        <td>rinfuza ili pakiranje, ovisno da li važete po narudžbi ili imate uniformirane pakete od recimo 1kg</td>
-        <td>kg ili paket od 1kg</td>
-        <td>po kg ili po paketu</td>
-      </tr>
-    </table>
+<table class="table offer_examples">
+  <thead>
+  <tr style="background-color: #fff">
+    <th width="20%">Proizvod</th>
+    <th width="25%">Uobičajeni oblik prodaje</th>
+    <th width="20%">Jed. mjera/način pakiranja</th>
+    <th width="15%">Cijena se izražava</th>
+    <th width="20%">Potreban opis</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>košara miješanog povrća</td>
+    <td>pakiranje</td>
+    <td>kom</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr style="background-color: #fff">
+    <td>peršin, bosiljak, celer, rotkvice, mladi luk</td>
+    <td>pakiranje</td>
+    <td>vezica</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>tikva</td>
+    <td>komad varijabilne težine</td>
+    <td>kg</td>
+    <td>po kg</td>
+    <td>tikve su teške između 1.5kg i 3kg</td>
+  </tr>
+  <tr style="background-color: #fff">
+    <td rowspan="2">zelje u glavici</td>
+    <td>komad varijabilne težine (glavice raznih veličina)</td>
+    <td>kg</td>
+    <td>po kg</td>
+    <td>glavice su teške od 0,6-1,3kg</td>
+  </tr>
+  <tr style="background-color: #fff">
+    <td style="border-right: none">pakiranje (glavice uniformiranih težina)</td>
+    <td>kom</td>
+    <td>po komadu</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td rowspan="2" >rukola</td>
+    <td>rinfuza</td>
+    <td>kg</td>
+    <td>po kg</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td style="border-right: none">pakiranje</td>
+    <td>paket od 100g</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr style="background-color: #fff">
+    <td rowspan="2">većina voća i povrća</td>
+    <td>rinfuza</td>
+    <td>kg</td>
+    <td>po kg</td>
+    <td></td>
+  </tr>
+  <tr style="background-color: #fff">
+    <td style="border-right: none">pakiranje</td>
+    <td>paket od 500g, 1kg i sl.</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td rowspan="2">orasi, lješnjaci i sl.</td>
+    <td>rinfuza</td>
+    <td>kg</td>
+    <td>po kg</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td style="border-right: none">pakiranje</td>
+    <td>paket od 500g, 1kg i sl.</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr style="background-color: #fff">
+    <td>jagode, maline, borovnice</td>
+    <td>pakiranje</td>
+    <td>mjerica od 250g, 500g i sl.</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>sokovi</td>
+    <td>pakiranje</td>
+    <td>boca od 1l, paket od 3l, 5l i sl.</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr style="background-color: #fff">
+    <td>zimnica, med i sl.</td>
+    <td>pakiranje</td>
+    <td>npr. teglica 720ml</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td rowspan="2">sir</td>
+    <td>pakiranje (težina sireva uniformirana)</td>
+    <td>komad, polovica, četvrtina</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td style="border-right: none">komad varijabilne težine (težina sireva varira)</td>
+    <td>kg</td>
+    <td>po kg</td>
+    <td>sirevi su teški od 2-2,5 kg - naručuje se komad, polovica, četvrtina</td>
+  </tr>
+  <tr style="background-color: #fff">
+    <td>mlijeko</td>
+    <td>pakiranje</td>
+    <td>boca od 1l</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>razni mliječni proizvodi (maslac, vrhnje itd)</td>
+    <td>pakiranje</td>
+    <td>paket od 250g, mjerica i sl.</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr style="background-color: #fff">
+    <td>jaja</td>
+    <td>pakiranje</td>
+    <td>paket od 10 komada</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td rowspan="2">perad</td>
+    <td>komad varijabilne težine (težina komada varira)</td>
+    <td>kg</td>
+    <td>po kg</td>
+    <td>piceki su teški od 0,7-2,3kg</td>
+  </tr>
+  <tr>
+    <td style="border-right: none">pakiranje (težina komada uniformirana)</td>
+    <td>komad</td>
+    <td>po komadu</td>
+    <td></td>
+  </tr>
+  <tr style="background-color: #fff">
+    <td>meso sitnije stoke (janjetina, kozlić, odojak)</td>
+    <td>komad varijabilne težine</td>
+    <td>kg</td>
+    <td>po kg</td>
+    <td>odojci su teški od 25-30kg - naručuje se cijeli, polovica ili četvrtina</td>
+  </tr>
+  <tr>
+    <td rowspan="2">meso krupnije stoke</td>
+    <td>rinfuza</td>
+    <td>kg</td>
+    <td>po kg</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td style="border-right: none">pakiranje</td>
+    <td>paket od 5kg, 10kg i sl.</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr style="background-color: #fff">
+    <td rowspan="3">špek</td>
+    <td>rinfuza (vaganje po narudžbi)</td>
+    <td>kg</td>
+    <td>po kg</td>
+    <td></td>
+  </tr>
+  <tr style="background-color: #fff">
+    <td style="border-right: none">paket (težina komada uniformirana)</td>
+    <td>paket od 500g</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+  <tr style="background-color: #fff">
+    <td style="border-right: none">komad varijabilne težine (težina komada varira)</td>
+    <td>kg</td>
+    <td>po kg</td>
+    <td>table su teške od 1,2-1,6kg, naručuje se cijeli komad ili polovica</td>
+  </tr>
+  <tr>
+    <td rowspan="2">kobasice</td>
+    <td>rinfuza ili , ovisno da li važete po narudžbi ili imate uniformirane pakete od recimo 1kg</td>
+    <td>kg</td>
+    <td>po kg</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td style="border-right: none">pakiranje</td>
+    <td>paket od 1kg</td>
+    <td>po pakiranju</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
   </div>
   </div>
 </div>
