@@ -7,7 +7,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th align="left">Proizvod</th>
+            <th align="left" width="50%">Proizvod</th>
             <th>Cijena</th>
             <th></th>
           </tr>
@@ -25,12 +25,13 @@
     </div>
     <div class="focus-footer">
       <div class="footer-links">
-        <%= link_to('Uredi proizvode', edit_offer_path(@offer) ) if @offer.editable? %>
+        <%= link_to('Uredi proizvode', edit_offer_path(@offer) ) if @offer.editable? && (@offer.user == current_user) %>
       </div>
     </div>
   </div>
 </div> 
-<% if current_user.offers.exists?(id: @offer.id) %>
+<%# if current_user.offers.exists?(id: @offer.id) %>
+<% if (@offer.user == current_user) %>
 <style>
 #sortable tr:hover {
   cursor: move;

@@ -5,13 +5,11 @@
   <div class="panel-body">
     <div class="row">
       <%= render partial: 'offer' %>
-      <% if (@offer.user == current_user) && (@offer.status == :draft) %>
-        <%= render(partial: 'form_publish')  %>
+      <% if ((@offer.user == current_user) || (@offer.user == current_user.admin)) && @offer.editable_with_errors? %>      
+        <%= render(partial: 'form_publish', offer: @offer)  %>
       <% else %>
-        <%= render partial: 'offer_publish_details'  %>
-      <% end %>      
-      
-      
+        <%= render partial: 'offer_publish_details', offer: @offer %>
+      <% end %>
     </div>
   </div>
   

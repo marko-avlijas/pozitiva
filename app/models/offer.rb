@@ -28,7 +28,7 @@ class Offer < ActiveRecord::Base
   def valid_until_cannot_be_greater_than_delivery_date
     if valid_until.present?
       deliveries.each do |delivery| 
-        errors.add(:valid_until, "isporuka mora biti nakon roka za narudžbu") if delivery.when && (valid_until > delivery.when)
+        errors.add(:base, "isporuka mora biti nakon roka za narudžbu") if delivery.when && (valid_until >= delivery.when)
       end
     end
   end
@@ -52,6 +52,10 @@ class Offer < ActiveRecord::Base
   
   def expired?
     status == :finished
+  end
+  
+  def editable_with_errors?
+    (status == :draft) || errors.messages.any?
   end
   
   def editable?
