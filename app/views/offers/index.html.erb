@@ -9,7 +9,7 @@
       <div class="panel-heading">
         <h5>
           <%= link_to profile_path(offer.user) do %>
-            <%= gravatar_image_tag(offer.user.email, alt: offer.user.name) %>
+            <%= image_tag offer.user.avatar_src, width: 80, alt: offer.user.name %>
             <span class="author"><%= offer.user.name %></span>
           <% end %>
         </h5>

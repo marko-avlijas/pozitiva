@@ -35,6 +35,7 @@ class ProfilesController < ApplicationController
   
   # PATCH/PUT /profiles/1
   def update
+    @user.download_avatar(params[:avatar_url])
     if @user.handle_about_attach(profile_params[:about_attach]) and @user.update(profile_params.except(:about_attach))
       redirect_to my_profile_path, notice: 'Promjene na korisničkom profilu su uspješno spremljene.'
     else

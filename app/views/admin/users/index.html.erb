@@ -36,7 +36,7 @@
         <% @users_without_group_not_suspended.each do |user| %>
         <tr>
           <td><%= user.id %></td>
-          <td><%= gravatar_image_tag(user.email, gravatar: { size: 50 }) %></td>
+          <td><%= image_tag user.avatar_src, width: 50 %></td>
           <td><%= user.buyer_tag %></td>
           <td><%= user.name %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
           <td><%= user.try(:group) ? user.group.title : '-' %></td>
@@ -76,7 +76,7 @@
         <% @users_with_group_not_suspended.each do |user| %>
         <tr>
           <td><%= user.id %></td>
-          <td><%= gravatar_image_tag(user.email, gravatar: { size: 50 }) %></td>
+          <td><%= image_tag user.avatar_src, width: 50 %></td>
           <td><%= user.buyer_tag %></td>
           <td><%= user.name %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
           <td><%= user.try(:group) ? user.group.title : '-' %></td>
@@ -115,7 +115,7 @@
         <% @users_suspended.each do |user| %>
         <tr>
           <td><%= user.id %></td>
-          <td><%= gravatar_image_tag(user.email, gravatar: { size: 50 }) %></td>
+          <td><%= image_tag user.avatar_src, width: 50 %></td>
           <td><%= user.buyer_tag %></td>
           <td><%= user.name %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
           <td><%= user.try(:group) ? user.group.title : '-' %></td>

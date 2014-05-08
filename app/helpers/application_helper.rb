@@ -23,10 +23,6 @@ module ApplicationHelper
       content_tag :li, link_to(title, path)
     end
   end
-  
-  def my_gravatar_image_tag
-    gravatar_image_tag(current_user.email) 
-  end
 
   def offer_item_packaging_icon(offer_item_packaging)
     case offer_item_packaging

@@ -1,3 +1,5 @@
+<%= render 'shared/aviary_feather' %>
+
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <div class="panel panel-offer">
@@ -7,10 +9,15 @@
       <div class="panel-body">
         <%= form_for(@user, url: profile_path(@user), html: {:method => :put, role: "form", class: "form-horizontal" }) do |f| %>
         <%= error_messages_for @user %>
+        
         <div class="form-group">
-          <label class="col-lg-4 control-label">Avatar</label>
+          <%= label_tag :avatar_file, "Avatar", class: "col-lg-4 control-label" %>
           <div class="col-lg-8">
-            <%= gravatar_image_tag(@user.email) %><br/><%= link_to "Promijeni", "http://en.gravatar.com", target: "_blank" %>
+            <%= image_tag @user.avatar_src, width: 80, id: "avatar", data: { title: 'Avatar', ratio: '1:1', size: '300' } %>
+            <br/><br/>
+            <%= file_field_tag :avatar_file, accept: "image/gif,image/jpeg,image/png" %>
+            <%= hidden_field_tag :avatar_url %>
+            <!-- <button class="btn btn-default btn-sm" onclick="return editImage('avatar');">Edit image</button> -->
           </div>
         </div>
         <div class="form-group" style="margin-bottom: 5px">

@@ -93,7 +93,7 @@ class Offer < ActiveRecord::Base
   
   def handle_attach(attachment)
     return true if attachment.blank?
-    if UploadValidator.new(self, :attach, attachment).valid?    
+    if UploadValidator.new(self, :attach, attachment, :pdf).valid?    
       self.attach = attachment.read
       # self.filename  = attachment.original_filename
       self.attach_mime_type = attachment.content_type

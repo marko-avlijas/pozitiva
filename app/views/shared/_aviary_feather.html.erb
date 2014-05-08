@@ -1,0 +1,101 @@
+<% content_for :javascript do %>
+<script type="text/javascript" charset="utf-8">
+$(function() {
+  $('input[type=file]').each(function() {
+    $(this).change(function() {
+      if(this.files!=undefined) { 
+        loadImage(this.files[0], $(this).siblings('img:first')); 
+      }
+      else { 
+        alert('Your Browser does not support HTML5 uploads! Please install newer browser like Chrome'); 
+      }
+    });
+  });
+  
+  $("form").submit(function() {
+      $(this).find('input[type=file]').remove();
+      return true; // ensure form still submits
+  });
+});
+
+
+function loadImage(file, image) { 
+  var reader;
+  try {
+    reader = new FileReader();
+    var max_file_size = 1048576 * 4;
+    if (file.size > max_file_size) {
+      alert('File size is too big, limit under 4MB');
+      return;
+    }
+  } catch (err) {
+    // alert('Your Browser does not support HTML5 uploads! Please install newer browser like Chrome'); 
+    alert('No file chosen (or your Browser does not support HTML5 uploads)'); 
+    return;
+  }
+  
+  reader.onload = function(e){
+    // e.target.result holds the DataURL which can be used as a source of the image:
+    // image.attr('src',e.target.result);
+    // image.attr('width','220');
+    // image.attr('height','192');
+    
+    launchEditor(image.attr('id'), e.target.result); 
+  }
+         
+  // Reading the file as a DataURL. When finished, this will trigger the onload function above:
+  reader.readAsDataURL(file);
+}
+
+function editImage(id) {
+  launchEditor(id, $('#' + id).attr('src'));  
+  return false
+}
+</script>
+
+<!-- Load Feather code -->
+<!-- <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script> -->
+<script type="text/javascript" src="https://dme0ih8comzn4.cloudfront.net/js/feather.js"></script>
+
+<!-- Instantiate Feather -->
+<script type='text/javascript'>
+   var featherEditor = new Aviary.Feather({
+       apiKey: '<%= ENV['AVIARY_API_KEY'] %>',
+       apiVersion: 3,
+       // enableCORS: true,
+       theme: 'minimum', // Check out our new 'light' and 'dark' themes!
+       tools: 'all',
+       appendTo: '',
+       onSave: function(imageID, newURL) {
+           // var img = document.getElementById(imageID);
+           // img.src = newURL;
+           img = $('#' + imageID);
+           img.attr('src', newURL);
+           img.siblings('input[id$=_url]').val(newURL);
+           
+           featherEditor.close();
+           // alert('edited image temp url: ' + newURL);
+       },
+       onError: function(errorObj) {
+           alert(errorObj.message);
+       }
+   });
+   function launchEditor(id, src) {
+     var title = $('#' + id).data('title');
+     var ratio = $('#' + id).data('ratio');
+     var size = $('#' + id).data('size');
+       featherEditor.launch({
+           image: id,
+           url: src,
+           hiresUrl: src,
+           fileFormat: 'png',
+           maxSize: size,
+           // cropPresets: ['131:155'],
+           // initTool: 'crop',
+           forceCropPreset: [title, ratio],
+           forceCropMessage: 'Please crop your photo to this aspect ratio'
+       });
+      return false;
+   }
+</script>
+<% end %>

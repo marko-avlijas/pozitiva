@@ -6,7 +6,7 @@
       </div>
       <div class="panel-body">
         <div style="text-align: center">
-          <p><%= gravatar_image_tag(@user.email) %></p>
+          <p><%= image_tag @user.avatar_src, width: 80 %></p>
           <h4><%= @user.name %></h4>
           <p style="margin-bottom: 5px">Član grupe <strong><%= @user.group.title %></strong></p>
           <p><strong><%= @user.buyer_tag %></strong></p><br/>
