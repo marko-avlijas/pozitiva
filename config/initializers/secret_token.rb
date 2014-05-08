@@ -9,4 +9,6 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Pozitiva::Application.config.secret_key_base = '45e079e4f549d428604d97451e5de4a4ad388333043dc963d385fdab17d46870004cddc6a2139858a75fe0738f9fd0497002368f864227e65a4825892a68dd8f'
+# Pozitiva::Application.config.secret_key_base = '45e079e4f549d428604d97451e5de4a4ad388333043dc963d385fdab17d46870004cddc6a2139858a75fe0738f9fd0497002368f864227e65a4825892a68dd8f'
+
+Pozitiva::Application.config.secret_key_base = ENV['APP_SECRET_KEY'] || '45e079e4f549d428604d97451e5de4a4ad388333043dc963d385fdab17d46870004cddc6a2139858a75fe0738f9fd0497002368f864227e65a4825892a68dd8f'

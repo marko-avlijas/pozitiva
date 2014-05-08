@@ -38,21 +38,20 @@ class User < ActiveRecord::Base
     self.group.blank?
   end
   
-  def handle_about_attach(uploaded_attach)
-    # save about_attach if uploaded and allowed type and size
-    if uploaded_attach.present?
-      if UPLOAD_CONTENT_TYPES_WHITELIST.include?(uploaded_attach.content_type) && (uploaded_attach.tempfile.size <= UPLOAD_MAX_FILE_SIZE)
-        self.about_attach = uploaded_attach.read
-        # self.about_attach_filename  = uploaded_attach.original_filename
-        self.about_attach_mime_type = uploaded_attach.content_type
-        self.about_attach_file_size = uploaded_attach.tempfile.size
-        self.save
-      else
-        errors.add(:about_attach, "Dozvoljen je samo PDF dokument manji od #{number_to_human_size(UPLOAD_MAX_FILE_SIZE)}")
-        return false
-      end
+  def handle_about_attach(attachment)
+    return true if attachment.blank?
+    if UploadValidator.new(self, :about_attach, attachment).valid?    
+      self.about_attach = attachment.read
+      # self.filename  = attachment.original_filename
+      self.about_attach_mime_type = attachment.content_type
+      self.about_attach_file_size = attachment.tempfile.size
+      true
     else
-      return true
+      false
     end
+  rescue => e
+    errors.add(:base, "Attachment upload error: #{e}")
+    false
   end
+
 end

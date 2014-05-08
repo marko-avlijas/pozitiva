@@ -35,14 +35,10 @@ class ProfilesController < ApplicationController
   
   # PATCH/PUT /profiles/1
   def update
-    respond_to do |format|
-      if @user.update(profile_params.except(:about_attach)) && @user.handle_about_attach(profile_params[:about_attach])
-        format.html { redirect_to my_profile_path, notice: 'Promjene na korisničkom profilu su uspješno spremljene.' }
-        # format.json { head :no_content }
-      else
-        format.html { render action: 'my_profile' }
-        # format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.handle_about_attach(profile_params[:about_attach]) and @user.update(profile_params.except(:about_attach))
+      redirect_to my_profile_path, notice: 'Promjene na korisničkom profilu su uspješno spremljene.'
+    else
+      render action: 'my_profile'
     end
   end
   
@@ -51,16 +47,12 @@ class ProfilesController < ApplicationController
   end
   
   def delete_about_attach
-    @user.about_attach = @user.about_attach_mime_type = nil
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to profile_path(@user), notice: 'Promjene na korisničkom profilu su uspješno spremljene.' }
-        # format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        # format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
+    @user.about_attach = @user.about_attach_mime_type @user.about_attach_file_size = nil
+    if @user.save
+      redirect_to profile_path(@user), notice: 'Promjene na korisničkom profilu su uspješno spremljene.'
+    else
+      render action: 'edit'
+    end  
   end
   
   private

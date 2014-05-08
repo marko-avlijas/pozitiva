@@ -12,7 +12,7 @@ class OffersController < ApplicationController
   def index
     @offers = Offer.published.joins(:group_offerings).where("group_offerings.group_id = ? ", current_user.group_id)
     @my_offers = Offer.where(user_id: current_user.id)
-    @current_user_order_in_offer_ids = @offers.map{ |offer| offer.id if  offer.orders_count_from_user(current_user) > 0 }.compact
+    @current_user_order_in_offer_ids = @offers.map{ |offer| offer.id if offer.orders_count_from_user(current_user) > 0 }.compact
   end
 
   def print_orders
@@ -55,55 +55,38 @@ class OffersController < ApplicationController
   # POST /offers
   # POST /offers.json
   def create
-    @offer = Offer.new(offer_params.except(:attach))
-    @offer.user = current_user
-    
-    respond_to do |format|
-      if @offer.save && @offer.handle_attach(offer_params[:attach])
-        format.html { redirect_to @offer, notice: 'Ponuda je uspješno kreirana.' }
-        # format.json { render action: 'show', status: :created, location: @offer }
-      else
-        format.html { 
-          @offer.offer_items.build
-          @offer.deliveries.build
-          render action: 'new' 
-        }
-        # format.json { render json: @offer.errors, status: :unprocessable_entity }
-      end
+    @offer = current_user.offers.build(offer_params.except(:attach))
+    if @offer.handle_attach(offer_params[:attach]) and @offer.save
+      redirect_to @offer, notice: 'Ponuda je uspješno kreirana.'
+    else
+      @offer.offer_items.build
+      @offer.deliveries.build
+      render action: 'new' 
     end
   end
 
   # PATCH/PUT /offers/1
   # PATCH/PUT /offers/1.json
   def update    
-    respond_to do |format|      
-      if @offer.update(offer_params.except(:attach)) and @offer.handle_attach(offer_params[:attach])
-        
-        format.html { 
-          if params[:print_orders].present? 
-            redirect_to print_orders_offer_path(@offer)
-          elsif params[:print_dispatch_notes].present? 
-            redirect_to print_dispatch_notes_offer_path(@offer)
-          else
-            flash[:notice] = 'Promjene su uspješno spremljene'
-            if offer_params_include_total_available_qty?
-              flash[:notice] += ' i naručene količine solidarizirane'
-              redirect_to offer_orders_path(@offer)
-            else
-              redirect_to @offer
-            end
-          end
-        }
-        # format.json { head :no_content }
+    if @offer.handle_attach(offer_params[:attach]) and @offer.update(offer_params.except(:attach))
+      if params[:print_orders].present?
+        redirect_to print_orders_offer_path(@offer) 
+      elsif params[:print_dispatch_notes].present? 
+        redirect_to print_dispatch_notes_offer_path(@offer) 
       else
-        format.html { 
-          if offer_params[:publishing_offer].present?
-            render action: 'show'
-          else
-            render action: 'edit' 
-          end
-        }
-        # format.json { render json: @offer.errors, status: :unprocessable_entity }
+        flash[:notice] = 'Promjene su uspješno spremljene'
+        if offer_params_include_total_available_qty?
+          flash[:notice] += ' i naručene količine solidarizirane'
+          redirect_to offer_orders_path(@offer)
+        else
+          redirect_to @offer
+        end
+      end
+    else # update failed
+      if offer_params[:publishing_offer].present?
+        render action: 'show'
+      else
+        render action: 'edit' 
       end
     end
   end
@@ -113,37 +96,27 @@ class OffersController < ApplicationController
   end
   
   def delete_attach
-    @offer.attach = @offer.attach_mime_type = nil
-    respond_to do |format|
-      if @offer.save
-        format.html { redirect_to @offer, notice: 'Promjene su uspješno spremljene.' }
-        # format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        # format.json { render json: @offer.errors, status: :unprocessable_entity }
-      end
+    @offer.attach = @offer.attach_mime_type = @offer.attach_file_size = nil
+    if @offer.save
+      flash[:notice] = 'Promjene su uspješno spremljene.'
+    else
+      flash[:alert] = 'Greška kod brisanja, promjene nisu spremljene.'
     end
+    redirect_to @offer
   end
   
   # DELETE /offers/1
   # DELETE /offers/1.json
   def destroy
     @offer.destroy
-    respond_to do |format|
-      format.html { redirect_to my_offers_path }
-      # format.json { head :no_content }
-    end
+    redirect_to my_offers_path
   end
 
   def duplicate
-    respond_to do |format|
-      if @copy = @offer.duplicate
-        format.html { redirect_to edit_offer_path(@copy), notice: 'Ponuda je uspješno kopirana.' }
-        # format.json { head :no_content }
-      else
-        format.html { redirect_to @offer, alert: 'Ooops, dogodila se greška i ponuda nije kopirana.' }
-        # format.json { render json: @offer.errors, status: :unprocessable_entity }
-      end
+    if (@copy = @offer.duplicate)
+      redirect_to edit_offer_path(@copy), notice: 'Ponuda je uspješno kopirana.'
+    else
+      redirect_to @offer, alert: 'Ooops, dogodila se greška i ponuda nije kopirana.'
     end
   end
   
