@@ -92,7 +92,7 @@ module ApplicationHelper
     # return "-" if offer_item.min_qty_per_order.blank? || offer_item.min_qty_per_order.to_d == 0.0
     case offer_item.packaging
     when "bulk"
-      "Min. narudžba: #{formatted_qty offer_item.min_qty_per_order} #{offer_item.unit}" if offer_item.min_qty_per_order > 0
+      "Min.: #{formatted_qty offer_item.min_qty_per_order} #{offer_item.unit}" if offer_item.min_qty_per_order > 0
     else
       ""
     end if offer_item.min_qty_per_order
