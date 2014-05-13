@@ -1,8 +1,8 @@
 <div class="panel-heading offer-author">
   <h5>
     <%= link_to profile_path(@offer.user) do %>
-    <%= gravatar_image_tag(@offer.user.email) %>
-    <span class="author"><%= @offer.user.name %></span>
+      <%= image_tag @offer.user.avatar_src, width: 50 %>
+      <span class="author"><%= @offer.user.name %></span>
     <% end %>
   </h5>
 </div>

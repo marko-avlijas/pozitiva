@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class User < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   
@@ -38,21 +40,34 @@ class User < ActiveRecord::Base
     self.group.blank?
   end
   
-  def handle_about_attach(uploaded_attach)
-    # save about_attach if uploaded and allowed type and size
-    if uploaded_attach.present?
-      if UPLOAD_CONTENT_TYPES_WHITELIST.include?(uploaded_attach.content_type) && (uploaded_attach.tempfile.size <= UPLOAD_MAX_FILE_SIZE)
-        self.about_attach = uploaded_attach.read
-        # self.about_attach_filename  = uploaded_attach.original_filename
-        self.about_attach_mime_type = uploaded_attach.content_type
-        self.about_attach_file_size = uploaded_attach.tempfile.size
-        self.save
-      else
-        errors.add(:about_attach, "Dozvoljen je samo PDF dokument manji od #{number_to_human_size(UPLOAD_MAX_FILE_SIZE)}")
-        return false
-      end
-    else
-      return true
+  def avatar_src
+    avatar.present? ? "data:image/jpg;base64,#{Base64.encode64(avatar)}" : 'user.png'    
+  end
+  
+  def download_avatar(url)
+    return true if url.blank?
+    aviary_image = open(url)
+    if aviary_image.status.first.to_i == 200 # => ["200", "OK"]
+      self.avatar = aviary_image.read
+      self.avatar_mime_type = aviary_image.meta["content-type"]
+      # aviary_image.meta["content-length"]  # bytes
     end
   end
+  
+  def handle_about_attach(attachment)
+    return true if attachment.blank?
+    if UploadValidator.new(self, :about_attach, attachment, :pdf).valid?    
+      self.about_attach = attachment.read
+      # self.filename  = attachment.original_filename
+      self.about_attach_mime_type = attachment.content_type
+      self.about_attach_file_size = attachment.tempfile.size
+      true
+    else
+      false
+    end
+  rescue => e
+    errors.add(:base, "Attachment upload error: #{e}")
+    false
+  end
+
 end

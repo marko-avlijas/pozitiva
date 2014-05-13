@@ -91,20 +91,19 @@ class Offer < ActiveRecord::Base
     kopy.save ? kopy : nil
   end
   
-  def handle_attach(uploaded_attach)
-    if uploaded_attach.present?
-      if UPLOAD_CONTENT_TYPES_WHITELIST.include?(uploaded_attach.content_type) && (uploaded_attach.tempfile.size <= UPLOAD_MAX_FILE_SIZE)
-        self.attach = uploaded_attach.read
-        # self.filename  = uploaded_attach.original_filename
-        self.attach_mime_type = uploaded_attach.content_type
-        self.attach_file_size = uploaded_attach.tempfile.size
-        self.save
-      else
-        errors.add(:attach, "Dozvoljen je samo PDF dokument manji od #{number_to_human_size(UPLOAD_MAX_FILE_SIZE)}")
-        return false
-      end
+  def handle_attach(attachment)
+    return true if attachment.blank?
+    if UploadValidator.new(self, :attach, attachment, :pdf).valid?    
+      self.attach = attachment.read
+      # self.filename  = attachment.original_filename
+      self.attach_mime_type = attachment.content_type
+      self.attach_file_size = attachment.tempfile.size
+      true
     else
-      return true
+      false
     end
+  rescue => e
+    errors.add(:base, "Attachment upload error: #{e}")
+    false
   end
 end

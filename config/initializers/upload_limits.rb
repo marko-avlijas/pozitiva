@@ -1,2 +1,0 @@
-UPLOAD_CONTENT_TYPES_WHITELIST = %w(application/pdf)
-UPLOAD_MAX_FILE_SIZE = 4.megabytes
