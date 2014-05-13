@@ -27,7 +27,7 @@
   <div class="form-group">
     <div class="checkbox">
       <%= hidden_field_tag "user[locked_at]", nil, id: "hidden_locked_at" %>
-      <% check_box_selected = @user.try(:locked_at) ? @user.locked_at : Time.now.to_s(:db) %>
+      <% check_box_selected = @user.try(:locked_at) ? @user.locked_at : Time.current.to_s(:db) %>
       <%= f.check_box :locked_at, {}, check_box_selected, nil %>       
       <%= f.label :locked_at, "Suspendiran" %>
     </div>

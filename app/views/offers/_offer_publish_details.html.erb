@@ -4,7 +4,7 @@
     <ul>
       <li>
         <span class="glyphicon glyphicon-record"></span> <%= formatted_valid_until @offer %> 
-        <% if @offer.valid_until && @offer.valid_until > Time.now %>
+        <% if @offer.valid_until && @offer.valid_until > Time.current %>
         &nbsp;
         <%= badge_status(@offer) %>
         <% end %>

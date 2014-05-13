@@ -1,5 +1,5 @@
 <div class="col-md-6 offer-details">
-  <% if @offer.valid_from && @offer.valid_from > Time.now %>
+  <% if @offer.valid_from && @offer.valid_from > Time.current %>
   <h3 style="color: #EE932E"><i class="fa fa-exclamation-circle"></i> &nbsp;Ponuda je objavljena s vremenskom odgodom</h3>
   <p>Vrijeme objave: <strong><%= formatted_valid_from @offer %></strong></p> 
   <% else %>
@@ -73,7 +73,7 @@
         <div class="modal-body">
           <label>Odaberi datum i vrijeme objave:</label>
           <div class="input-group date datetimepicker" style="float: left; margin-right: 10px">
-            <%= f.text_field :valid_from, value: dt_picker(f.object.valid_from || Time.now), class: "form-control" %>
+            <%= f.text_field :valid_from, value: dt_picker(f.object.valid_from || Time.current), class: "form-control" %>
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>

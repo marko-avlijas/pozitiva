@@ -64,9 +64,9 @@ class Offer < ActiveRecord::Base
   
   def status
     case
-    when valid_from.present? && (valid_from <= Time.now) && valid_until.present? && (valid_until >= Time.now) && self.group_offerings.present? && deliveries.present?
+    when valid_from.present? && (valid_from <= Time.current) && valid_until.present? && (valid_until >= Time.current) && self.group_offerings.present? && deliveries.present?
       :active
-    when (valid_until.present?) && (valid_until < Time.now)
+    when (valid_until.present?) && (valid_until < Time.current)
       :finished
     else
       :draft
@@ -75,8 +75,8 @@ class Offer < ActiveRecord::Base
   
   # TODO - new field "deactivated"
   def deactivate
-    self.valid_from = Time.now - 48.hours
-    self.valid_until = Time.now
+    self.valid_from = Time.current - 48.hours
+    self.valid_until = Time.current
     self.save!      
   end
   

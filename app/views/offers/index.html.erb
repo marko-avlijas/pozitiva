@@ -22,7 +22,7 @@
         <div class="offer-details">
         <label>Rok za narudžbu:</label>
           <strong style="line-height: 26px"><span class="glyphicon glyphicon-record"></span> <%= "#{formatted_valid_until offer}" if offer.valid_until %></strong>
-          <% if offer.valid_until && offer.valid_until > Time.now %>
+          <% if offer.valid_until && offer.valid_until > Time.current %>
           <%= badge_status(offer) %>
           <% end %>
         </div>

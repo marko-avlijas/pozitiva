@@ -197,11 +197,11 @@ module ApplicationHelper
   end
   
   def formatted_delivery_when_date(delivery)
-    l(delivery.when.to_date, format: "%A %d.%m.%Y") if delivery.when
+    l(delivery.when, format: "%A %d.%m.%Y") if delivery.when
   end
   
   def formatted_delivery_when_time(delivery)
-    l(delivery.when.to_time, format: "%k:%M") if delivery.when
+    l(delivery.when, format: "%k:%M") if delivery.when
   end
   
   def display_order(order)
@@ -211,7 +211,7 @@ module ApplicationHelper
   def badge_delivery(order)
     location = order.delivery.location.title if order && order.try(:delivery) && order.delivery.try(:location)
     time = "u #{formatted_delivery_when order.delivery}" if order.try(:delivery) && order.delivery.try(:when)
-    grey = "grey" if order.delivery.when && order.delivery.when < Time.now
+    grey = "grey" if order.delivery.when && order.delivery.when < Time.current
     blue = "blue" if order.delivery.when.blank?
     content_tag :span, "#{location} #{time}" , class: "badge #{grey} #{blue}"
   end

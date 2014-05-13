@@ -4,7 +4,7 @@ class Admin::CleanupController < ApplicationController
   def clean_older_than
     older_than = params["older_than"].to_i
     if older_than > 1
-      offers = Offer.where("valid_until < ?", Time.now - older_than.months)
+      offers = Offer.where("valid_until < ?", Time.current - older_than.months)
       offers_count = offers.count
       offers.each do |offer|
         offer.orders.destroy_all
