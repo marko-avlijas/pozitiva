@@ -12,6 +12,7 @@ hr:
         deliveries: "Mjesto i vrijeme isporuke"
         group_offerings: "Vidljivost ponude po grupama"
         valid_until: "Rok za narudžbu"
+        attach: "PDF s više informacija o ponudi"
         
       delivery:
         when: "Vrijeme isporuke"

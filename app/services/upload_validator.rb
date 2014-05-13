@@ -1,5 +1,7 @@
 class UploadValidator
   
+  include ActionView::Helpers::NumberHelper
+  
   UPLOAD_MAX_FILE_SIZE = 4.megabytes
   PDF_CONTENT_TYPE_WHITELIST = %w(application/pdf)
   IMAGE_CONTENT_TYPE_WHITELIST = %w(image/png image/jpeg image/gif)
@@ -14,7 +16,7 @@ class UploadValidator
     valid_content_type? && valid_size?
   end
    
-  def valid_content_type_for?(content_type)
+  def valid_content_type?(content_type=:pdf)
     if content_type == :pdf
       whitelist = PDF_CONTENT_TYPE_WHITELIST
     elsif content_type == :image
