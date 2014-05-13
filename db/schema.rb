@@ -174,6 +174,8 @@ ActiveRecord::Schema.define(version: 20140513073844) do
     t.string   "company_address"
     t.string   "company_oib"
     t.string   "neighborhood"
+    t.binary   "avatar"
+    t.string   "avatar_mime_type"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
