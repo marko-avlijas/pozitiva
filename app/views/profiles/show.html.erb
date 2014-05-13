@@ -5,15 +5,17 @@
         <h3>Korisnički profil</h3>
       </div>
       <div class="panel-body">
-        <div style="text-align: center">
-          <p><%= gravatar_image_tag(@user.email) %></p>
-          <h4><%= @user.name %></h4>
-          <p style="margin-bottom: 5px">Član grupe <strong><%= @user.group.title %></strong></p>
-          <p><strong><%= @user.buyer_tag %></strong></p><br/>
-        </div>
+        <p><%= gravatar_image_tag(@user.email) %></p>
+        <h4><%= @user.name %></h4>
+        <hr/>
+        <p>Član grupe: <strong><%= @user.group.title %></strong></p>
+        <p>Članski broj: <strong><%= @user.buyer_tag %></strong></p>
+        <p>Kvart: <strong><%= @user.neighborhood %></strong></p>
+        <hr/>
+        
         <p><%= @user.about_text %></p>
-        <p><label>Više na linku:</label> <%= @user.about_url %></p>
-        <p><label>Više u dokumentu: </label>
+        <p>Više na linku: <strong><%= @user.about_url %></strong></p>
+        <p>Više u dokumentu: 
           <% if @user.try(:about_attach) %>
           <%= link_to "Download (#{number_to_human_size @user.about_attach_file_size.to_i})", 
           about_attach_profile_path %> 

@@ -4,6 +4,7 @@
   <p>Ime i prezime: <strong><%= link_to @user.name, profile_path(@user) %></strong></p>
   <p>E-mail adresa: <strong><%= @user.email %></strong></p>
   <p>Telefon: <strong><%= @user.phone %></strong></p>
+  <p>Kvart: <strong><%= @user.neighborhood %></strong></p>
   <p>Resetirana lozinka: <strong><%= @user.try(:reset_password_sent_at) ? short_dt(@user.reset_password_sent_at) : 'nikad' %></strong></p>
   <div class="form-group">
     <%= f.label :group_id, "Grupa:" %>

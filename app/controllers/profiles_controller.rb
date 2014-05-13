@@ -75,7 +75,7 @@ class ProfilesController < ApplicationController
   end
   
   def profile_params
-    params.require(:user).permit(:about_text, :about_url, :phone, :about_attach, :company_name, :company_address, :company_oib) # can't change email, name
+    params.require(:user).permit(:about_text, :about_url, :phone, :about_attach, :company_name, :company_address, :company_oib, :neighborhood) # can't change email, name
   end  
 
 end

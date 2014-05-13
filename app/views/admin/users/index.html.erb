@@ -22,6 +22,7 @@
           <th>Oznaka kupca</th>
           <th>Name / Email</th>
           <th>Grupa</th>
+          <th>Kvart</th>
           <th>Admin</th>
           <th>Suspend.</th>
           <th>created_at</th>
@@ -40,6 +41,7 @@
           <td><%= user.buyer_tag %></td>
           <td><%= user.name %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
           <td><%= user.try(:group) ? user.group.title : '-' %></td>
+          <td><%= user.neighborhood %></td>
           <td><%= user.admin ? 'Da' : '-' %></td>
           <td><%= user.try(:locked_at) ? short_dt(user.locked_at) : '-' %></td>
           <td><%= short_dt user.created_at %></td>
@@ -62,6 +64,7 @@
           <th>Oznaka kupca</th>
           <th>Name / Email</th>
           <th>Grupa</th>
+          <th>Kvart</th>
           <th>Admin</th>
           <th>Suspend.</th>
           <th>created_at</th>
@@ -80,6 +83,7 @@
           <td><%= user.buyer_tag %></td>
           <td><%= user.name %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
           <td><%= user.try(:group) ? user.group.title : '-' %></td>
+          <td><%= user.neighborhood %></td>
           <td><%= user.admin ? 'Da' : '-' %></td>
           <td><%= user.try(:locked_at) ? short_dt(user.locked_at) : '-' %></td>
           <td><%= short_dt user.created_at %></td>
@@ -101,6 +105,7 @@
           <th>Oznaka kupca</th>
           <th>Name / Email</th>
           <th>Grupa</th>
+          <th>Kvart</th>
           <th>Admin</th>
           <th>Suspend.</th>
           <th>created_at</th>
@@ -119,6 +124,7 @@
           <td><%= user.buyer_tag %></td>
           <td><%= user.name %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
           <td><%= user.try(:group) ? user.group.title : '-' %></td>
+          <td><%= user.neighborhood %></td>
           <td><%= user.admin ? 'Da' : '-' %></td>
           <td><%= user.try(:locked_at) ? short_dt(user.locked_at) : '-' %></td>
           <td><%= short_dt user.created_at %></td>
