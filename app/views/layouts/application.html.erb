@@ -15,6 +15,20 @@
   <%#= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%#= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= stylesheet_link_tag    "application", media: "all" %>
+  <% unless mobile_device? %>
+  <style>
+  body { background-image: url(<%= asset_path 'bg_paper.jpg' %>); }
+  .povrce{
+    height: 180px;
+    background-image: url(<%= asset_path 'povrce_bg.png' %>);
+    opacity: .8;
+  }
+  #wrap {
+    margin: 0 auto -250px;
+    padding: 0 0 250px;
+  }
+  </style>
+  <% end %>
   <%= javascript_include_tag "application"  %>
   <%= yield :javascript %>
   
@@ -36,7 +50,7 @@
         <%= msg %>
       </div>
       <% end %>
-      
+       
       <%= yield %>
     </div> <!-- /container -->
   </div> <!-- /wrap -->
