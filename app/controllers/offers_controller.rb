@@ -44,6 +44,7 @@ class OffersController < ApplicationController
   def new
     @offer = Offer.new
     @offer.offer_items.build #if @offer.offer_items.empty?
+    @stale_form_check_timestamp = Time.now.to_i
   end
 
   # GET /offers/1/edit
@@ -56,12 +57,20 @@ class OffersController < ApplicationController
   # POST /offers.json
   def create
     @offer = current_user.offers.build(offer_params.except(:attach))
-    if @offer.handle_attach(offer_params[:attach]) and @offer.save
+    
+    # if stale form? (user clicked back in browser) http://stackoverflow.com/questions/4657758
+    if session[:offer_last_created_at].to_i > params[:timestamp].to_i
+      flash[:alert] = 'Za promjenu ponude nemojte koristiti gumb "Back" iz browsera, nego isključivo link "Uredi ponudu" na pregledu vaše ponude'
+      render action: 'new'
+
+    elsif @offer.handle_attach(offer_params[:attach]) and @offer.save
+      @stale_form_check_timestamp = Time.now.to_i
+      session[:offer_last_created_at] = @stale_form_check_timestamp
       redirect_to @offer, notice: 'Ponuda je uspješno kreirana.'
     else
       @offer.offer_items.build
       @offer.deliveries.build
-      render action: 'new' 
+      render action: 'new'
     end
   end
 

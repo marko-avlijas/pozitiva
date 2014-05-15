@@ -25,7 +25,7 @@
     </div>
     <div class="focus-footer">
       <div class="footer-links">
-        <%= link_to('Uredi proizvode', edit_offer_path(@offer) ) if @offer.editable? && (@offer.user == current_user) %>
+        <%= link_to('Uredi ponudu', edit_offer_path(@offer) ) if @offer.editable? && (@offer.user == current_user) %>
       </div>
     </div>
   </div>
