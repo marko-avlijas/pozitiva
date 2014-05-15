@@ -123,7 +123,7 @@ class OrdersController < ApplicationController
   end
 
   def current_user_can_see_orders
-    raise "[OrdersController#current_user_can_see_orders]" unless offer_from_current_user?
+    raise "[OrdersController#current_user_can_see_orders]" unless offer_from_current_user? || current_user_is_admin?
   end
 
   def current_user_can_see_order
