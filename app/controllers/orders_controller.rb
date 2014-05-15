@@ -48,7 +48,6 @@ class OrdersController < ApplicationController
     @offer = Offer.find(params[:offer_id])
     @offer_items = @offer.offer_items
     @order = @offer.orders.build
-    @stale_form_check_timestamp = Time.now.to_i
   end
 
   # GET /orders/1/edit
@@ -62,14 +61,7 @@ class OrdersController < ApplicationController
     @order = @offer.orders.build(order_params)
     @order.user = current_user
 
-    # if stale form? (user clicked back in browser) http://stackoverflow.com/questions/4657758
-    if session[:last_created_at].to_i > params[:timestamp].to_i
-      flash[:alert] = 'Za promjenu narudžbe nemojte koristiti gumb "Back" iz browsera, nego isključivo link "Uredi narudžbu" na pregledu vaše narudžbe'
-      render action: 'new'
-
-    elsif @order.save
-      @stale_form_check_timestamp = Time.now.to_i
-      session[:last_created_at] = @stale_form_check_timestamp
+    if @order.save
       redirect_to [@offer,@order], notice: 'Narudžba je uspješno kreirana.'
     else
       render action: 'new'

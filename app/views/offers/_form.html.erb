@@ -1,8 +1,6 @@
 <%= form_for @offer, html: {role: "form"} do |f| %>
 <%= error_messages_for @offer %>
 
-<%= hidden_field_tag name: 'timestamp', value: @stale_form_check_timestamp %>
-
 <div class="group">
   <h4><span class="glyphicon glyphicon-bullhorn"></span> &nbsp;Osnovne informacije o ponudi</h4>
   <div class="content">

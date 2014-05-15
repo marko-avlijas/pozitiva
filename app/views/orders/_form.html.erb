@@ -1,8 +1,6 @@
 <%= form_for [@offer, @order], html: {role: "form"}  do |f| %>
 <%= error_messages_for @order %>
 
-<%= hidden_field_tag name: 'timestamp', value: @stale_form_check_timestamp %>
-
 <div class="row">
   <div class="col-md-12 order">
     <div class="group">
