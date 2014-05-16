@@ -13,7 +13,6 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">      
-      <%= li_active_if_current "Naslovnica", root_path %>
       <%= li_active_if_current "Sve ponude", offers_path %>
       <%= li_active_if_current("Moje ponude", my_offers_path) if user_signed_in? && current_user.try(:is_producer) %>
       <%= li_active_if_current "Moje narudžbe", my_orders_path %>

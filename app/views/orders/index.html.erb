@@ -71,7 +71,7 @@
             <tr>
               <td><%= order.id %></td>
               <td><strong><%= order.delivery.location.title %></strong> <br/><%= short_dt order.delivery.when %></td>
-              <td><strong><%= order.user.buyer_tag %> <%= order.user.name %></strong><br/><%= order.user.try(:group) ? order.user.group.title : '-' %><br/>Tel: <%= order.user.phone %><br/><%= order.user.email %></td>
+              <td><strong><%= order.user.buyer_tag %> <%= link_to order.user.name, profile_path(order.user), target: '_blank' %></strong><br/><%= order.user.try(:group) ? order.user.group.title : '-' %><br/>Tel: <%= order.user.phone %><br/><%= order.user.email %></td>
               
               <td>
                 <table class="table">
@@ -156,7 +156,7 @@
                   <tbody>
                     <% offer_item.order_items.each do |order_item| %> 
                     <tr>
-                      <td><%= order_item.order.user.buyer_tag %> <%= order_item.order.user.name %></td>
+                      <td><%= order_item.order.user.buyer_tag %> <%= link_to order_item.order.user.name, profile_path(order_item.order.user)%></td>
                       <td><%= formatted_item_qty_unit order_item %></td>
                       <td><%#= vario_qty_unknown(order_item) %><%= formatted_item_corrected_qty_unit order_item %></td>
                     </tr>
@@ -215,7 +215,7 @@
                     <%#= order_item_form.hidden_field :offer_item_id %>
                     <% order_item = order_item_form.object %>
                     <tr>
-                      <td><%= @order.user.buyer_tag %> <%= @order.user.name %></td>
+                      <td><%= @order.user.buyer_tag %> <%= link_to @order.user.name, profile_path(@order.user)%><%= @order.user.name %></td>
                       <td><%= formatted_item_qty_unit order_item %></td>
                       <td>
                         <% if offer_item.packaging == "vario" %>
