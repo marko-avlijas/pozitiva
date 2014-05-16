@@ -1,7 +1,7 @@
 <%= render 'shared/aviary_feather' %>
 
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-8 col-md-offset-2">
     <div class="panel panel-offer">
       <div class="panel-heading offer-title">
         <h3>Moj profil</h3>
@@ -33,19 +33,19 @@
           <div class="col-lg-8"><%= f.text_field :phone, class: "form-control" %></div>
         </div>
         <div class="form-group">
-          <%= f.label :neighborhood, "Kvart", class: "col-lg-4 control-label" %>
+          <%= f.label :neighborhood, "Moj kvart", class: "col-lg-4 control-label" %>
           <div class="col-lg-8"><%= f.text_field :neighborhood, class: "form-control" %></div>
         </div>				
         <div class="form-group">
-          <%= f.label :about_text, "Opis", class: "col-lg-4 control-label" %>
+          <%= f.label :about_text, "O meni", class: "col-lg-4 control-label" %>
           <div class="col-lg-8"><%= f.text_area :about_text, class: "form-control" %></div>
         </div>
         <div class="form-group">
-          <%= f.label :about_url, "URL", class: "col-lg-4 control-label" %>
+          <%= f.label :about_url, "Link na moju web-stranicu", class: "col-lg-4 control-label" %>
           <div class="col-lg-8"><%= f.text_field :about_url, class: "form-control" %></div>
         </div>
         <div class="form-group">
-          <%= f.label :about_attach, "PDF", class: "col-lg-4 control-label" %>
+          <%= f.label :about_attach, "O meni u PDF-u", class: "col-lg-4 control-label" %>
           <div class="col-lg-8">
             <%= f.file_field :about_attach, class: "form-control" %>
             <% if @user.about_attach.present? %>
@@ -53,9 +53,15 @@
             <%= link_to("x", about_attach_profile_path(@user), method: :delete, data: { confirm: 'Jeste li sigurni da želite izbrisati?' }) %>
             <% end %>
           </div>
-        </div>		
-        <br/>
-
+        </div>
+        <br/>		
+        <hr/>
+        <div class="form-group">
+          <div class="col-md-8 col-md-offset-4">
+            <h4 >Samo za proizvođače</h4>
+            <p>Podaci potrebni za ispis narudžbenica i otpremnica:</p>
+          </div>
+        </div>
         <div class="form-group">
           <%= f.label :company_name, "Naziv OPG-a ili Tvrtke", class: "col-lg-4 control-label" %>
           <div class="col-lg-8"><%= f.text_field :company_name, class: "form-control" %></div>

@@ -14,7 +14,7 @@
         <hr/>
 
         <p><%= @user.about_text %></p>
-        <p>Više na linku: <strong><%= @user.about_url %></strong></p>
+        <p>Više na linku: <strong><%= link_to @user.about_url, @user.about_url, target: "_blank" %></strong></p>
         <p>Više u dokumentu: 
           <% if @user.try(:about_attach) %>
           <%= link_to "Download (#{number_to_human_size @user.about_attach_file_size.to_i})", 
