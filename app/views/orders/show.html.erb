@@ -4,7 +4,11 @@
   <div class="panel-heading offer-title">
 
         <h3>Narudžba br. <%= @order.id %> </h3>
-        <p class="lead" style="margin-bottom: 10px"><%= link_to @offer.title, @offer, target: '_blank' %> - <%= link_to @offer.user.name, profile_path(@offer.user), target: '_blank' %></p>
+        <ul style=" padding: 5px 0 0 0; line-height: 1.6em">
+          <li><label>Naručitelj:</label> <%= link_to @order.user.name, profile_path(@order.user) %> <span style="font-weight: 600">(<%= @order.user.buyer_tag %>)</span></li>
+          <li><label>Prema ponudi:</label> <%= link_to @offer.title, @offer %></li>
+          <li><label>Autor ponude:</label> <%= link_to @offer.user.name, profile_path(@offer.user) %></li>
+      </ul>
         <%= @offer.note %>
 
   </div>
@@ -69,8 +73,8 @@
     <%#= link_to 'Promijeni narudžbu', edit_offer_order_path(@offer, @order) %> 
     <%#= link_to 'Izbriši narudžbu', [@offer, @order], method: :delete, data: { confirm: 'Are you sure?' } %>
     
-    <%= link_to('Uredi narudžbu', edit_offer_order_path(@offer, @order)) unless @offer.expired? %>&nbsp; &nbsp; 
-    <%= link_to('Izbriši narudžbu', offer_order_path(@offer, @order), method: :delete, data: { confirm: 'Jeste li sigurni da želite obrisati narudžbu?' }) unless @offer.expired? %>
+    <%= link_to('Uredi narudžbu', edit_offer_order_path(@offer, @order), class:'btn btn-primary') unless @offer.expired? %>
+    <%= link_to('Izbriši narudžbu', offer_order_path(@offer, @order), class:'btn', method: :delete, data: { confirm: 'Jeste li sigurni da želite obrisati narudžbu?' }) unless @offer.expired? %>
     
     <%#= link_to 'Back', offer_orders_path(@offer) %>
     <% end %>

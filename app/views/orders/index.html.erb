@@ -71,7 +71,7 @@
             <tr>
               <td><%= order.id %></td>
               <td><strong><%= order.delivery.location.title %></strong> <br/><%= short_dt order.delivery.when %></td>
-              <td><strong><%= order.user.buyer_tag %> <%= link_to order.user.name, profile_path(order.user), target: '_blank' %></strong><br/><%= order.user.try(:group) ? order.user.group.title : '-' %><br/>Tel: <%= order.user.phone %><br/><%= order.user.email %></td>
+              <td><strong><%= order.user.buyer_tag %> <%= link_to order.user.name, profile_path(order.user) %></strong><br/><%= order.user.try(:group) ? order.user.group.title : '-' %><br/>Tel: <%= order.user.phone %><br/><%= order.user.email %></td>
               
               <td>
                 <table class="table">
@@ -215,7 +215,7 @@
                     <%#= order_item_form.hidden_field :offer_item_id %>
                     <% order_item = order_item_form.object %>
                     <tr>
-                      <td><%= @order.user.buyer_tag %> <%= link_to @order.user.name, profile_path(@order.user)%><%= @order.user.name %></td>
+                      <td><span style="font-weight: 600"><%= @order.user.buyer_tag %></span> <%= link_to @order.user.name, profile_path(@order.user)%></td>
                       <td><%= formatted_item_qty_unit order_item %></td>
                       <td>
                         <% if offer_item.packaging == "vario" %>

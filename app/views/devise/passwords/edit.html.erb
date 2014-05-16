@@ -11,7 +11,9 @@
         
         <div class="form-group" style="overflow: auto;"> 
           <%= f.label :password, "Nova lozinka", class: "col-lg-4 control-label" %>
-          <div class="col-lg-8"><%= f.password_field :password, :autofocus => true, class: "form-control" %></div>
+          <div class="col-lg-8"><%= f.password_field :password, :autofocus => true, class: "form-control" %>
+          <span class="help-block">Koristite kombinaciju slova i brojki, minimalno 8 znakova</span>
+        </div>
         </div>
         <div class="form-group" style="overflow: auto;"> 
           <%= f.label :password_confirmation, "Potvrdi novu lozinku", class: "col-lg-4 control-label" %>

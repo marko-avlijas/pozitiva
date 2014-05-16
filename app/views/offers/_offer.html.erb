@@ -22,15 +22,16 @@
           <% end %>
         </tbody>
       </table>
+      <% if (@offer.user == current_user) %><span class="help-block">Za promjenu poretka primite stavku mišem i odvucite na željenu poziciju</span>
+      <% end %>
     </div>
     <div class="focus-footer">
       <div class="footer-links">
-        <%= link_to('Uredi ponudu', edit_offer_path(@offer) ) if @offer.editable? && (@offer.user == current_user) %>
+        <%= link_to('Uredi proizvode', edit_offer_path(@offer), class: 'btn btn-primary btn-xs' ) if @offer.editable? && (@offer.user == current_user) %>
       </div>
     </div>
   </div>
-  <% if (@offer.user == current_user) %><span class="help-block">Za promjenu poretka primite stavku mišem i odvucite na željenu poziciju</span><br/>
-  <% end %>
+  
 </div> 
 <%# if current_user.offers.exists?(id: @offer.id) %>
 <% if (@offer.user == current_user) %>
