@@ -14,7 +14,7 @@
       <th>Isporuka</th>
       <th>Naručitelj</th>
       <th>Proizvodi</th>
-      <th>Ukupno</th>
+      <th>Uk. cijena</th>
     </tr>
   </thead>
   <tbody>
@@ -28,9 +28,9 @@
         <table class="table">
           <thead>
             <th>Proizvod</th>
-            <th>Količina</th>
+            <th>Isporučena kol.</th>
             <th>Jed. cijena</th>
-            <th>Ukupno</th>
+            <th>Ukupna cijena</th>
           </thead>
           <tbody>
             <% total = 0 %>
@@ -43,7 +43,7 @@
                 <strong><%= formatted_item_numeric_qty_unit order_item %></strong>
               </td>
               <td>
-                <%= formatted_price order_item.offer_item.decimal_price %>
+                <%= offer_item_quantity_for_price(order_item.offer_item) %>
               </td>
               <td>
                 <%= vario_price_unknown(order_item) %>

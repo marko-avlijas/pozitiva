@@ -58,7 +58,7 @@
               <th>Isporuka</th>
               <th>Naručitelj</th>
               <th>Narudžba</th>
-              <th>Ukupno</th>
+              <th>Uk. cijena</th>
               <!-- <th>Status</th> -->
               <th></th>
               <!-- <th></th> -->
@@ -78,8 +78,8 @@
                   <thead>
                     <th>Proizvod</th>
                     <th>Isporučena kol.</th>
-                    <th>Cijena</th>
-                    <th>Ukupno</th>
+                    <th>Jed. cijena</th>
+                    <th>Uk. cijena</th>
                   </thead>
                   <tbody>
                     <% total = 0 %>
@@ -128,10 +128,10 @@
               <th>Proizvod</th>
               <th>Jed. mjera</th>
               <th>Jed. cijena</th>
-              <th>Naručena kol.</th>
+              <th>Uk. naručena kol.</th>
               <th>Količine po narudžbama</th>
               <th>Uk. cijena</th>
-              <th>Uk. isporučeno</th> 
+              <th>Uk. isporučena kol.</th> 
             </tr>
           </thead>
           <tbody>
@@ -174,7 +174,7 @@
                 </table>
               </td>
               <td><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></td>
-              <td><strong><%= @offer_items_sum[id][:numeric_qty_sum] %> 
+              <td><strong><%= formatted_qty @offer_items_sum[id][:numeric_qty_sum] %> 
                 <% unless offer_item.packaging == "package" %>
                 <%= @offer_items_sum[id][:unit] %>
                 <% end %>
@@ -189,7 +189,7 @@
         
       <div id="calculation-tab-2" class="tab-pane">
         <h3>Korekcija količina</h3>
-        <p class="lead">Količine je moguće korigirati <strong>nakon isteka roka za narudžbu</strong>.</p><br/>
+        <p class="lead" style="color: #cc2200">Količine je moguće korigirati <strong>nakon isteka roka za narudžbu</strong>.</p><br/>
         <table class="table">
           <thead>
             <tr>

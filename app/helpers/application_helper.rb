@@ -157,7 +157,7 @@ module ApplicationHelper
       end
       
     else
-      "#{formatted_qty item.numeric_qty} x #{item.offer_item.unit}"
+      "#{formatted_qty item.numeric_qty}"
     end
   end
   
