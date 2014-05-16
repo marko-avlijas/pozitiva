@@ -128,11 +128,10 @@
               <th>Proizvod</th>
               <th>Jed. mjera</th>
               <th>Jed. cijena</th>
-              <th>Ukupno</th>
-              <th>Naručeno</th>
+              <th>Naručena kol.</th>
               <th>Količine po narudžbama</th>
-              
-              <th>Isporučeno</th>
+              <th>Uk. cijena</th>
+              <th>Uk. isporučeno</th> 
             </tr>
           </thead>
           <tbody>
@@ -142,10 +141,20 @@
             <tr>
               <td><%= id %></td>
               <td><%= offer_item_packaging_icon @offer_items_sum[id][:icon] %> &nbsp;<strong><%= @offer_items_sum[id][:title] %></strong></td>
-              <td><%= @offer_items_sum[id][:unit] %></td>
+              <td><strong>
+                <%= '1' unless offer_item.packaging == "package" %> <%= @offer_items_sum[id][:unit] %></strong></td>
               <td><%= formatted_price @offer_items_sum[id][:price] %></td>
-              <td><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></td>
-              <td><strong><%= formatted_qty @offer_items_sum[id][:qty_sum] %> <%= @offer_items_sum[id][:unit] %></strong></td>
+              
+              <td><strong>
+                <% unless offer_item.packaging == "vario" %>
+                <%= formatted_qty @offer_items_sum[id][:qty_sum] %> 
+                  <% if offer_item.packaging == "bulk" %>
+                  <%= @offer_items_sum[id][:unit] %></strong>
+                  <% end %>
+                <% else %>
+                opisno
+                <% end %>
+              </td>
               <td>
                 <table class="table">
                   <thead>
@@ -164,8 +173,13 @@
                   </tbody>
                 </table>
               </td>
-              
-              <td><strong><%= @offer_items_sum[id][:numeric_qty_sum] %> <%= @offer_items_sum[id][:unit] %></strong></td>
+              <td><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></td>
+              <td><strong><%= @offer_items_sum[id][:numeric_qty_sum] %> 
+                <% unless offer_item.packaging == "package" %>
+                <%= @offer_items_sum[id][:unit] %>
+                <% end %>
+              </strong>
+              </td>
             </tr>
             <% end %>
             <% end %>
@@ -174,7 +188,8 @@
       </div>
         
       <div id="calculation-tab-2" class="tab-pane">
-        <h3>Korekcija količina</h3><br/>
+        <h3>Korekcija količina</h3>
+        <p class="lead">Količine je moguće korigirati <strong>nakon isteka roka za narudžbu</strong>.</p><br/>
         <table class="table">
           <thead>
             <tr>
@@ -182,9 +197,9 @@
               <th></th>
               <th>Proizvod</th>
               <th>Jed. mjera</th>
-              <th>Naručena količina</th>
-              <th>Količine po narudžbama</th>
-              <th>Dostupna količina</th>
+              <th>Naručena kol.</th>
+              <th>Kol. po narudžbama</th>
+              <th>Dostupna kol.</th>
               <th>Isporučena kol.</th>
             </tr>
           </thead>
@@ -196,9 +211,18 @@
               <td><%= id %></td>
               <td><%= offer_item_packaging_icon @offer_items_sum[id][:icon] %></td>
               <td><strong><%= @offer_items_sum[id][:title] %></strong></td>
-              <td><%= @offer_items_sum[id][:unit] %></td>
+              <td><strong><%= '1' unless offer_item.packaging == "package" %> <%= @offer_items_sum[id][:unit] %></strong></td>
               <td><strong>
-                <%= formatted_qty(@offer_items_sum[id][:qty_sum]) unless offer_item.packaging == 'vario' %>
+                <% unless offer_item.packaging == "vario" %>
+                <%= formatted_qty @offer_items_sum[id][:qty_sum] %> 
+                  <% if offer_item.packaging == "bulk" %>
+                  <%= @offer_items_sum[id][:unit] %></strong>
+                  <% end %>
+                <% else %>
+                opisno
+                <% end %>
+                
+
               </strong></td>
               <td>
                 <table class="table">
@@ -248,7 +272,14 @@
                 <% end # form_for %>
                 <% end # unless %>
               </td>
-              <td><%= @offer_items_sum[id][:numeric_qty_sum].to_s.gsub('.', ',') %></td>
+              <td>
+                <strong>
+                  <%= formatted_qty @offer_items_sum[id][:numeric_qty_sum] %>
+                    <% unless offer_item.packaging == "package" %>
+                    <%= @offer_items_sum[id][:unit] %>
+                    <% end %>
+                  </strong>
+                </td>
             </tr>
             <% end # if @offer_items_sum[id] %>
             <% end # @offer_items.each %>

@@ -74,7 +74,7 @@ module ApplicationHelper
   def offer_item_quantity_for_price(offer_item)
     case offer_item.packaging
     when "bulk", "vario"
-       "1#{offer_item.unit} = #{formatted_price offer_item.decimal_price}"
+       "1 #{offer_item.unit} = #{formatted_price offer_item.decimal_price}"
     when "package"
       "#{offer_item.unit} = #{formatted_price offer_item.decimal_price}"
     else
@@ -123,7 +123,7 @@ module ApplicationHelper
     when "vario"
       out = "#{item.qty_description}"
     else
-      out = "#{formatted_qty item.qty} x #{item.offer_item.unit}"
+      out = "#{formatted_qty item.qty}"
     end
     item.corrected_qty.present? ? content_tag(:span, "(#{out})", style: 'text-decoration: line-through') : out
   end

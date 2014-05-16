@@ -22,7 +22,7 @@
               <span style="display:block; margin-bottom: 5px; font-size: 13px"><%= offer_item.note %></span>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3">
-              <%= "1" unless offer_item.packaging %><%= offer_item.unit %> = <%= formatted_price offer_item.decimal_price %>
+              <%= "1" unless offer_item.packaging %>1 <%= offer_item.unit %> = <%= formatted_price offer_item.decimal_price %>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3">
               <%= offer_item_packaging_min_qty(offer_item) %>

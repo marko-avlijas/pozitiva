@@ -5,13 +5,12 @@
             <tr>
               <th>ID</th>
               <th>Proizvod</th>
-              <th>Jed. mjere</th>
+              <th>Jed. mjera</th>
               <th>Jed. cijena</th>
-              <th>Ukupno</th>
               <th>Naručeno</th>
               <th>Količine po narudžbama</th>
-              
-              <th>Isporučeno</th>
+              <th>Uk. cijena</th>
+              <th>Uk. isporučeno</th>
             </tr>
           </thead>
           <tbody>
@@ -23,7 +22,6 @@
               <td><%= offer_item_packaging_icon @offer_items_sum[id][:icon] %> &nbsp;<strong><%= @offer_items_sum[id][:title] %></strong></td>
               <td><%= @offer_items_sum[id][:unit] %></td>
               <td><%= formatted_price @offer_items_sum[id][:price] %></td>
-              <td><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></td>
               <td><strong><%= formatted_qty @offer_items_sum[id][:qty_sum] %></strong></td>
               <td>
                 <table class="table">
@@ -43,7 +41,7 @@
                   </tbody>
                 </table>
               </td>
-              
+              <td><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></td>
               <td><strong><%= @offer_items_sum[id][:numeric_qty_sum] %> <%= @offer_items_sum[id][:unit] %></strong></td>
             </tr>
             <% end %>
