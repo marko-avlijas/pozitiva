@@ -31,6 +31,7 @@ class UploadValidator
   end
   
   def valid_size?
+    return true if @uploaded_attachment.blank?
     if @uploaded_attachment.tempfile.try(:size).to_i <= UPLOAD_MAX_FILE_SIZE
       true
     else

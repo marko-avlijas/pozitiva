@@ -1,7 +1,8 @@
 <% content_for :javascript do %>
 <script type="text/javascript" charset="utf-8">
+var aviaryFileSelector = 'input[type=file].aviary';
 $(function() {
-  $('input[type=file]').each(function() {
+  $(aviaryFileSelector).each(function() {
     $(this).change(function() {
       if(this.files!=undefined) { 
         loadImage(this.files[0], $(this).siblings('img:first')); 
@@ -13,7 +14,7 @@ $(function() {
   });
   
   $("form").submit(function() {
-      $(this).find('input[type=file]').remove();
+      $(this).find(aviaryFileSelector).remove();
       return true; // ensure form still submits
   });
 });

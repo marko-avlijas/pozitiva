@@ -5,7 +5,7 @@ Pozitiva::Application.routes.draw do
   resources :profiles, only: [:show, :update] do
     member do
       get 'about_attach'
-      get 'delete_about_attach'
+      delete 'about_attach' => 'profiles#delete_about_attach'
       post 'message'
     end
   end

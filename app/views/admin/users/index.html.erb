@@ -39,7 +39,7 @@
           <td><%= user.id %></td>
           <td><%= image_tag user.avatar_src, width: 50 %></td>
           <td><%= user.buyer_tag %></td>
-          <td><%= user.name %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
+          <td><%= link_to user.name, profile_path(user) %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
           <td><%= user.try(:group) ? user.group.title : '-' %></td>
           <td><%= user.neighborhood %></td>
           <td><%= user.admin ? 'Da' : '-' %></td>
@@ -81,7 +81,7 @@
           <td><%= user.id %></td>
           <td><%= image_tag user.avatar_src, width: 50 %></td>
           <td><%= user.buyer_tag %></td>
-          <td><%= user.name %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
+          <td><%= link_to user.name, profile_path(user) %>  <br/><%= user.email %><br/>tel: <%= user.phone %></td>
           <td><%= user.try(:group) ? user.group.title : '-' %></td>
           <td><%= user.neighborhood %></td>
           <td><%= user.admin ? 'Da' : '-' %></td>
@@ -122,7 +122,7 @@
           <td><%= user.id %></td>
           <td><%= image_tag user.avatar_src, width: 50 %></td>
           <td><%= user.buyer_tag %></td>
-          <td><%= user.name %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
+          <td><%= link_to user.name, profile_path(user) %>  <br/><%= user.email %><br/>tel: <%= user.phone %></td>
           <td><%= user.try(:group) ? user.group.title : '-' %></td>
           <td><%= user.neighborhood %></td>
           <td><%= user.admin ? 'Da' : '-' %></td>

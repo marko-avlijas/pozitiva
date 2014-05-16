@@ -15,7 +15,7 @@
           <div class="col-lg-8">
             <%= image_tag @user.avatar_src, width: 80, id: "avatar", data: { title: 'Avatar', ratio: '1:1', size: '300' } %>
             <br/><br/>
-            <%= file_field_tag :avatar_file, accept: "image/gif,image/jpeg,image/png" %>
+            <%= file_field_tag :avatar_file, class: 'aviary', accept: "image/gif,image/jpeg,image/png" %>
             <%= hidden_field_tag :avatar_url %>
             <!-- <button class="btn btn-default btn-sm" onclick="return editImage('avatar');">Edit image</button> -->
           </div>
@@ -49,7 +49,8 @@
           <div class="col-lg-8">
             <%= f.file_field :about_attach, class: "form-control" %>
             <% if @user.about_attach.present? %>
-            <%= link_to "Download (#{number_to_human_size @user.about_attach_file_size.to_i})", about_attach_profile_path(@user) %>
+            <%= link_to "Download (#{number_to_human_size @user.about_attach_file_size.to_i})", about_attach_profile_path(@user), target: '_blank' %> | 
+            <%= link_to("x", about_attach_profile_path(@user), method: :delete, data: { confirm: 'Jeste li sigurni da želite izbrisati?' }) %>
             <% end %>
           </div>
         </div>		
@@ -68,7 +69,7 @@
           <div class="col-lg-8"><%= f.text_field :company_oib, class: "form-control" %></div>
         </div>
         
-        
+        <br/>
         <div class="form-group">
           <div class="col-lg-offset-4 col-lg-8">
             <%= f.submit "Spremi promjene", class: "btn btn-primary" %>
@@ -78,7 +79,6 @@
       </div>
       <div class="panel-footer">
         <div class="footer-links">
-          <%= link_to t(:back), :back %>
         </div>
       </div>
     </div>

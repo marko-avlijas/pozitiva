@@ -37,7 +37,7 @@ class ProfilesController < ApplicationController
   def update
     @user.download_avatar(params[:avatar_url])
     if @user.handle_about_attach(profile_params[:about_attach]) and @user.update(profile_params.except(:about_attach))
-      redirect_to my_profile_path, notice: 'Promjene na korisničkom profilu su uspješno spremljene.'
+      redirect_to profile_path(@user), notice: 'Promjene na korisničkom profilu su uspješno spremljene.'
     else
       render action: 'my_profile'
     end
@@ -48,9 +48,8 @@ class ProfilesController < ApplicationController
   end
   
   def delete_about_attach
-    @user.about_attach = @user.about_attach_mime_type @user.about_attach_file_size = nil
-    if @user.save
-      redirect_to profile_path(@user), notice: 'Promjene na korisničkom profilu su uspješno spremljene.'
+    if @user.update(about_attach: nil, about_attach_mime_type: nil, about_attach_file_size: nil)
+      redirect_to my_profile_path, notice: 'Promjene na korisničkom profilu su uspješno spremljene.'
     else
       render action: 'edit'
     end  

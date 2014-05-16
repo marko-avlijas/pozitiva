@@ -18,10 +18,7 @@
         <p>Više u dokumentu: 
           <% if @user.try(:about_attach) %>
           <%= link_to "Download (#{number_to_human_size @user.about_attach_file_size.to_i})", 
-          about_attach_profile_path %> 
-          <% if @show_delete %>
-          | <%= link_to("Delete", delete_about_attach_profile_path) %>
-          <% end %>
+          about_attach_profile_path, target: '_blank' %> 
           <% else %>
           -
           <% end %>
@@ -29,9 +26,12 @@
       </div>
       <div class="panel-footer">
         <div class="footer-links">
+          <% unless current_user == @user %>
           <button class="btn btn-primary message-trigger" data-toggle="modal" data-target="#message_to_user">
             <i class="fa fa-envelope"></i> Poruka korisniku
           </button>
+          <% end %>
+          <%= link_to("Uredi profil", my_profile_path, class: 'btn btn-primary') if current_user == @user %>
           <div class="modal fade" id="message_to_user">
             <div class="modal-dialog">
               <div class="modal-content">
