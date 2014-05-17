@@ -94,7 +94,7 @@
                       <td>
                         <%= offer_item_quantity_for_price(order_item.offer_item) %>
                       </td>
-                      <td>
+                      <td style="white-space: nowrap">
                         <%= vario_price_unknown(order_item) %>
                       </td>
                     </tr>
@@ -104,7 +104,7 @@
                 </table>
                 <%= truncate(order.note, length: 500) if order.note %>
               </td>
-              <td><strong><%= formatted_price total %></strong></td>
+              <td style="white-space: nowrap"><strong><%= formatted_price total %></strong></td>
               <!-- <td><%#= order.status %></td> -->
               <td><%= link_to 'Detaljnije', offer_order_path(@offer, order) %></td>
               <!-- <td><%#= link_to 'Edit', edit_offer_order_path(@offer, order) %></td> -->
@@ -173,7 +173,7 @@
                   </tbody>
                 </table>
               </td>
-              <td><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></td>
+              <td style="white-space: nowrap"><%= formatted_price @offer_items_sum[id][:numeric_qty_sum] * @offer_items_sum[id][:price] %></td>
               <td><strong><%= formatted_qty @offer_items_sum[id][:numeric_qty_sum] %> 
                 <% unless offer_item.packaging == "package" %>
                 <%= @offer_items_sum[id][:unit] %>
