@@ -7,7 +7,7 @@
       <th class="hidden-xs" >Ponuđač</th>
       <th class="hidden-xs" >Dostava</th>
       <th class="hidden-sm hidden-md hidden-lg" >Dostava</th>
-      <th width="25%" class="hidden-xs hidden-sm" >Narudžba</th>
+      <th width="25%" class="visible-md visible-lg visible-print" >Narudžba</th>
       <th>Ukupan iznos</th>
       <!-- <th>Status</th> -->
       <th></th>
@@ -29,7 +29,7 @@
       <td class="hidden-xs"><%= link_to order.offer.user.name, profile_path(order.offer.user), target: '_blank' %></td>
       <td class="hidden-xs" ><%= badge_delivery order %></td>
       <td class="hidden-sm hidden-md hidden-lg" ><%= badge_delivery order %></td>
-      <td class="hidden-xs hidden-sm" >
+      <td class="visible-md visible-lg visible-print" >
         <table class="table">
           
         <% total = 0 %>
