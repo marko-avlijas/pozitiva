@@ -52,6 +52,16 @@
             <% end %>
           </tbody>
         </table>
+        
+        <pre>Ukupno zapisa u bazi: <%= RowCountsQuery.total %>/10.000</pre>
+        
+        <pre>Broj zapisa po tablicama:
+        <% rows_count = RowCountsQuery.count_per_table %>
+          <%- rows_count.each do |row| -%>
+          <%= row[0] -%>: <%= row[1] %>
+          <%- end -%>
+        </pre>
+        
       </div>
     </div>
   </div>
