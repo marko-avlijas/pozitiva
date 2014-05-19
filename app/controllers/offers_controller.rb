@@ -183,7 +183,7 @@ class OffersController < ApplicationController
   end
   
   def current_user_can_write
-    raise "[OffersController#current_user_can_write]" unless offer_from_current_user?
+    raise "[OffersController#current_user_can_write]" unless (offer_from_current_user? || current_user.admin)
   end
 
   def current_user_can_read
