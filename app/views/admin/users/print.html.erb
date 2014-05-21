@@ -1,0 +1,33 @@
+<h4>Registrirani korisnici Pozitiva Hub aplikacije, <%= Date.today %></h4>
+<br/>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Članski broj</th>
+          <th>Ime i prezime</th>
+          <th>E-mail</th>
+          <th>Telefon</th>
+          <th>Kvart</th>
+          <th>Grupa</th>
+          <th>Proizvođač</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @users_with_group_not_suspended.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.buyer_tag %></td>
+          <td><%= user.name%></td>
+          <td><%= user.email %></td>
+          <td><%= user.phone %></td>
+          <td><%= user.neighborhood %></td>
+          <td><%= user.try(:group) ? user.group.title : '-' %></td>
+          <td><%= user.is_producer ? "Da" : "-" %></td>
+         
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  

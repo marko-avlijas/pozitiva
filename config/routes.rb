@@ -39,7 +39,9 @@ Pozitiva::Application.routes.draw do
   get 'manifest' => 'static_pages#manifest'
   
   namespace :admin do
-    resources :users
+    resources :users do
+      get 'print', on: :collection
+    end
     post 'clean_older_than' => 'cleanup#clean_older_than'  
   end
   

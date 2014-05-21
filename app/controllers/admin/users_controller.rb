@@ -11,6 +11,11 @@ class Admin::UsersController < ApplicationController
     @users_suspended = User.where("users.locked_at IS NOT NULL")
   end
   
+  def print
+    # svi članovi koji su u nekoj grupi i koji nisu suspendirani
+    @users_with_group_not_suspended = User.where("(users.group_id IS NOT NULL) AND (users.locked_at IS NULL)")
+  end
+  
   # GET /admin/users/1/edit
   def edit
     @user = User.find(params[:id])
