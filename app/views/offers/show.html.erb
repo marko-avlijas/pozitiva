@@ -38,7 +38,7 @@
         <%= link_to('Izbriši ponudu'.html_safe,  @offer, class:'btn', method: :delete, data: { confirm: 'Jeste li sigurni da želite izbrisati ponudu?' }) if @offer.editable? %> 
 
         
-        <%= link_to '&nbsp; &nbsp; &nbsp; Vidi kalkulaciju &raquo;'.html_safe, offer_orders_path(@offer) %>
+        <%= link_to '&nbsp; &nbsp; &nbsp; Vidi narudžbe po ovoj ponudi &raquo;'.html_safe, offer_orders_path(@offer) %>
 
         
         

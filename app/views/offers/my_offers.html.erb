@@ -11,12 +11,11 @@
           <thead>
             <tr>
               <th class="hidden-xs">ID</th>
-              <th class="hidden-xs">Za koga</th>
-              <th>Naziv ponude</th>
+              <th>Za</th>
+              <th>Naziv</th>
               <th>Status</th>
               <th class="hidden-xs">Objavljena</th>
               <th class="hidden-xs">Rok za narudžbu</th>
-              <th class="hidden-xs">Broj narudžbi</th>
               <th></th>
               <th></th>
               <th></th>
@@ -31,21 +30,20 @@
             <% @my_offers.each do |offer| %>
             <tr>
               <td class="hidden-xs"><%= offer.id %></td>
-              <td class="hidden-xs">
+              <td ><strong>
                   <% offer.groups.each do |group| %>
                   <%= group.title %><br/>
-                  <% end %>
+                  <% end %></strong>
               </td>
-              <td><%= offer.title %></td>
+              <td style="max-width: 230px"><%= offer.title %></td>
               <td><%= badge_status(offer) %></td>
               <td class="hidden-xs">
                 <%= formatted_valid_from offer %><br/>
                 <%= "(počinje za #{distance_of_time_in_words_to_now offer.valid_from})" if offer.valid_from && offer.valid_from > Time.current %> 
               </td>
               <td class="hidden-xs"><%= formatted_valid_until offer %></td>
-              <td class="hidden-xs"><%= offer.orders.count %></td>
               <td class="hidden-xs"><%= link_to 'Detaljnije', offer %></td>
-              <td class="hidden-xs"><%= link_to 'Kalkulacija', offer_orders_path(offer) %></td>
+              <td class="hidden-xs"><%= link_to 'Narudžbe', offer_orders_path(offer) %> (<%= offer.orders.count %>)</td>
               <td class="visible-xs">
                 <%= link_to offer do %>
                 <span class="glyphicon glyphicon-file"></span> 

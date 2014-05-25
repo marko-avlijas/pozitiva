@@ -13,7 +13,7 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">      
-      <%= li_active_if_current "Sve ponude", offers_path %>
+      <%= li_active_if_current "Aktualne ponude", offers_path %>
       <%= li_active_if_current("Moje ponude", my_offers_path) if user_signed_in? && current_user.try(:is_producer) %>
       <%= li_active_if_current "Moje narudžbe", my_orders_path %>
       
@@ -45,6 +45,7 @@
 					<li><%= link_to "Moj profil", my_profile_path %></li>
 					<% if current_user.admin? %>
 					<li class="divider"></li>
+          <li style="padding: 0 15px"><h5>Admin:</h5></li>
 					<li><%= link_to "Sve ponude", admin_offers_path %></li>
 					<li><%= link_to "Sve narudžbe", admin_orders_path %></li>
 					<li><%= link_to "Svi korisnici", admin_users_path %></li>

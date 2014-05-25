@@ -1,6 +1,9 @@
 
-    <%= content_tag :h4, "Trenutno nema niti jedne ponude" if @offers.blank? %>
-
+    <% if @offers.blank? %>
+    <h4>Trenutno nema niti jedne ponude</h4>
+    <% else %>
+    <h4>Aktualne ponude za <%= current_user.group.title %>:</h4><br/>
+    <% end %>
 
 <div class="row">
   <% @offers.each_with_index do |offer, i| %>

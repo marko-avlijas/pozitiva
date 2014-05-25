@@ -53,10 +53,10 @@
     <ul><li><%= formatted_valid_from @offer %></li></ul>
   </div>
   <div class="offer-details">
-    <label>Dostupno u grupama:</label>
+    <label>Objavljeno u grupi:</label>
     <ul>    
       <% @offer.groups.each do |group| %>
-      <li> <%= group.title %></li>
+      <li><i class="fa fa-users"></i> &nbsp;<%= group.title %></li>
       <% end %>
     </ul>
   </div>
