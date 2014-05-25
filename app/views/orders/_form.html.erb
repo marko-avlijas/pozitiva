@@ -6,7 +6,7 @@
     <div class="group">
       <h4><i class="fa fa-truck"></i> &nbsp;Mjesto i vrijeme isporuke<span style="color: #cc2200">*</span> </h4>
       <div class="content">
-        <%= f.select :delivery_id, @offer.deliveries.collect{|p| [ "#{p.location.title} - #{p.when.strftime("%A %d.%m.%Y %k:%M") if p.when.present? }", p.id ] }, {prompt: "obavezno odabrati", size: 4}, class: "form-control" %>
+        <%= f.select :delivery_id, @offer.deliveries.collect{|p| [ "#{p.location.title} - #{p.when.strftime("%A %d.%m.%Y %k:%M") if p.when.present? }", p.id ] }, {prompt: "obavezno odabrati", size: 4}, class: "form-control", style: "color: #cc2200; font-weight: 600" %>
       </div>
     </div>
     <div class="group">

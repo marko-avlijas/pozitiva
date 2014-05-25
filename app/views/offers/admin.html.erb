@@ -22,6 +22,7 @@
               <th>Vrijedi do</th>
               <th>Ponuđač</th>
               <th>Ponuda</th>
+              <th>Za grupu</th>
               <th>Status</th>
               <!-- <th></th> -->
               <th></th>
@@ -43,9 +44,13 @@
               <td><%= formatted_dt offer.valid_until %></td>
               <td><%= link_to offer.user.name, edit_admin_user_path(offer.user), target: '_blank' %> <br/><%= offer.user.email %> </td>
               <td><%= link_to offer.title, offer %></td>
-              <td><%= offer.status %></td>
+              <td><% offer.groups.each do |group| %>
+                  <%= group.title %><br/>
+                  <% end %></td>
+              <td><%= badge_status(offer) %></td>
               <!-- <td><%#= link_to 'Show', offer %></td> -->
-              <td><%= link_to 'Deactivate', deactivate_offer_path(offer, params: {admin: :offers}) %></td>
+              <td><%= link_to('Deaktiviraj'.html_safe, deactivate_offer_path(offer, params: {admin: :offers}), class:'btn btn-xs btn-primary', data: { confirm: 'Jeste li sigurni da želite deaktivirati ponudu?' } ) if offer.status == :active %> 
+               </td>
               <!-- <td><%#= link_to 'Edit', edit_order_path(offer) %></td> -->
               <!-- <td><%#= link_to 'Destroy', offer_path(offer), method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
             </tr>
