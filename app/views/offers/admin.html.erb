@@ -24,7 +24,7 @@
               <th>Ponuda</th>
               <th>Za grupu</th>
               <th>Status</th>
-              <!-- <th></th> -->
+              <th></th>
               <th></th>
               <!-- <th></th> -->
               <!-- <th></th> -->
@@ -48,6 +48,7 @@
                   <%= group.title %><br/>
                   <% end %></td>
               <td><%= badge_status(offer) %></td>
+              <td><%= link_to 'Narudžbe', offer_orders_path(offer) %> (<%= offer.orders.count %>)</td>
               <!-- <td><%#= link_to 'Show', offer %></td> -->
               <td><%= link_to('Deaktiviraj'.html_safe, deactivate_offer_path(offer, params: {admin: :offers}), class:'btn btn-xs btn-primary', data: { confirm: 'Jeste li sigurni da želite deaktivirati ponudu?' } ) if offer.status == :active %> 
                </td>
