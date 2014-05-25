@@ -10,7 +10,7 @@
   <%= form_for @offer, html: { role: "form"} do |f| %>
   <%= error_messages_for @offer %>
   <%= f.hidden_field :publishing_offer, value: true %>
-  <h4><i class="fa fa-users"></i> &nbsp;Vidljivost ponude u grupama <span style="color: #cc2200">*</span></h4>
+  <h4><i class="fa fa-users"></i> &nbsp;Ponuda namijenjena grupi: <span style="color: #cc2200">*</span></h4>
   <div class="form-group" style="overflow: auto;">
     <%# http://railscasts.com/episodes/17-habtm-checkboxes-revised %>
     <%= hidden_field_tag "offer[group_ids][]", nil %>
@@ -21,7 +21,7 @@
       <%= label_tag dom_id(group), group.title %>
     </div>
     <% end %>
-    <span class="help-block"><i class="fa fa-exclamation-circle" style="color: #cc2200"></i> Ponudu objavite isključivo u grupi s kojom imate prethodni dogovor o suradnji.
+    <span class="help-block" style="padding-top: 10px"><i class="fa fa-exclamation-circle" style="color: #cc2200"></i> Ponudu objavite isključivo u grupi s kojom imate prethodni dogovor o objavi.
     <hr/>
     <h4><i class="fa fa-clock-o"></i> &nbsp;Rok za narudžbu <span style="color: #cc2200">*</span></h4>
     <div class="form-group">
