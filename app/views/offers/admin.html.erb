@@ -39,11 +39,11 @@
             <% @offers.each do |offer| %>
             <tr>
               <td><%= offer.id %></td>
-              <td><%= formatted_dt offer.updated_at %></td>
-              <td><%= formatted_dt offer.valid_from %></td>
-              <td><%= formatted_dt offer.valid_until %></td>
+              <td style="max-width: 120px"><%= formatted_dt offer.updated_at %></td>
+              <td style="max-width: 120px"><%= formatted_dt offer.valid_from %></td>
+              <td style="max-width: 120px"><%= formatted_dt offer.valid_until %></td>
               <td><%= link_to offer.user.name, edit_admin_user_path(offer.user), target: '_blank' %> <br/><%= offer.user.email %> </td>
-              <td><%= link_to offer.title, offer %></td>
+              <td style="max-width: 200px"><%= link_to offer.title, offer %></td>
               <td><% offer.groups.each do |group| %>
                   <%= group.title %><br/>
                   <% end %></td>
