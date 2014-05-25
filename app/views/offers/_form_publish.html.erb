@@ -15,9 +15,9 @@
     <%# http://railscasts.com/episodes/17-habtm-checkboxes-revised %>
     <%= hidden_field_tag "offer[group_ids][]", nil %>
     <% Group.all.each do |group| %>
-    <div class="checkbox" style="padding-left: 35px">
-      <% check_box_selected = (@offer.new_record? && group.id == 1) ? true : @offer.group_ids.include?(group.id) %>
-      <%= check_box_tag "offer[group_ids][]", group.id, check_box_selected, id: dom_id(group) %>
+    <div class="radio" style="padding-left: 35px">
+      <% radio_button_selected = (@offer.new_record? && group.id == 1) ? true : @offer.group_ids.include?(group.id) %>
+      <%= radio_button_tag "offer[group_ids][]", group.id, radio_button_selected, id: dom_id(group) %>
       <%= label_tag dom_id(group), group.title %>
     </div>
     <% end %>
