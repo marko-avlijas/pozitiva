@@ -5,10 +5,17 @@ class StaticPagesController < ApplicationController
     flash.now[:notice] = "Registracija u aplikaciju je u tijeku - obavijest o uspješnoj registraciji primit ćete mailom." if current_user.try(:group).blank?
     @current_user_is_admin = current_user.admin?
   end
-
-  def help
+  
+  def info_gsr_pozitiva
+    if current_user.group.title != "GSR Pozitiva"
+      redirect_to :root, alert: "samo za članove grupe GSR Pozitiva"
+    end
   end
   
-  def manifest
+  def info_gsr_puslek
+    if current_user.group.title != "GSR Pušlek"
+      redirect_to :root, alert: "samo za članove grupe GSR Pušlek"
+    end
   end
+
 end
