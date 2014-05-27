@@ -49,5 +49,15 @@
     <% end %>
   </div>
   <% end %>
+  
+<% if current_user && current_user.try(:group).present? %>
+  <div class="col-md-3 col-sm-6 ">
+    <% slug = "info-" + current_user.group.title.parameterize %>
+  <a href="/<%= slug %>" class= "white-card home">
+      <p><%= image_tag("info.png") %></p>
+      <h3>Info</h3>
+    </a>
+  </div>
+<% end %>
 </div>
 <% end %>

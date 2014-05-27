@@ -57,7 +57,13 @@
   </div> <!-- /wrap -->
   <div class="povrce"></div>
   <div id="footer" style="min-width: 1200px">
-    <p class="text-muted credit">&copy; 2013 Pozitiva &nbsp; <%= link_to "Uvjeti korištenja", manifest_path, target: "_blank" %></p>
+    <p class="text-muted credit">&copy; 2013 PozitivaHub &nbsp; &nbsp; 
+      <%= link_to "Uvjeti korištenja", manifest_path, target: "_blank" %> &nbsp; &nbsp; 
+      <% if current_user && current_user.try(:group).present? %>
+      <% slug = "info-" + current_user.group.title.parameterize %>
+      <a href="/<%= slug %>">Info</a>
+      <% end %>
+    </p>
   </div>
 </body>
 </html>
