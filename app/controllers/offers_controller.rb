@@ -177,7 +177,7 @@ class OffersController < ApplicationController
   end
   
   def current_user_can_publish_offer
-    if current_user.try(:group).blank? || !current_user.is_producer
+    if current_user.try(:group).blank? || (!current_user.is_producer && !current_user.admin)
       raise "[OffersController#current_user_can_publish_offer]"
     end
   end
