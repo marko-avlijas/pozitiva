@@ -31,7 +31,8 @@ gem 'rails_12factor', group: :production
 # Use unicorn as the app server (locally start with: foreman start)
 # https://devcenter.heroku.com/articles/getting-started-with-rails4
 # https://devcenter.heroku.com/articles/rails-unicorn
-gem 'unicorn', group: :production
+gem 'unicorn'
+gem 'unicorn-worker-killer'
 
 # Use SCSS for stylesheets
 # gem 'sass-rails', '~> 4.0.0'
