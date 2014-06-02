@@ -14,7 +14,15 @@
         <hr/>
 
         <p><%= @user.about_text %></p>
-        <p>Više na linku: <strong><%= link_to(@user.about_url, @user.about_url, target: "_blank") if @user.about_url.present? %></strong></p>
+        <p>Više na linku: 
+          <strong>
+            <% if @user.about_url.to_s.start_with?("http://") || @user.about_url.to_s.start_with?("https://")%>
+            <%= link_to(@user.about_url, @user.about_url, target: "_blank") %>
+            <% else %>
+            <%= link_to(@user.about_url, "http://#{@user.about_url}", target: "_blank") %>
+            <% end %>
+          </strong>
+        </p>
         <p>Više u dokumentu: 
           <% if @user.try(:about_attach) %>
           <%= link_to "Download (#{number_to_human_size @user.about_attach_file_size.to_i})", 
