@@ -3,7 +3,8 @@
     <h3>GSR Pozitiva - informacije</h3> 
   </div>
   <div class="panel-body">
-    <p>Sljedeći sadržaji prikazuju se putem Google Drivea s ograničenim pristupom samo za članove GSR Pozitiva, stoga za pregledavanje morate biti ulogirani u Google, s istom e-mail adresom s kojom ste prijavljeni na mailing listu.</p>
+    <p class="lead">Sljedeći sadržaji prikazuju se putem Google Drivea s ograničenim pristupom samo za članove GSR Pozitiva,<br/>stoga za pregledavanje morate biti ulogirani u Google, s istom e-mail adresom s kojom ste prijavljeni na mailing listu.</p>
+    <p class="lead">U slučaju problema s prikazom, istim sadržajima možete pristupiti i putem <a href="https://docs.google.com/document/d/1BQxViEk7eI2ODvOlG6unOqZ7b9LKvmWQtSat1Fj8JJg/edit?usp=sharing" target="_blank">ovog linka &raquo;</a></p>
     <% if current_user.group.title == "GSR Pozitiva" %>
     <iframe style="border: 1px solid #ddd; width: 100%; height: 700px" src="https://docs.google.com/document/d/1BQxViEk7eI2ODvOlG6unOqZ7b9LKvmWQtSat1Fj8JJg/pub?embedded=true"></iframe>
     <% end %>
