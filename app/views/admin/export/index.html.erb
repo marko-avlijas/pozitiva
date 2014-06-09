@@ -1,0 +1,63 @@
+<style> table th, table td {border: 1px solid #ddd;} </style>
+<h3>Data Export</h3>
+
+<table class="table">
+  <thead>
+    <th>Kupac</th>
+    <th>Čl. broj</th>
+    <th>Proizvod</th>
+    <th>Pakiranje</th>
+    <th>Cijena</th>
+    <th>Naručena kol.</th>
+    <th>Opisna kol.</th)>
+    <th>Korigirana kol.</th>
+    <th>Jed. mjere</th>
+    <th>ID ponude</th>
+    <th>Naziv ponude</th>
+    <th>Proizvođač</th>
+    <th>Vrijeme isporuke</th>
+    <th>Mjesto isporuke</th>
+    <th>Objavljena</th>
+    <th>Rok za narudžbu</th>
+  </thead>
+  <tbody>
+    
+    <% @order_items.each do |order_item| %>
+    <% offer  = order_item.offer_item.offer %>
+    <% seller = order_item.offer_item.offer.user %>
+    <% buyer  = order_item.order.user %>
+    <tr>
+      <td><%= buyer.name %></td>
+      <td><%= buyer.buyer_tag %></td>
+      
+      <!-- offer_item -->
+      <td><%= order_item.offer_item.title %></td>
+      <td><%= order_item.offer_item.packaging %></td>
+      <td><%= order_item.offer_item.decimal_price %></td>
+      
+      <!-- order_item -->
+      <td><%= order_item.qty %></td>
+      <td><%= order_item.qty_description %></td>
+      <td><%= order_item.corrected_qty %></td>
+      <td><%= order_item.offer_item.unit %></td>      
+
+      <!-- offer -->
+      <td><%= offer.id %></td>
+      <td><%= offer.title %></td>
+      
+      <!-- proizvođač -->
+      <td><%= seller.name %></td>
+      
+      <!-- offer -->
+      <td><%= short_dt order_item.order.delivery.when %></td>
+      <td><%= offer.dispatch_place %></td>
+      <td><%= short_dt offer.valid_from %></td>
+      <td><%= short_dt offer.valid_until %></td>
+      
+
+
+
+    </tr>
+    <% end %>
+  </tbody>
+</table>

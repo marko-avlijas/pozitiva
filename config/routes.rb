@@ -44,7 +44,9 @@ Pozitiva::Application.routes.draw do
     resources :users do
       get 'print', on: :collection
     end
-    post 'clean_older_than' => 'cleanup#clean_older_than'  
+    post 'clean_older_than' => 'cleanup#clean_older_than'
+    get 'export' => 'export#index'
+    
   end
   
   # get 'how' => 'static_pages#how_it_works'
