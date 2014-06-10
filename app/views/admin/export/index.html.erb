@@ -5,9 +5,9 @@
   <%= select_tag :group_id, options_from_collection_for_select(Group.all, "id", "title", params[:group_id]) %>
   <%= text_field_tag :start_date, params[:start_date], placeholder: "Datum od" %>
   <%= text_field_tag :end_date, params[:end_date], placeholder: "Datum do" %>
-  <%= submit_tag "Generiraj tablicu" %><br/>
+  <%= submit_tag "Generiraj tablicu" %> <%= submit_tag "Generiraj nenaručeno" %><br/>
   <small>Format datuma: GGGG-MM-DD npr. 2014-03-23</small><br/><br/>
-  <%= submit_tag "Prikaži nenaručeno" %><br/><br/>
+  <br/><br/>
 <% end %>
 
 <%= render "order_items" if @order_items %>

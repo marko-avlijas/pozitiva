@@ -7,7 +7,7 @@ class Admin::ExportController < ApplicationController
       if params[:commit] == "Generiraj tablicu"
         @order_items = OrderItem.joins(order: {user: :group}).joins(order: :delivery).includes(offer_item: { offer: :user }).where("groups.id = ?", params[:group_id].to_i).where("deliveries.when >= ? AND deliveries.when <= ?", params[:start_date], params[:end_date].to_date+1.day)
       else
-        @offer_items_without_orders = OfferItem.where("offer_items.id not in (select order_items.offer_item_id from order_items)").includes(offer: :user)
+        @offer_items_without_orders = OfferItem.where("offer_items.id not in (select order_items.offer_item_id from order_items)").joins(offer: :group_offerings).where("group_offerings.group_id = ?",params[:group_id]).includes(offer: :user)
       end
     end
     
