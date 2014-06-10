@@ -2,10 +2,11 @@
 
 <%= form_tag nil, method: :get do %>
   
-  <%= select_tag :group_id, options_from_collection_for_select(Group.all, "id", "title", params[:group_id]) %>
+  <%= select_tag :group_id, options_from_collection_for_select(Group.all, "id", "title", params[:group_id]) %> Isporuka od: 
   <%= text_field_tag :start_date, params[:start_date], placeholder: "Datum od" %>
+  do: 
   <%= text_field_tag :end_date, params[:end_date], placeholder: "Datum do" %>
-  <%= submit_tag "Generiraj tablicu" %> <%= submit_tag "Generiraj nenaručeno" %><br/>
+  <%= submit_tag "Generiraj narudžbe" %> <%= submit_tag "Generiraj nenaručeno" %><br/>
   <small>Format datuma: GGGG-MM-DD npr. 2014-03-23</small><br/><br/>
   <br/><br/>
 <% end %>

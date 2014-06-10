@@ -4,7 +4,7 @@ class Admin::ExportController < ApplicationController
   
   def index
     if params[:group_id].present? && params[:start_date].present? && params[:end_date].present?
-      if params[:commit] == "Generiraj tablicu"
+      if params[:commit] == "Generiraj narudžbe"
         @order_items = OrderItem.joins(order: {user: :group}).joins(order: :delivery).includes(offer_item: { offer: :user }).where("groups.id = ?", params[:group_id].to_i).where("deliveries.when >= ? AND deliveries.when <= ?", params[:start_date], params[:end_date].to_date+1.day)
       else
         @offer_items_without_orders = OfferItem.where("offer_items.id not in (select order_items.offer_item_id from order_items)").joins(offer: :group_offerings).where("group_offerings.group_id = ?",params[:group_id]).includes(offer: :user)
