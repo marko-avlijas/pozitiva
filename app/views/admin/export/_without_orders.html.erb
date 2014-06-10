@@ -1,0 +1,44 @@
+<h3>Nikad naručeno</h3>
+<table cellpading="0" cellspacing="0" border="0">
+  <thead>
+
+    <th>Proizvod</th>
+    <th>Pakiranje</th>
+    <th>Cijena</th>
+    <th>Jed. mjere</th>
+    <th>ID ponude</th>
+    <th>Naziv ponude</th>
+    <th>Proizvođač</th>
+    <th>Mjesto isporuke</th>
+    <th>Objavljena</th>
+    <th>Rok za narudžbu</th>
+  </thead>
+  <tbody>
+    
+    <% @offer_items_without_orders.each do |offer_item| %>
+    <% offer  = offer_item.offer %>
+    <% seller = offer_item.offer.user %>
+    <tr>
+      
+      <!-- offer_item -->
+      <td><%= offer_item.title %></td>
+      <td><%= offer_item.packaging %></td>
+      <td><%= offer_item.decimal_price %></td>
+      <td><%= offer_item.unit %></td>   
+        
+
+      <!-- offer -->
+      <td><%= offer.id %></td>
+      <td><%= offer.title %></td>
+      
+      <!-- proizvođač -->
+      <td><%= seller.name %></td>
+      
+      <!-- offer -->
+      <td><%= offer.deliveries.map{|d| d.location.title}.join(', ') %></td>
+      <td><%= short_dt offer.valid_from %></td>
+      <td><%= short_dt offer.valid_until %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
