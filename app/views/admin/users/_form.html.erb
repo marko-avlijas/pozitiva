@@ -7,6 +7,17 @@
   <p>Kvart: <strong><%= @user.neighborhood %></strong></p>
   <p>Resetirana lozinka: <strong><%= @user.try(:reset_password_sent_at) ? short_dt(@user.reset_password_sent_at) : 'nikad' %></strong></p>
   <div class="form-group">
+    <%= f.label :about_attach, "O korisniku - PDF: ", style: "font-weight: 400"%>
+    <div style="display: inline-block">
+      <%= f.file_field :about_attach, class: "form-control" %>
+      <% if @user.about_attach.present? %>
+      <%= link_to "Download (#{number_to_human_size @user.about_attach_file_size.to_i})", about_attach_profile_path(@user), target: '_blank' %> | 
+      <%= link_to("x", about_attach_profile_path(@user), method: :delete, data: { confirm: 'Jeste li sigurni da želite izbrisati?' }) %>
+      <% end %>
+    </div>
+  </div>
+  <hr/>
+  <div class="form-group">
     <%= f.label :group_id, "Grupa:" %>
     <%= f.select :group_id, Group.all.collect {|g| [ g.title, g.id ] }, {include_blank: true}, {class: "form-control"} %>
   </div>

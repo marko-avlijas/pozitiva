@@ -26,7 +26,10 @@ class Admin::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     respond_to do |format|
-      if @user.update(user_params)
+      # if @user.update(user_params)
+      # file upload handler prije @user.update
+      if @user.handle_about_attach(user_params[:about_attach]) and @user.update(user_params.except(:about_attach))
+        
         format.html { redirect_to admin_users_path, notice: 'User was successfully updated.' }
         # format.json { head :no_content }
       else
@@ -39,7 +42,7 @@ class Admin::UsersController < ApplicationController
   private
   
   def user_params
-    params.require(:user).permit(:group_id, :admin, :locked_at, :is_producer, :about_text, :about_url, :buyer_tag)
+    params.require(:user).permit(:group_id, :admin, :locked_at, :is_producer, :about_text, :about_url, :buyer_tag, :about_attach)
   end
   
   def seed_admin
