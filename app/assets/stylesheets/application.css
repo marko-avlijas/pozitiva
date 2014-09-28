@@ -9,9 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require form_errors
- * require jquery.ui.all
- *= require jquery.ui.core
- *= require jquery.ui.selectable
+ *= require jquery-ui
  *= require bootstrap
  * require bootstrap-theme
  *= require bootstrap-datetimepicker.min
