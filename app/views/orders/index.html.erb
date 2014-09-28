@@ -66,6 +66,7 @@
             </tr>
           </thead>
           <tbody>
+            <% grand_total = 0 %>
             <% @orders.each do |order| %>
             <% if order.delivery %>
             <tr>
@@ -99,7 +100,9 @@
                       </td>
                     </tr>
                     <% total += order_item.item_price %>
+                    
                     <% end %>
+                    <% grand_total += total %>
                   </tbody>
                 </table>
                 <%= truncate(order.note, length: 500) if order.note %>
@@ -110,8 +113,13 @@
               <!-- <td><%#= link_to 'Edit', edit_offer_order_path(@offer, order) %></td> -->
               <!-- <td><%#= link_to 'Destroy', offer_order_path(@offer, order), method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
             </tr>
+           
             <% end %>
+            
             <% end %>
+            <tr>
+              <td colspan="6" align="right"><h4>Ukupno po ponudi: <%= formatted_price grand_total %></h4></td>
+            </tr>
           </tbody>
             
         </table>
@@ -281,6 +289,7 @@
                   </strong>
                 </td>
             </tr>
+            
             <% end # if @offer_items_sum[id] %>
             <% end # @offer_items.each %>
           </tbody>

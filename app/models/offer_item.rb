@@ -17,6 +17,18 @@ class OfferItem < ActiveRecord::Base
   
   # include ActionView::Helpers::NumberHelper
   
+  def deactivate
+    self.status = 'deactivated'
+    self.status_changed_at = Time.current
+    self.save
+  end
+  
+  def activate
+    self.status = nil
+    self.status_changed_at = Time.current
+    self.save
+  end
+  
   def packaging_bulk?
     packaging == 'bulk'
   end

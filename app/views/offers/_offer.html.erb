@@ -4,9 +4,10 @@
       <h4><%= image_tag("notepad.png") %> Ponuđeni proizvodi</h4>
     </div>
     <div class="focus-body">
-      <table class="table">
+      <table class="table offer">
         <thead>
           <tr>
+            <th></th>
             <th align="left" width="50%">Proizvod</th>
             <th>Cijena</th>
             <th></th>
@@ -14,15 +15,34 @@
         </thead>
         <tbody id="sortable">
           <% @offer.offer_items.each do |offer_item| %>
-          <tr id="item-<%= offer_item.id %>">
-            <td align="left"><strong><%= offer_item.title %>&nbsp; <%= offer_item_packaging_icon(offer_item.packaging) %></strong><br/><%= offer_item.note %></td>
+          <% (item_class = 'disabled') if (offer_item.status == 'deactivated') %>
+          
+          <tr id="item-<%= offer_item.id %>" class="<%= item_class %>" >
+            
+            <td>
+              <% if (@offer.user == current_user) || current_user.admin? %>
+                <% if offer_item.status == 'deactivated' %>
+                  <%= link_to activate_offer_offer_item_path(offer_item.offer.id, offer_item.id), data: { confirm: 'Jeste li sigurni da želite aktivirati stavku?' }, title: "Aktiviraj stavku" do %>
+                    <span class="glyphicon glyphicon-ban-circle"></span>
+                  <% end %>
+                <% else %>
+                  <%= link_to deactivate_offer_offer_item_path(offer_item.offer.id, offer_item.id), data: { confirm: 'Jeste li sigurni da želite deaktivirati stavku?' }, title: "Deaktiviraj stavku" do %>
+                    
+                    <span class="glyphicon glyphicon-ban-circle"></span>
+                  <% end %>
+                <% end %>
+              <% end %>  
+            </td>
+            
+            <td align="left">
+              <strong><%= offer_item.title %>&nbsp; <%= offer_item_packaging_icon(offer_item.packaging) %></strong><br/><%= offer_item.note %></td>
             <td ><%= offer_item_quantity_for_price(offer_item) %></td>
             <td><%= offer_item_packaging_min_qty(offer_item) %></td>
           </tr>
           <% end %>
         </tbody>
       </table>
-      <% if (@offer.user == current_user) %><span class="help-block">Za promjenu poretka primite stavku mišem i odvucite na željenu poziciju</span>
+      <% if (@offer.user == current_user) %><span class="help-block">Za promjenu poretka primite stavku mišem i odvucite na željenu poziciju<br/>Za deaktivaciju stavke kliknite znak <span data-toggle="tooltip" title="sgjasgdh" id="example" class="glyphicon glyphicon-ban-circle"></span> ispred željene stavke</span>
       <% end %>
     </div>
     <div class="focus-footer">
@@ -60,6 +80,8 @@ $(function() {
     }
   });
   $( "#sortable" ).disableSelection();
+  
+  $('#example').tooltip();
 });
 </script>
 <% end %>
