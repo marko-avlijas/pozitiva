@@ -41,8 +41,7 @@ Pozitiva::Application.routes.draw do
   
   get 'help'     => 'static_pages#help'
   get 'manifest' => 'static_pages#manifest'
-  get 'info-gsr-pozitiva' => 'static_pages#info_gsr_pozitiva'
-  get 'info-gsr-puslek'   => 'static_pages#info_gsr_puslek'
+  get 'info' => 'static_pages#info_njam_njam'
   get 'recipes'   => 'static_pages#recipes'
   
   namespace :admin do

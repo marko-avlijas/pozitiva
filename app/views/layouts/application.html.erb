@@ -59,7 +59,7 @@
       <p class="text-muted credit">&copy; 2014 Njam-Njam &nbsp; &nbsp; 
         <%= link_to "Uvjeti korištenja", manifest_path, target: "_blank" %> &nbsp; &nbsp; 
         <% if current_user && current_user.try(:group).present? %>
-        <% slug = "info-" + current_user.group.title.parameterize %>
+        <% slug = "info" %>
         <a href="/<%= slug %>">Info</a>
         <% end %>
       </p>
