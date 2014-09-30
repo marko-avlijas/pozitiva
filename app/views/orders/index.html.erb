@@ -207,7 +207,7 @@
               <th>Jed. mjera</th>
               <th>Naručena kol.</th>
               <th>Kol. po narudžbama</th>
-              <th>Dostupna kol.</th>
+              <!-- <th>Dostupna kol.</th> SA SOLIDARIZACINOM-->
               <th>Isporučena kol.</th>
             </tr>
           </thead>
@@ -237,7 +237,7 @@
                   <thead>
                     <th>Naručitelj</th>
                     <th>Naručeno</th>
-                    <th>Isporučeno</th>
+                    <th>Korekcija</th>
                   </thead>
                   <tbody>
                     <% offer_item.order_items.each do |order_item| %>
@@ -249,18 +249,34 @@
                     <tr>
                       <td><span style="font-weight: 600"><%= @order.user.buyer_tag %></span> <%= link_to @order.user.name, profile_path(@order.user)%></td>
                       <td><%= formatted_item_qty_unit order_item %></td>
+                      
+                      
+                      
+                      <!-- <td>   SA SOLIDARIZACIJOM
+                        <%# if offer_item.packaging == "vario" %>
+                          <%# if @offer.expired? %>
+                            <%#= order_item_form.text_field :corrected_qty, class: "xs-form-input" %>
+                            <%#= f.submit "Spremi", class: "btn btn-xs btn-primary" %>
+                          <%# else %>
+                            ponuda nije istekla
+                          <%# end %>
+                        <%# elsif order_item.corrected_qty.present? %>
+                          <%#= formatted_qty order_item.corrected_qty %>
+                        <%# end %>
+                      </td> -->
+                      
+                      <!-- BEZ SOLIDARIZACIJE -->
                       <td>
-                        <% if offer_item.packaging == "vario" %>
-                        <% if @offer.expired? %>
-                        <%= order_item_form.text_field :corrected_qty, class: "xs-form-input" %>
-                        <%= f.submit "Spremi", class: "btn btn-xs btn-primary" %>
-                        <% else %>
-                        ponuda nije istekla
-                        <% end %>
-                        <% elsif order_item.corrected_qty.present? %>
-                        <%= formatted_qty order_item.corrected_qty %>
-                        <% end %>
+                          <% if @offer.expired? %>
+                            <%= order_item_form.text_field :corrected_qty, class: "xs-form-input" %>
+                            <%= f.submit "Spremi", class: "btn btn-xs btn-primary" %>
+                          <% else %>
+                            <span class="glyphicon glyphicon-ban-circle"></span>
+                          <% end %> 
                       </td>
+                      
+                      
+                      
                     </tr>
                     <% end # f.fields_for :order_items %>
                     <% end # form_for [@offer, @order]%>
@@ -268,18 +284,18 @@
                   </tbody>
                 </table>
               </td>
-              <td>
-                <% if (offer_item.packaging_bulk? || offer_item.packaging_package?) && @offer.expired? %>
-                <%= form_for @offer, html: {role: "form"} do |f| %>
-                <%= f.fields_for :offer_items do |f_offer_item| %>
-                <% if offer_item.id == f_offer_item.object.id %>
-                <%= f_offer_item.text_field :total_available_qty, value: f_offer_item.object.total_available_qty.to_s.gsub('.', ','), class: "xs-form-input" %>
-                <%= f.submit "Solidariziraj", class: "btn btn-xs btn-primary" %>
-                <% end %>
-                <% end # fields_for :offer_items %>
-                <% end # form_for %>
-                <% end # unless %>
-              </td>
+              <!-- <td> SA SOLIDARIZACIJOM
+                <%# if (offer_item.packaging_bulk? || offer_item.packaging_package?) && @offer.expired? %>
+                <%#= form_for @offer, html: {role: "form"} do |f| %>
+                <%#= f.fields_for :offer_items do |f_offer_item| %>
+                <%# if offer_item.id == f_offer_item.object.id %>
+                <%#= f_offer_item.text_field :total_available_qty, value: f_offer_item.object.total_available_qty.to_s.gsub('.', ','), class: "xs-form-input" %>
+                <%#= f.submit "Solidariziraj", class: "btn btn-xs btn-primary" %>
+                <%# end %>
+                <%# end # fields_for :offer_items %>
+                <%# end # form_for %>
+                <%# end # unless %>
+              </td> -->
               <td>
                 <strong>
                   <%= formatted_qty @offer_items_sum[id][:numeric_qty_sum] %>
