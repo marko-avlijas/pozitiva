@@ -15,7 +15,19 @@
 
      <br/>
 
-  <p class="lead" style="color: #cc2200"><strong><%=  @user.try(:locked_at) ? "Korisnik je suspendiran #{short_dt @user.locked_at}" : 'Aktivan korisnik' %></strong></p>
+  <p class="lead" style="color: #cc2200">
+    <strong>
+    <% if @user.try(:locked_at) %>
+      <%= "Korisnik je suspendiran #{short_dt @user.locked_at}" %>
+    <% else %>
+      <% if @user.try(:group) %>
+        <%= "Korisnik je aktivan" %>
+      <% else %>
+        <%= "Korisnik nije autoriziran" %>
+      <% end %>
+    <% end %>
+    </strong>
+  </p>
     
 </div>
 <div class="panel-footer">

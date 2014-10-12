@@ -43,7 +43,7 @@
   
   <div class="form-group">
     <%= f.label :group_id, "Grupa:", class: "col-lg-4 control-label" %>
-    <div class="col-lg-8"><%= f.select :group_id, Group.all.collect {|g| [ g.title, g.id ] }, {include_blank: true}, {class: "form-control"} %></div>
+    <div class="col-lg-8"><%= f.select :group_id, Group.all.collect {|g| [ g.title, g.id ] }, {:prompt => 'Dodijelite grupu'}, {class: "form-control"} %></div>
   </div>
   
   

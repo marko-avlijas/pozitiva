@@ -21,14 +21,11 @@
           <th></th>
           <th>Oznaka kupca</th>
           <th>Name / Email</th>
-          <th>Grupa</th>
+          <th>Željena grupa</th>
           <th>Kvart</th>
-          <th>Admin</th>
-          <th>Proizv.</th>
-          <th>Susp.</th>
+          
           <th>Učlanjen</th>
-          <th>Broj prijava</th>
-          <th>Zadnja prijava</th>
+
           <th></th>
         </tr>
       </thead>
@@ -40,14 +37,12 @@
           <td><%= image_tag user.avatar_src, width: 50 %></td>
           <td><%= user.buyer_tag %></td>
           <td><%= link_to user.name, profile_path(user) %> <br/><%= user.email %><br/>tel: <%= user.phone %></td>
-          <td><%= user.try(:group) ? user.group.title : '-' %></td>
+          <td><%#= user.try(:group) ? user.group.title : '-' %> 
+            <%= Group.find(user.requested_group_id).title %></td>
           <td><%= user.neighborhood %></td>
-          <td><%= user.admin ? 'Da' : '-' %></td>
-          <td><%= user.is_producer ? "Da" : "-" %></td>
-          <td><%= user.try(:locked_at) ? short_dt(user.locked_at) : '-' %></td>
+          
           <td><%= short_dt user.created_at %></td> 
-          <td><%= user.sign_in_count %></td>
-          <td><%= short_dt user.last_sign_in_at %></td>
+
           <td><%= link_to "Promijeni", edit_admin_user_path(user) %></td>
           <!-- <td><%#= link_to "Detaljnije", admin_user_path(user) %></td> -->
         </tr>
