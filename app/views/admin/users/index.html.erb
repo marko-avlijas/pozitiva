@@ -48,7 +48,8 @@
           <td><%= short_dt user.created_at %></td> 
           <td><%= user.sign_in_count %></td>
           <td><%= short_dt user.last_sign_in_at %></td>
-          <td><%= link_to "Detaljnije", admin_user_path(user) %></td>
+          <td><%= link_to "Promijeni", edit_admin_user_path(user) %></td>
+          <!-- <td><%#= link_to "Detaljnije", admin_user_path(user) %></td> -->
         </tr>
         <% end %>
       </tbody>
@@ -90,7 +91,8 @@
           <td><%= short_dt user.created_at %></td>
           <td><%= user.sign_in_count %></td>
           <td><%= short_dt user.last_sign_in_at %></td>
-          <td><%= link_to "Detaljnije", admin_user_path(user) %></td>
+          <td><%= link_to "Promijeni", edit_admin_user_path(user) %></td>
+          <!-- <td><%#= link_to "Detaljnije", admin_user_path(user) %></td> -->
         </tr>
         <% end %>
       </tbody>
@@ -131,7 +133,8 @@
           <td><%= short_dt user.created_at %></td>
           <td><%= user.sign_in_count %></td>
           <td><%= short_dt user.last_sign_in_at %></td>
-          <td><%= link_to "Detaljnije", admin_user_path(user) %></td>
+          <td><%= link_to "Promijeni", edit_admin_user_path(user) %></td>
+          <!-- <td><%#= link_to "Detaljnije", admin_user_path(user) %></td> -->
         </tr>
         <% end %>
       </tbody>
