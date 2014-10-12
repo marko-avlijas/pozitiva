@@ -5,7 +5,7 @@
 
   <div class="form-group">
     <%= f.label :name, "Ime i prezime:", class: "col-lg-4 control-label" %>
-    <div class="col-lg-8"><%= f.text_field :name, class: "form-control", style: "width: 200px" %></div>
+    <div class="col-lg-8"><%= f.text_field :name, class: "form-control" %></div>
   </div>
 
   <div class="form-group">
@@ -84,6 +84,8 @@
 <div class="panel-footer">
   <div class="footer-links">
     <%= f.submit "Spremi promjene", class: "btn btn-primary" %>
+    <%= link_to '&nbsp; &nbsp; &nbsp; Pregled korisnika &raquo;'.html_safe, admin_user_path(@user) %>
+    <%= link_to '&nbsp; &nbsp; &nbsp; Svi korisnici &raquo;'.html_safe, admin_users_path %>
     <% end %>
   </div>
 </div>
