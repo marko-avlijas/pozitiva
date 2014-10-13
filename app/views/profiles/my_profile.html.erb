@@ -28,6 +28,10 @@
           <%= f.label :name, "Oznaka naručitelja", class: "col-lg-4 control-label" %>
           <div class="col-lg-8"><p style="line-height: 35px; margin-bottom: 0; color: #cc2200; font-weight: bold"><%= @user.buyer_tag %></p></div>
         </div>
+        <div class="form-group" style="margin-bottom: 5px">
+          <%= f.label :name, "Grupa", class: "col-lg-4 control-label" %>
+          <div class="col-lg-8"><p style="line-height: 35px; margin-bottom: 0;"><%= @user.group.title %></p></div>
+        </div>
         <div class="form-group">
           <%= f.label :email, "E-mail", class: "col-lg-4 control-label" %>
           <div class="col-lg-8"><p style="line-height: 35px; margin-bottom: 0"><%= @user.email %></p></div>
