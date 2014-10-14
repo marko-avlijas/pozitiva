@@ -56,7 +56,7 @@
             <%= order_item_form.hidden_field :qty, value: "0" %>        
             <div class="col-lg-2 col-sm-3 qty">
               <div>
-                <%= order_item_form.text_field :qty_description, class: "form-control", placeholder: "opisna količina", style: "color: #cc2200; font-weight: bold" %>
+                <%= order_item_form.text_field :qty_description, class: "form-control", placeholder: "opisna količina", style: "color: #cc2200; font-weight: bold", disabled: item_disabled %>
               </div>
             
             <% unless order_item_form.object.new_record?  %>
