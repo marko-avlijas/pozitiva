@@ -45,6 +45,21 @@ font-weight: 500;
 #footer a:hover {
   text-decoration: underline;
 }
+#footer.table-layout {
+  min-width: 1200px
+}
+
+  #footer.table-layout p.text-muted {
+    width: 40%;
+    float: right;
+    text-align: right;
+    margin-top: 0;
+  }
+  #footer.table-layout p.text-muted:first-child{
+    float: left;
+    text-align: left;
+  }
+}
 
 /*-------- NAVBAR --------- */
 
@@ -937,17 +952,21 @@ table.offer_examples tbody tr td:first-child {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color: #F6F8EE;
   }
-  .text-muted{
+  #footer .text-muted{
     text-align: center;
   }
-  .text-muted:first-child{
+  #footer .text-muted:first-child{
     margin-bottom: 5px;
   }
   #footer {
     padding-top: 5px;
   }
+  #footer.table-layout p.text-muted {
+    margin-top: 15px;
+    }
+  }
+  
 
-}
 
 @media (max-width: 480px){
   .badge, .badge.blue, .badge.grey{
