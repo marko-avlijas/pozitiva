@@ -25,11 +25,15 @@ Pozitiva::Application.routes.draw do
       post 'message_to_orderers'
       post 'save_sort_order'
     end
+    resources :offer_items do
+      get 'activate', on: :member, to: 'offers#activate_item'
+      get 'deactivate', on: :member, to: 'offers#deactivate_item'
+    end
     resources :orders do
       resources :order_items, only: :destroy
     end
   end
-  
+    
   get 'my_orders'    => 'orders#my_orders'
   get 'my_offers'    => 'offers#my_offers'
   get 'admin_offers' => 'offers#admin'
@@ -39,6 +43,7 @@ Pozitiva::Application.routes.draw do
   get 'manifest' => 'static_pages#manifest'
   get 'info-gsr-pozitiva' => 'static_pages#info_gsr_pozitiva'
   get 'info-gsr-puslek'   => 'static_pages#info_gsr_puslek'
+
   get 'recipes'   => 'static_pages#recipes'
   
   namespace :admin do

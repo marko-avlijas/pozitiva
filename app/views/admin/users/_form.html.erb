@@ -1,52 +1,91 @@
 <div class="panel-body">
-  <%= form_for [:admin, @user], html: {role: "form"} do |f| %>
+  <%= form_for [:admin, @user], html: {role: "form", class: "form-horizontal"} do |f| %>
   <%= error_messages_for @user %>
-  <p>Ime i prezime: <strong><%= link_to @user.name, profile_path(@user) %></strong></p>
-  <p>E-mail adresa: <strong><%= @user.email %></strong></p>
-  <p>Telefon: <strong><%= @user.phone %></strong></p>
-  <p>Kvart: <strong><%= @user.neighborhood %></strong></p>
-  <p>Resetirana lozinka: <strong><%= @user.try(:reset_password_sent_at) ? short_dt(@user.reset_password_sent_at) : 'nikad' %></strong></p>
+  
+
   <div class="form-group">
-    <%= f.label :about_attach, "O korisniku - PDF: ", style: "font-weight: 400"%>
-    <div style="display: inline-block">
+    <%= f.label :name, "Ime i prezime:", class: "col-lg-4 control-label" %>
+    <div class="col-lg-8"><%= f.text_field :name, class: "form-control" %></div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email, "E-mail:", class: "col-lg-4 control-label" %>
+    <div class="col-lg-8"><%= f.text_field :email, class: "form-control" %></div>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :phone, "Telefon:", class: "col-lg-4 control-label" %>
+    <div class="col-lg-8"><%= f.text_field :phone, class: "form-control" %></div>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :neighborhood, "Kvart:", class: "col-lg-4 control-label" %>
+    <div class="col-lg-8"><%= f.text_field :neighborhood, class: "form-control" %></div>
+  </div>
+  
+ 
+  <div class="form-group">
+    <%= f.label :about_attach, "O korisniku - PDF: ", class: "col-lg-4 control-label"%>
+    <div class="col-lg-8">
       <%= f.file_field :about_attach, class: "form-control" %>
       <% if @user.about_attach.present? %>
       <%= link_to "Download (#{number_to_human_size @user.about_attach_file_size.to_i})", about_attach_profile_path(@user), target: '_blank' %> | 
-      <%= link_to("x", about_attach_profile_path(@user), method: :delete, data: { confirm: 'Jeste li sigurni da želite izbrisati?' }) %>
+      <%= link_to("x", about_attach_profile_path(@user), method: :delete, data: { confirm: 'Jeste li sigurni da želite deaktivirati stavku?' }) %>
       <% end %>
     </div>
   </div>
+  
   <hr/>
+  
+  
+  
+  
+  
   <div class="form-group">
-    <%= f.label :group_id, "Grupa:" %>
-    <%= f.select :group_id, Group.all.collect {|g| [ g.title, g.id ] }, {include_blank: true}, {class: "form-control"} %>
+    <%= f.label :group_id, "Grupa:", class: "col-lg-4 control-label" %>
+    <div class="col-lg-8"><%= f.select :group_id, Group.all.collect {|g| [ g.title, g.id ] }, {:prompt => 'Dodijelite grupu'}, {class: "form-control"} %></div>
   </div>
+  
+  
+  
   <div class="form-group">
-    <%= f.label :buyer_tag, "Oznaka naručitelja" %>
-    <%= f.text_field :buyer_tag, class: "form-control", style: "width: 200px" %>
+    <%= f.label :buyer_tag, "Oznaka naručitelja:", class: "col-lg-4 control-label" %>
+    <div class="col-lg-8"><%= f.text_field :buyer_tag, class: "form-control" %></div>
   </div>
+  
   <div class="form-group">
+    <label class= "col-lg-4 control-label">Ovlasti:</label>
+    <div class="col-lg-8">
     <div class="checkbox">
       <%= f.check_box :admin %> <%= f.label :admin, "Administrator" %>
     </div>
   </div>
+  </div>
   <div class="form-group">
+    <div class="col-lg-8 col-lg-offset-4">
     <div class="checkbox">
       <%= f.check_box :is_producer %> <%= f.label :is_producer, "Proizvođač" %>
     </div>
   </div>
+  </div>
   <div class="form-group">
-    <div class="checkbox">
-      <%= hidden_field_tag "user[locked_at]", nil, id: "hidden_locked_at" %>
-      <% check_box_selected = @user.try(:locked_at) ? @user.locked_at : Time.current.to_s(:db) %>
-      <%= f.check_box :locked_at, {}, check_box_selected, nil %>       
-      <%= f.label :locked_at, "Suspendiran" %>
+    <div class="col-lg-8 col-lg-offset-4">
+      <div class="checkbox">
+        <%= hidden_field_tag "user[locked_at]", nil, id: "hidden_locked_at" %>
+        <% check_box_selected = @user.try(:locked_at) ? @user.locked_at : Time.current.to_s(:db) %>
+        <%= f.check_box :locked_at, {}, check_box_selected, nil %>       
+        <%= f.label :locked_at, "Suspendiran" %>
+      </div>
     </div>
   </div>
 </div>
+   
+
 <div class="panel-footer">
   <div class="footer-links">
     <%= f.submit "Spremi promjene", class: "btn btn-primary" %>
+    <%= link_to '&nbsp; &nbsp; &nbsp; Pregled korisnika &raquo;'.html_safe, admin_user_path(@user) %>
+    <%= link_to '&nbsp; &nbsp; &nbsp; Svi korisnici &raquo;'.html_safe, admin_users_path %>
     <% end %>
   </div>
 </div>

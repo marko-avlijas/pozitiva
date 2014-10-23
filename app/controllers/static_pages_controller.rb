@@ -17,5 +17,8 @@ class StaticPagesController < ApplicationController
       redirect_to :root, alert: "samo za članove grupe GSR Pušlek"
     end
   end
+  
+  def recipes
+  end
 
 end

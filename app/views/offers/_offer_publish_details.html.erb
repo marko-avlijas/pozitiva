@@ -1,5 +1,5 @@
 <div class="col-md-6">
-  <div class="offer-details">
+  <div class="offer-details offer-details-important">
     <label>Rok za narudžbu:</label>
     <ul>
       <li>
@@ -11,7 +11,7 @@
       </li>
     </ul>
   </div>
-  <div class="offer-details">
+  <div class="offer-details offer-details-important">
     <label>Isporuke:</label>
     <ul>
       <% @offer.deliveries.each do |delivery| %>        
@@ -56,7 +56,7 @@
     <label>Objavljeno u grupi:</label>
     <ul>    
       <% @offer.groups.each do |group| %>
-      <li><i class="fa fa-users"></i> &nbsp;<%= group.title %></li>
+      <li><%= group.title %></li>
       <% end %>
     </ul>
   </div>

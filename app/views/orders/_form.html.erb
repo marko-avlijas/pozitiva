@@ -14,10 +14,13 @@
       <div class="content">
         <% @offer.offer_items.each do |offer_item| %>
         <%= f.fields_for :order_items, @order.find_or_build_order_item_for(offer_item) do |order_item_form| %>
-
-        <div class="form-group order-row"> 
+        <% item_disabled = 'disabled' if offer_item.status == 'deactivated' %>
+        <div class="form-group order-row <%= item_disabled %>"> 
           <div class="row">
             <div class="col-lg-4 col-md-3 col-sm-3">
+              <% if offer_item.status == 'deactivated' %>
+                <span class="glyphicon glyphicon-ban-circle disabled-order"></span>
+              <% end %>
               <strong><%= offer_item.title %>&nbsp; <%= offer_item_packaging_icon(offer_item.packaging) %></strong>
               <span style="display:block; margin-bottom: 5px; font-size: 13px"><%= offer_item.note %></span>
             </div>
@@ -31,13 +34,14 @@
             <% if offer_item.packaging != "vario" %>   
             <div class="col-lg-2 col-md-3 col-sm-3 qty">
               <div class="input-group">
+                 
                 <% if order_item_form.object.qty  %>
                   <% qty_val = sprintf("%.2f", order_item_form.object.qty).gsub('.', ',') %>
                   <% qty_val = order_item_form.object.qty.to_i if order_item_form.object.qty_have_to_be_integer? %>
                 <% end %>
                 <%= order_item_form.text_field :qty, 
                 value: qty_val, 
-                class: "form-control", placeholder: "količina", style: "color: #cc2200; font-weight: bold" %><%= offer_item_packaging_unit(offer_item) %> 
+                class: "form-control", placeholder: "količina", style: "color: #cc2200; font-weight: bold", disabled: item_disabled %><%= offer_item_packaging_unit(offer_item) %> 
                 
               </div>
               <% unless order_item_form.object.new_record?  %>
@@ -52,7 +56,7 @@
             <%= order_item_form.hidden_field :qty, value: "0" %>        
             <div class="col-lg-2 col-sm-3 qty">
               <div>
-                <%= order_item_form.text_field :qty_description, class: "form-control", placeholder: "opisna količina", style: "color: #cc2200; font-weight: bold" %>
+                <%= order_item_form.text_field :qty_description, class: "form-control", placeholder: "opisna količina", style: "color: #cc2200; font-weight: bold", disabled: item_disabled %>
               </div>
             
             <% unless order_item_form.object.new_record?  %>

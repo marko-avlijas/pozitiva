@@ -32,9 +32,11 @@ font-weight: 500;
 }
 
 #footer {
-  background-color: #534C49;
   height: 70px;
   color: #CAB5B1;
+  background-color: #82A536;
+  border-top: 5px solid #68842B;
+  padding-top: 20px;
 }
 
 #footer a{
@@ -43,6 +45,21 @@ font-weight: 500;
 #footer a:hover {
   text-decoration: underline;
 }
+#footer.table-layout {
+  min-width: 1200px
+}
+
+  #footer.table-layout p.text-muted {
+    width: 40%;
+    float: right;
+    text-align: right;
+    margin-top: 0;
+  }
+  #footer.table-layout p.text-muted:first-child{
+    float: left;
+    text-align: left;
+  }
+
 
 /*-------- NAVBAR --------- */
 
@@ -337,6 +354,10 @@ position: relative;
 .footer-links{
 	padding: 10px 0;
 }
+.footer-links a, .footer-links button{
+  margin-bottom: 10px;
+  display: inline-block;
+}
 .panel.panel-offer .focus{
   margin: 10px 30px 0 0;
 }
@@ -440,6 +461,7 @@ border-bottom: 2px solid #DAD6C9;
 	border-top: 1px solid #FFF;
 	border-bottom: 1px solid #DAD6C9;
 }
+
 .table > tfoot > tr > td {
   border-bottom: none;
 }
@@ -532,8 +554,11 @@ a.white-card.home:hover, a.white-card.home:active {
 
 .text-muted {
 	color: #EBEDE3;
-  padding: 18px 30px;
-
+  padding: 0;
+  margin: 0;
+}
+.credits {
+  text-align: right;
 }
 .offer-title h4{
   font-size: 22px;
@@ -590,10 +615,14 @@ span.inline{
 
 
 
-.order-row{
+.order-row.form-group{
 	border-bottom: 1px dashed #BFC0B2; 
-	padding-bottom: 10px;
+	padding: 10px;
   position: relative;
+  margin-bottom: 0;
+}
+.order-row.form-group:first-child {
+  border-top: 1px dashed #BFC0B2; 
 }
 
 
@@ -771,6 +800,13 @@ text-shadow: 1px 2px 3px #F6F8EF, 0 0 0 #666, 1px 2px 3px #F6F8EF;
   display:block;
   font-weight: 400;
 }
+.offer-details-important {
+  font-size: 18px;
+}
+.offer-details-important label {
+  font-weight: 600;
+  color: #cc2200;
+}
 .order .group, .offer .group{
   border: 1px solid #CFCBBA;
   margin-bottom: 20px;
@@ -784,7 +820,8 @@ text-shadow: 1px 2px 3px #F6F8EF, 0 0 0 #666, 1px 2px 3px #F6F8EF;
   border-bottom: 1px solid #E2E0D5;
 }
 .order .group .content, .offer .group .content{
-  padding: 20px;
+  margin-top: 20px;
+  padding: 0 20px 20px 20px;
 }
 .offer .group .group-footer{
   padding: 15px 20px;
@@ -850,6 +887,38 @@ table.offer_examples tbody tr td:first-child {
   font-size: 16px;
 }
 
+.glyphicon.glyphicon-ban-circle {
+  color: #ccc;
+}
+.offer .glyphicon.glyphicon-ban-circle:hover {
+  color: #cc2200;
+}
+
+.help-block .glyphicon.glyphicon-ban-circle:hover {
+  color: #ccc;
+}
+.disabled .glyphicon.glyphicon-ban-circle {
+  color: #cc2200;
+  position: relative;
+  top: 2px;
+}
+.disabled .glyphicon.glyphicon-ban-circle:hover {
+  color: #777;
+}
+.disabled td, .disabled .row > div {
+  opacity: .4;
+}
+.disabled td:first-child{
+  opacity: 1;
+}
+.disabled .fa {
+  color: #777 !important;
+}
+.disabled .glyphicon-ban-circle.disabled-order {
+  color: #777
+}
+
+
 
 /*----------------------------- MEDIA QUERIES ----------------------------*/
 
@@ -883,19 +952,60 @@ table.offer_examples tbody tr td:first-child {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color: #F6F8EE;
   }
+  #footer .text-muted{
+    text-align: center;
+  }
+  #footer .text-muted:first-child{
+    margin-bottom: 5px;
+  }
+  #footer {
+    padding-top: 5px;
+  }
+  #footer.table-layout p.text-muted {
+    margin-top: 15px;
+    }
+  }
+  
 
-}
 
 @media (max-width: 480px){
   .badge, .badge.blue, .badge.grey{
-    display: inline;
+    display: inline-block;
     white-space: normal;
-    background-color: transparent;
-    color: #25748D;
     top: 0;
     text-align: left;
-    padding: 0;
   }
+  .panel-offer .panel-heading, .panel-offer .panel-body, .panel-offer .panel-footer {
+    padding: 10px;
+  }
+  .container {
+  padding: 0 10px;
+  }
+  .row {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  .focus-header, .focus-body, .focus-footer {
+  padding: 10px;
+  }
+  .panel-heading.offer-title h3 {
+  line-height: 30px;
+  margin: 20px 0;
+  }
+  .offer-title h4 {
+  font-size: 18px;
+  }
+  body {
+    padding-top: 70px;
+  }
+  .order .group .content, .offer .group .content {
+    margin-top: 20px;
+    padding: 0 10px 20px 10px;
+  }
+  .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+  padding: 8px 5px;
+  }
+ 
 }
 
 @media print 

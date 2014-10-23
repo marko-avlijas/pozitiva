@@ -9,8 +9,8 @@
           <thead>
             <tr>
               <th>Naziv</th>
-              <th>Lat (geogr. širina)</th>
-              <th>Lng (geogr. dužina)</th>
+              <!-- <th>Lat (geogr. širina)</th>
+              <th>Lng (geogr. dužina)</th> -->
               <th>Opis</th>
               <th></th>
               <th></th>
@@ -22,11 +22,11 @@
             <% @locations.each do |location| %>
             <tr>
               <td><%= location.title %></td>
-              <td><%= location.lat %></td>
-              <td><%= location.lng %></td>
+              <!-- <td><%#= location.lat %></td>
+              <td><%#= location.lng %></td> -->
               <td><%= location.description %></td>
               <td><%= link_to 'Uredi', edit_location_path(location) %></td>
-              <td><%= link_to "Prikaži na karti", location.map_url, target: "_blank" if location.map_url %></td>
+              <td><%= link_to "Karta", location.map_url, target: "_blank" if location.map_url %></td>
               <td><%= link_to 'Izbriši', location, method: :delete, data: { confirm: 'Jeste li sigurni da želite izbrisati lokaciju?' } %></td>
             </tr>
             <% end %>

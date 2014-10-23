@@ -11,6 +11,10 @@ class Admin::UsersController < ApplicationController
     @users_suspended = User.where("users.locked_at IS NOT NULL")
   end
   
+  def show
+    @user = User.find(params[:id])
+  end
+  
   def print
     # svi članovi koji su u nekoj grupi i koji nisu suspendirani
     @users_with_group_not_suspended = User.where("(users.group_id IS NOT NULL) AND (users.locked_at IS NULL)")
@@ -30,7 +34,7 @@ class Admin::UsersController < ApplicationController
       # file upload handler prije @user.update
       if @user.handle_about_attach(user_params[:about_attach]) and @user.update(user_params.except(:about_attach))
         
-        format.html { redirect_to admin_users_path, notice: 'User was successfully updated.' }
+        format.html { redirect_to [:admin, @user], notice: 'User was successfully updated.' }
         # format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -42,7 +46,7 @@ class Admin::UsersController < ApplicationController
   private
   
   def user_params
-    params.require(:user).permit(:group_id, :admin, :locked_at, :is_producer, :about_text, :about_url, :buyer_tag, :about_attach)
+    params.require(:user).permit(:group_id, :admin, :locked_at, :is_producer, :about_text, :about_url, :buyer_tag, :about_attach, :name, :email, :phone, :neighborhood)
   end
   
   def seed_admin
