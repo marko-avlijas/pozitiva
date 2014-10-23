@@ -24,18 +24,9 @@
     background-image: url(<%= asset_path 'povrce_bg.png' %>);
     opacity: .8;
   }
-  .koke {
-    height: 160px;
-    background-image: url(<%= asset_path 'koke2.png' %>);
-    background-position: center;
-    background-size: 600px;
-    background-repeat: repeat-x;
-    background-color: rgba(48, 28, 6, 0.1);
-    border-top: 1px solid #CCC;
-  }
   #wrap {
-    margin: 0 auto -230px;
-    padding: 0 0 230px;
+    margin: 0 auto -250px;
+    padding: 0 0 250px;
   }
   </style>
   <% end %>
@@ -64,11 +55,10 @@
       <%= yield %>
     </div> <!-- /container -->
   </div> <!-- /wrap -->
- 
-  <div class="koke" style="min-width: 1200px"></div>
-  <div id="footer" class="table-layout">
-    <div class="container">
-    <p class="text-muted">
+
+  <div class="povrce"></div>
+  <div id="footer" style="min-width: 1200px">
+    <p class="text-muted credit">&copy; 2014 Njam-Njam &nbsp; &nbsp; 
       <%= link_to "Uvjeti korištenja", manifest_path, target: "_blank" %> &nbsp; &nbsp; 
       <% if current_user && current_user.try(:group).present? %>
       <% slug = "info" %>
