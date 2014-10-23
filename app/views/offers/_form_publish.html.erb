@@ -19,18 +19,20 @@
     <% Group.all.each do |group| %>
     
     <!-- Producer can select just one group: -->
-    <!-- <div class="radio" style="padding-left: 35px">
-      <%# radio_button_selected = (@offer.new_record? && group.id == 1) ? true : @offer.group_ids.include?(group.id) %>
-      <%#= radio_button_tag "offer[group_ids][]", group.id, radio_button_selected, id: dom_id(group) %>
-      <%#= label_tag dom_id(group), group.title %>
-    </div> -->
-      
-    <!-- Producer can select more groups at a time: -->
-    <div class="checkbox" style="padding-left: 35px">
-      <% check_box_selected = (@offer.new_record? && group.id == 1) ? true : @offer.group_ids.include?(group.id) %>
-      <%= check_box_tag "offer[group_ids][]", group.id, check_box_selected, id: dom_id(group) %>
+    <div class="radio" style="padding-left: 35px">
+      <% radio_button_selected = (@offer.new_record? && group.id == 1) ? true : @offer.group_ids.include?(group.id) %>
+      <%= radio_button_tag "offer[group_ids][]", group.id, radio_button_selected, id: dom_id(group) %>
       <%= label_tag dom_id(group), group.title %>
     </div>
+    <!-- end of Producer can select just one group -->
+      
+    <!-- Producer can select more groups at a time: -->
+    <!-- <div class="checkbox" style="padding-left: 35px">
+      <%# check_box_selected = (@offer.new_record? && group.id == 1) ? true : @offer.group_ids.include?(group.id) %>
+      <%#= check_box_tag "offer[group_ids][]", group.id, check_box_selected, id: dom_id(group) %>
+      <%#= label_tag dom_id(group), group.title %>
+    </div> -->
+    <!-- end of Producer can select more groups at a time -->
     
     <% end %>
     <span class="help-block" style="padding-top: 10px"><i class="fa fa-exclamation-circle" style="color: #cc2200"></i> Ponudu objavite isključivo u grupi s kojom imate prethodni dogovor o objavi.</span>
