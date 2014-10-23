@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   
   after_save do
     if changed_attributes.slice("group_id").any?
-      message = Message.new(subject: "Upis u grupu", body: "Dobrodošli u web-aplikaciju Njam-Njam! Registrirani ste kao član grupe #{group.title}. Aplikaciji pristupite putem linka: https://njam-njam.herokuapp.com/ . Ukoliko ste vlasnik ove e-mail adrese, a ne sjećate se da ste se registrirali u Njam-Njam aplikaciju, možda je došlo do neke greške pa nas što prije kontaktirajte na ndesertrose@gmail.com ") 
+      message = Message.new(subject: "Upis u grupu", body: "Dobrodošli u web-aplikaciju PozitivaHub! Registrirani ste kao član grupe #{group.title}. Aplikaciji pristupite putem linka: http://pozitiva.herokuapp.com . Ukoliko ste vlasnik ove e-mail adrese, a ne sjećate se da ste se registrirali u PozitivaHub aplikaciju, možda je došlo do neke greške pa nas što prije kontaktirajte na pozitiva.gsr@gmail.com ") 
       NotificationsMailer.admin_message_to_user(self, message).deliver
     end
   end

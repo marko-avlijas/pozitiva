@@ -9,8 +9,9 @@
 				<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {role: "form", class: "form-horizontal accepted_manifest" }) do |f| %>
 				<%= devise_error_messages! %>
 				<div class="form-group">
-					<%= f.label :name, "Ime i prezime*", class: "col-lg-4 control-label" %>
+					<%= f.label :name, "Ime i prezime ili naziv proizvođača*", class: "col-lg-4 control-label" %>
 					<div class="col-lg-8"><%= f.text_field :name, :autofocus => true, class: "form-control" %>
+          <span class="help-block">Kupci upisuju puno ime i prezime, proizvođači uobičajeni (što kraći) naziv prema kojem ih kupci prepoznaju</span>
         </div>
           
 				</div>
@@ -18,35 +19,37 @@
 				<div class="form-group">
 					<%= f.label :phone, "Telefon*", class: "col-lg-4 control-label" %>
 					<div class="col-lg-8"><%= f.text_field :phone, class: "form-control" %>
+            <span class="help-block">Bit će vidljiv proizvođačima prilikom narudžbe</span>
           </div>
 				</div>
 				<div class="form-group">
 					<%= f.label :email, "E-mail*", class: "col-lg-4 control-label" %>
 					<div class="col-lg-8"><%= f.email_field :email, class: "form-control" %>
+          <span class="help-block">Obavezno unijeti e-mail adresu s kojom ste prijavljeni u GSR</span>
         </div>
           
 				</div>
 				<div class="form-group">
 					<%= f.label :password, "Lozinka*", class: "col-lg-4 control-label" %>
 					<div class="col-lg-8"><%= f.password_field :password, class: "form-control" %>
-          <span class="help-block">Koristite kombinaciju slova i brojki, minimalno 8 znakova</span></div>
+          <span class="help-block">Koristite kombinaciju slova i brojki, minimalno 8 znakova (ovdje <strong>ne upisujete</strong> svoj članski broj, npr. PO-xxx)</span></div>
 				</div>
 				<div class="form-group">
 					<%= f.label :password_confirmation, "Ponovi lozinku*", class: "col-lg-4 control-label" %>
 					<div class="col-lg-8"><%= f.password_field :password_confirmation, class: "form-control" %></div>
 				</div>
 				<div class="form-group">
-					<%= f.label :requested_group_id, "Grad*", class: "col-lg-4 control-label" %>
+					<%= f.label :requested_group_id, "Članstvo u grupi*", class: "col-lg-4 control-label" %>
 					<div class="col-lg-8">
             <%= f.select :requested_group_id, Group.all.collect {|g| [ g.title, g.id ] }, {include_blank: true}, {class: "form-control"} %>
-            <span class="help-block">Odaberite Vaš ili Vama najbliži grad (gdje želite preuzimati narudžbe)</span>
+            <span class="help-block">Članstvo u jednoj od navedenih grupa je preduvjet za registraciju</span>
           </div>
 				</div>
 				<div class="form-group">
 					<%= f.label :neighborhood, "Kvart", class: "col-lg-4 control-label" %>
 					<div class="col-lg-8">
             <%= f.text_field :neighborhood, class: "form-control" %>
-            <span class="help-block">npr. Trešnjevka, Rijeka-istok</span>
+            <span class="help-block">U kojem kvartu živiš?</span>
           </div>
 				</div>
         
