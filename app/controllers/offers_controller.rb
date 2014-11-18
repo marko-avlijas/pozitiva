@@ -150,6 +150,27 @@ class OffersController < ApplicationController
     redirect_to my_offers_path
   end
 
+  # GET /offers/:offer_id/offer_items/:id/deactivate
+  def deactivate_item
+    @offer = Offer.find(params[:offer_id])    
+    @offer_item = @offer.offer_items.find(params[:id])
+    if @offer_item.deactivate
+      redirect_to @offer, notice: 'Stavka je uspješno deaktivirana.'
+    else
+      redirect_to @offer, alert: 'Ooops, dogodila se greška.'
+    end
+  end
+
+  def activate_item
+    @offer = Offer.find(params[:offer_id])    
+    @offer_item = @offer.offer_items.find(params[:id])
+    if @offer_item.activate
+      redirect_to @offer, notice: 'Stavka je uspješno aktivirana.'
+    else
+      redirect_to @offer, alert: 'Ooops, dogodila se greška.'
+    end
+  end
+  
   def duplicate
     if (@copy = @offer.duplicate)
       redirect_to edit_offer_path(@copy), notice: 'Ponuda je uspješno kopirana.'

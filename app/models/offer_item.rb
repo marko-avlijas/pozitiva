@@ -3,7 +3,7 @@ class OfferItem < ActiveRecord::Base
   belongs_to :offer, inverse_of: :offer_items
   has_many :order_items, dependent: :restrict_with_error
     
-  default_scope { order('offer_items.position') }
+  default_scope { order('offer_items.position, id') }
 
   STATUSES = [:available, :out_of_stock, :canceled]
   PACKAGING = [["Rinfuza", :bulk], ["Pakiranje", :package], ["Komad varijabilne težine", :vario]]
@@ -16,6 +16,18 @@ class OfferItem < ActiveRecord::Base
   validates_presence_of :decimal_price_vario, if: :packaging_vario?
   
   # include ActionView::Helpers::NumberHelper
+  
+  def deactivate
+    self.status = 'deactivated'
+    self.status_changed_at = Time.current
+    self.save
+  end
+  
+  def activate
+    self.status = nil
+    self.status_changed_at = Time.current
+    self.save
+  end
   
   def packaging_bulk?
     packaging == 'bulk'

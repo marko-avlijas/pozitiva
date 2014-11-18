@@ -1,24 +1,27 @@
 <%= form_for @location, html: {role: "form", style: "max-width: 400px"}  do |f| %>
 
   <div class="form-group">
-    <%= f.label :title, "Naziv" %>
+    <%= f.label :title, "Naziv lokacije" %>
     <%= f.text_field :title, class: "form-control", placeholder: "Naziv"  %>
+    <p class="help-block">Što kraći naziv, do 2 riječi</p>
+  </div>
+  <!-- <div class="form-group">
+    <%#= f.label :lat, "Geografska širina (Lat)" %>
+    <%#= f.text_field :lat, class: "form-control", placeholder: "Geografska širina (Lat)" %>
   </div>
   <div class="form-group">
-    <%= f.label :lat, "Geografska širina (Lat)" %>
-    <%= f.text_field :lat, class: "form-control", placeholder: "Geografska širina (Lat)" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :lng, "Geografska dužina (Lng)" %>
-    <%= f.text_field :lng, class: "form-control", placeholder: "Geografska dužina (Lng)" %>
-  </div>
+    <%#= f.label :lng, "Geografska dužina (Lng)" %>
+    <%#= f.text_field :lng, class: "form-control", placeholder: "Geografska dužina (Lng)" %>
+  </div> -->
   <div class="form-group">
     <%= f.label :description, "Opis" %>
     <%= f.text_area :description, class: "form-control", placeholder: "Opis" %>
+    <p class="help-block">Detaljnije opisati lokaciju i upute kako do nje doći</p>
   </div>
   <div class="form-group">
     <%= f.label :map_image_url, "URL karte" %>
     <%= f.text_field :map_image_url, class: "form-control", placeholder: "URL karte" %>
+    <p class="help-block">Kartu je potrebno spremiti kao sliku (.jpg ili .png), objaviti na nekom servisu koji omogućuje javni pristup slici (dropbox, picassa, thumblr) i u ovo polje unijeti URL slike</p>
   </div>
 
   <%= f.submit "Spremi", class: "btn btn-primary" %>

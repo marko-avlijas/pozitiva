@@ -4,6 +4,7 @@ class OrderItem < ActiveRecord::Base
   
   belongs_to :offer_item
   validates :offer_item, presence: true
+  default_scope { order('order_items.id DESC') }
   
   # include ActionView::Helpers::NumberHelper
   

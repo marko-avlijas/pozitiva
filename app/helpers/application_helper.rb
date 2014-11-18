@@ -140,7 +140,7 @@ module ApplicationHelper
     when "bulk", "vario"
       "#{formatted_qty item.corrected_qty} #{item.offer_item.unit}"
     else
-      "#{formatted_qty item.corrected_qty} x #{item.offer_item.unit}"
+      "#{formatted_qty item.corrected_qty}"
     end
   end
     

@@ -10,83 +10,106 @@
   <%= form_for @offer, html: { role: "form"} do |f| %>
   <%= error_messages_for @offer %>
   <%= f.hidden_field :publishing_offer, value: true %>
+  
+  
   <h4><i class="fa fa-users"></i> &nbsp;Ponuda namijenjena grupi: <span style="color: #cc2200">*</span></h4>
   <div class="form-group" style="overflow: auto;">
     <%# http://railscasts.com/episodes/17-habtm-checkboxes-revised %>
     <%= hidden_field_tag "offer[group_ids][]", nil %>
     <% Group.all.each do |group| %>
+    
+    <!-- Producer can select just one group: -->
     <div class="radio" style="padding-left: 35px">
       <% radio_button_selected = (@offer.new_record? && group.id == 1) ? true : @offer.group_ids.include?(group.id) %>
       <%= radio_button_tag "offer[group_ids][]", group.id, radio_button_selected, id: dom_id(group) %>
       <%= label_tag dom_id(group), group.title %>
     </div>
+    <!-- end of Producer can select just one group -->
+      
+    <!-- Producer can select more groups at a time: -->
+    <!-- <div class="checkbox" style="padding-left: 35px">
+      <%# check_box_selected = (@offer.new_record? && group.id == 1) ? true : @offer.group_ids.include?(group.id) %>
+      <%#= check_box_tag "offer[group_ids][]", group.id, check_box_selected, id: dom_id(group) %>
+      <%#= label_tag dom_id(group), group.title %>
+    </div> -->
+    <!-- end of Producer can select more groups at a time -->
+    
     <% end %>
     <span class="help-block" style="padding-top: 10px"><i class="fa fa-exclamation-circle" style="color: #cc2200"></i> Ponudu objavite isključivo u grupi s kojom imate prethodni dogovor o objavi.</span>
-      <hr/>
-      <h4><i class="fa fa-clock-o"></i> &nbsp;Rok za narudžbu <span style="color: #cc2200">*</span></h4>
-      <div class="form-group">
-        <div class="input-group date datetimepicker">
-          <%= f.text_field :valid_until, value: dt_picker(f.object.valid_until), class: "form-control" %>
-          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-        </div>
-        <span class="help-block">Od trenutka objave do roka za narudžbu mora proći min. 24h</span>
-      </div>
-      <hr/>
-      <h4><i class="fa fa-truck"></i> &nbsp;Mjesto i vrijeme isporuke <span style="color: #cc2200">*</span></h4>
-      <div class="form-group">
-        <%# always have one empty %>
-        <% f.object.deliveries.build if f.object.deliveries.blank? %>
-        <%= f.fields_for :deliveries do |deliveries_form| %>
-        <div class="duplicatable_nested_form deliveries">
-          <%= deliveries_form.hidden_field :id %>       
-          <div class="delivery-row">
-            <div style="float: left; margin: 0 10px 10px 0"><%= deliveries_form.collection_select :location_id, Location.all.to_a, 'id', 'title', {include_blank: 'odaberite lokaciju'}, class: "form-control" %></div>
-            <div style="float: left;">
-              <div class="form-group">
-                <div class="input-group date datetimepicker">
-                  <%= deliveries_form.text_field :when, value: dt_picker(deliveries_form.object.when), class: "form-control" %>
-                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                </div>
-                <span class="help-block">Vrijeme isporuke mora biti kasnije od roka za narudžbu.</span>
-              </div>
-            </div>
-            <%= link_to '', '', class: 'remove_nested_form glyphicon glyphicon-trash', data: {fields: "deliveries"} %>
-            <%#= deliveries_form.check_box :_destroy %> <%#= deliveries_form.label :_destroy, "Remove" %>
-            <%#= hidden_field_tag nil, "0", id: "offer_deliveries_attributes_#{deliveries_form.index}__destroy", name: "offer[deliveries_attributes][#{deliveries_form.index}][_destroy]" %>
-          </div>
-        </div>
-        <% end # fields_for %>
-      </div>
-      <p><%= link_to 'Dodaj lokaciju/termin', '', class: 'duplicate_nested_form delivery btn btn-primary btn-xs', data: {fields: "deliveries"} %> </p>
-      <span class="help-block">Ostavite si dovoljno vremena između roka za narudžbu i termina isporuke za pakiranje, uplate kupaca i sl.<br/>Ukoliko ste fleksibilini oko mjesta i vremena isporuke, odaberite opciju "prema dogovoru" - u tom slučaju ne morate unijeti termin isporuke, nego se o detaljima isporuke dogovarate direktno s kupcima.</span>
-      <hr/>
-      <%= f.submit "Objavi ponudu odmah!", class: "btn btn-primary" %>
-      <!-- gumb za otvaranje modala -->
-      <button class="btn" data-toggle="modal" data-target="#modal-publish-future" > Objavi ponudu s odgodom</button>
-    </div>
-    <div class="modal fade" id="modal-publish-future">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title"> Vrijeme objave ponude</h4>
-          </div>
-          <div class="modal-body">
-            <label>Odaberi datum i vrijeme objave:</label>
-            <div class="input-group date datetimepicker" style="float: left; margin-right: 10px">
-              <%= f.text_field :valid_from, value: dt_picker(f.object.valid_from || Time.current), class: "form-control" %>
-              <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-              </span>
-            </div>
-            <br/>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
-            <%= f.submit "Objavi ponudu", class: "btn btn-primary" %>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <% end # end of form %>
   </div>
+  
+  <hr/>
+  
+  <h4><i class="fa fa-clock-o"></i> &nbsp;Rok za narudžbu <span style="color: #cc2200">*</span></h4>
+  <div class="form-group">
+    <div class="input-group date datetimepicker">
+      <%= f.text_field :valid_until, value: dt_picker(f.object.valid_until), class: "form-control" %>
+      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+    </div>
+    <span class="help-block">Od trenutka objave do roka za narudžbu mora proći min. 24h</span>
+  </div>
+      
+  <hr/>
+  
+  <h4><i class="fa fa-truck"></i> &nbsp;Mjesto i vrijeme isporuke <span style="color: #cc2200">*</span></h4>
+  <div class="form-group">
+    <%# always have one empty %>
+    <% f.object.deliveries.build if f.object.deliveries.blank? %>
+    <%= f.fields_for :deliveries do |deliveries_form| %>
+    <div class="duplicatable_nested_form deliveries">
+      <%= deliveries_form.hidden_field :id %>       
+      <div class="delivery-row">
+        <div style="float: left; margin: 0 10px 10px 0"><%= deliveries_form.collection_select :location_id, Location.all.to_a, 'id', 'title', {include_blank: 'odaberite lokaciju'}, class: "form-control" %>
+        </div>
+        <div style="float: left;">
+          <div class="form-group">
+            <div class="input-group date datetimepicker">
+              <%= deliveries_form.text_field :when, value: dt_picker(deliveries_form.object.when), class: "form-control" %>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+            <span class="help-block">Vrijeme isporuke mora biti kasnije od roka za narudžbu.</span>
+          </div>
+        </div>
+        <%= link_to '', '', class: 'remove_nested_form glyphicon glyphicon-trash', data: {fields: "deliveries"} %>
+        <%#= deliveries_form.check_box :_destroy %> <%#= deliveries_form.label :_destroy, "Remove" %>
+        <%#= hidden_field_tag nil, "0", id: "offer_deliveries_attributes_#{deliveries_form.index}__destroy", name: "offer[deliveries_attributes][#{deliveries_form.index}][_destroy]" %>
+      </div> <!-- delivery-row end -->
+    </div>
+    <% end # fields_for %>
+  </div>
+  <p><%= link_to 'Dodaj lokaciju/termin', '', class: 'duplicate_nested_form delivery btn btn-primary btn-xs', data: {fields: "deliveries"} %> </p>
+  <span class="help-block">Ostavite si dovoljno vremena između roka za narudžbu i termina isporuke za pakiranje, uplate kupaca i sl.<br/>Ukoliko ste fleksibilini oko mjesta i vremena isporuke, odaberite opciju "prema dogovoru" - u tom slučaju ne morate unijeti termin isporuke, nego se o detaljima isporuke dogovarate direktno s kupcima.</span>
+  
+
+  <hr/>
+      
+  <%= f.submit "Objavi ponudu odmah!", class: "btn btn-primary" %>
+  <!-- gumb za otvaranje modala -->
+  <button class="btn" data-toggle="modal" data-target="#modal-publish-future" > Objavi ponudu s odgodom</button>
+
+  <div class="modal fade" id="modal-publish-future">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"> Vrijeme objave ponude</h4>
+        </div>
+        <div class="modal-body">
+          <label>Odaberi datum i vrijeme objave:</label>
+          <div class="input-group date datetimepicker" style="float: left; margin-right: 10px">
+            <%= f.text_field :valid_from, value: dt_picker(f.object.valid_from || Time.current), class: "form-control" %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+          <br/>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+          <%= f.submit "Objavi ponudu", class: "btn btn-primary" %>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  <% end # end of form %>
+</div>

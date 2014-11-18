@@ -56,13 +56,22 @@
   </div> <!-- /wrap -->
   <div class="povrce"></div>
   <div id="footer">
-      <p class="text-muted credit">&copy; 2013 PozitivaHub &nbsp; &nbsp; 
-        <%= link_to "Uvjeti korištenja", manifest_path, target: "_blank" %> &nbsp; &nbsp; 
-        <% if current_user && current_user.try(:group).present? %>
-        <% slug = "info-" + current_user.group.title.parameterize %>
-        <a href="/<%= slug %>">Info</a>
-        <% end %>
-      </p>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <p class="text-muted">
+            <%= link_to "Uvjeti korištenja", manifest_path, target: "_blank" %> &nbsp; &nbsp; 
+            <% if current_user && current_user.try(:group).present? %>
+            <% slug = "info-" + current_user.group.title.parameterize %>
+            <a href="/<%= slug %>">Info</a>
+            <% end %>
+          </p>
+        </div>
+        <div class="col-sm-6">
+          <p class="text-muted credits">Izrada: <a href="https://ejla.github.io" target="_blank">Mirna M.</a> © 2014 PozitivaHub</p>
+        </div>
+      </div>
     </div>
+  </div>
 </body>
 </html>

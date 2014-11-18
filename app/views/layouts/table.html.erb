@@ -55,15 +55,26 @@
       <%= yield %>
     </div> <!-- /container -->
   </div> <!-- /wrap -->
-  <div class="povrce"></div>
-  <div id="footer" style="min-width: 1200px">
-    <p class="text-muted credit">&copy; 2013 PozitivaHub &nbsp; &nbsp; 
+
+  <div class="povrce" style="min-width: 1200px"></div>
+  
+  <div id="footer" class="table-layout">
+    <div class="container">
+    <p class="text-muted">
       <%= link_to "Uvjeti korištenja", manifest_path, target: "_blank" %> &nbsp; &nbsp; 
       <% if current_user && current_user.try(:group).present? %>
       <% slug = "info-" + current_user.group.title.parameterize %>
       <a href="/<%= slug %>">Info</a>
       <% end %>
-    </p>
+    </p>  
+    <p class="text-muted credits">Izrada: <a href="https://ejla.github.io" target="_blank">Mirna M.</a> &copy; 2014 PozitivaHub</p>
   </div>
+  </div>
+  
+  
+  
+  
+  
+  
 </body>
 </html>

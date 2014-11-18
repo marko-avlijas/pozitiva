@@ -27,7 +27,13 @@
       <td class="hidden-xs hidden-sm" ><%= badge_status(order.offer) %></td>
       <td style="max-width: 200px"><%= link_to order.offer.title, order.offer %></td>
       <td class="hidden-xs"><%= link_to order.offer.user.name, profile_path(order.offer.user), target: '_blank' %></td>
-      <td class="hidden-xs" ><%= badge_delivery order %></td>
+      <td class="hidden-xs" ><%= badge_delivery order %><br/>
+      
+      <a href="#" data-toggle="modal" data-target="#LocationModal<%= order.delivery.location.id %>">
+        <span class="glyphicon glyphicon-map-marker"></span> 
+        <%= order.delivery.location.title %>
+      </a>
+      </td>
       <td class="hidden-sm hidden-md hidden-lg" ><%= badge_delivery order %></td>
       <td class="visible-md visible-lg visible-print" >
         <table class="table">
@@ -60,6 +66,26 @@
       <!-- <td><%#= link_to('', edit_offer_order_path(order.offer, order), class: "link glyphicon glyphicon-pencil") unless order.offer.expired? %></td> -->
       <!-- <td><%#= link_to '', offer_order_path(order.offer, order), method: :delete, data: { confirm: 'Jeste li sigurni da želite obrisati narudžbu?' }, class: "link glyphicon glyphicon-trash" unless expired %></td> -->
     </tr>
+    <!-- Modal -->
+    <div class="modal fade" id="LocationModal<%= order.delivery.location.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Mjesto isporuke</h4>
+          </div>
+          <div class="modal-body">
+            <h3><%= order.delivery.location.title %></h3>
+            <%= image_tag(order.delivery.location.map_image_url, style: "max-width: 100%") if order.delivery.location.map_image_url.present? %>
+            <p><%= order.delivery.location.description %></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end Modal -->
     <% end %>
   </tbody>
 </table>
+      
