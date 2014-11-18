@@ -26,15 +26,30 @@
     <%= f.text_field :buyer_tag, class: "form-control", style: "width: 200px" %>
   </div>
   <div class="form-group">
-    <div class="checkbox">
-      <%= f.check_box :admin %> <%= f.label :admin, "Administrator" %>
+
+    <label class= "col-lg-4 control-label">Ovlasti:</label>
+    <div class="col-lg-8">
+      <div class="checkbox">
+        <%= f.check_box :admin %> <%= f.label :admin, "Administrator" %>
+      </div>
     </div>
   </div>
   <div class="form-group">
-    <div class="checkbox">
-      <%= f.check_box :is_producer %> <%= f.label :is_producer, "Proizvođač" %>
+    <div class="col-lg-8 col-lg-offset-4">
+      <div class="checkbox">
+        <%= f.check_box :is_producer %> <%= f.label :is_producer, "Proizvođač" %>
+      </div>
     </div>
   </div>
+
+  <div class="form-group">
+    <div class="col-lg-8 col-lg-offset-4">
+      <div class="checkbox">
+        <%= f.check_box :is_premium %> <%= f.label :is_premium, "Premium korisnik" %>
+      </div>
+    </div>
+  </div>
+
   <div class="form-group">
     <div class="checkbox">
       <%= hidden_field_tag "user[locked_at]", nil, id: "hidden_locked_at" %>

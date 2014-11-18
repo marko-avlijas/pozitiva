@@ -42,7 +42,7 @@ class Admin::UsersController < ApplicationController
   private
   
   def user_params
-    params.require(:user).permit(:group_id, :admin, :locked_at, :is_producer, :about_text, :about_url, :buyer_tag, :about_attach)
+    params.require(:user).permit(:group_id, :admin, :locked_at, :is_producer, :is_premium, :about_text, :about_url, :buyer_tag, :about_attach, :name, :email, :phone, :neighborhood)
   end
   
   def seed_admin

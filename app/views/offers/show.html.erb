@@ -33,6 +33,8 @@
       <% if (@offer.user == current_user) %>
         <%= link_to('Uredi ponudu', edit_offer_path(@offer), class:'btn btn-primary') if @offer.editable? %> 
         <%= link_to 'Kopiraj ponudu'.html_safe, duplicate_offer_path(@offer), class:'btn btn-primary' %> 
+        <%= link_to('Export ponude'.html_safe, export_offer_path(@offer), class:'btn btn-primary') if current_user.is_premium %> 
+        
         <%= link_to('Naruči'.html_safe, new_offer_order_path(@offer), class:'btn btn-primary') if @offer.status == :active %>
         <%= link_to('Deaktiviraj ponudu'.html_safe, deactivate_offer_path(@offer), class:'btn') if @offer.status == :active %> 
         <%= link_to('Izbriši ponudu'.html_safe,  @offer, class:'btn', method: :delete, data: { confirm: 'Jeste li sigurni da želite izbrisati ponudu?' }) if @offer.editable? %> 
