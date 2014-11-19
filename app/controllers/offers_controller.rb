@@ -5,7 +5,7 @@ class OffersController < ApplicationController
   before_action :current_user_can_read,  only: [:show]
   before_action :current_user_can_write, only: [:edit, :update, :destroy, :duplicate]
   before_action :current_user_can_publish_offer, only: [:edit, :update, :destroy, :duplicate, :new, :my_offers]
-  before_action :set_offer, only: [:show, :edit, :update, :destroy, :duplicate, :deactivate, :attach, :delete_attach, :message_to_orderers, :save_sort_order]
+  before_action :set_offer, only: [:show, :edit, :update, :destroy, :duplicate, :deactivate, :attach, :delete_attach, :message_to_orderers, :save_sort_order, :export]
   
   # GET /offers
   # GET /offers.json
@@ -34,10 +34,47 @@ class OffersController < ApplicationController
 
   # GET /offers/1
   # GET /offers/1.json
-  def show    
+  def show
     @show_delete = (@offer.user == current_user)
     @my_orders = @offer.orders.where(user_id: current_user.id)
     @current_user_has_orders = @offer.orders_count_from_user(current_user) > 0
+  end
+
+  def export
+    send_data @offer.fields_to_copy.to_json(include: :offer_items), filename: "ponuda_#{Time.now.to_i}.json"
+  end
+
+  def import
+    hash = JSON.parse(params[:file].tempfile.read)
+    @offer = Offer.new
+    @offer.user = current_user
+    @offer.title = '[imported] ' + hash['title'].to_s
+    @offer.note =  hash['note']
+    if @offer.save
+      hash['offer_items'].to_a.each do |offer_item|
+        @offer.offer_items.create({ 
+          position: offer_item['position'],
+          title: offer_item['title'],
+          note: offer_item['note'],
+          min_qty_per_order: offer_item['min_qty_per_order'],
+          packaging: offer_item['packaging'],
+          packaging_description: offer_item['packaging_description'],
+          unit_bulk: offer_item['unit_bulk'],
+          price_bulk: offer_item['price_bulk'],
+          unit_package: offer_item['unit_package'],
+          price_package: offer_item['price_package'],
+          unit_vario: offer_item['unit_vario'],
+          price_vario: offer_item['price_vario'],
+        })
+      end
+      redirect_to edit_offer_path(@offer), notice: 'Ponuda je uspješno importirana.'
+      
+    else
+      raise 'Greška kod importiranja, promjene nisu spremljene.'
+    end
+    
+  rescue => e
+    redirect_to my_offers_path, alert: "Greška kod importiranja: #{e.message[0...50]}..., promjene nisu spremljene."
   end
 
   # GET /offers/new

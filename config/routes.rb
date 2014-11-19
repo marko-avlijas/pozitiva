@@ -14,7 +14,11 @@ Pozitiva::Application.routes.draw do
   resources :locations
   
   resources :offers do
+    collection do
+      post 'import'
+    end
     member do 
+      get 'export'
       get 'duplicate'
       get 'deactivate'
       get 'attach'

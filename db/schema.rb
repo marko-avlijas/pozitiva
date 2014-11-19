@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140520205254) do
+ActiveRecord::Schema.define(version: 20141118151126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -173,9 +173,10 @@ ActiveRecord::Schema.define(version: 20140520205254) do
     t.string   "company_name"
     t.string   "company_address"
     t.string   "company_oib"
-    t.string   "neighborhood"
     t.binary   "avatar"
     t.string   "avatar_mime_type"
+    t.string   "neighborhood"
+    t.boolean  "is_premium",             default: false, null: false
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

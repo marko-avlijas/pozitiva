@@ -79,8 +79,8 @@ class Offer < ActiveRecord::Base
     self.valid_until = Time.current
     self.save!      
   end
-  
-  def duplicate
+
+  def fields_to_copy
     kopy = self.dup
     kopy.title = "Kopija ponude #{kopy.title}"
     kopy.valid_from = nil
@@ -88,9 +88,14 @@ class Offer < ActiveRecord::Base
     kopy.offer_items << self.offer_items.collect{ |offer_item| offer_item.dup }
     # kopy.deliveries << self.deliveries.collect{ |delivery| delivery.dup }
     # kopy.group_offerings << self.group_offerings.collect{ |group_offering| group_offering.dup }
+    kopy
+  end
+
+  def duplicate
+    kopy = fields_to_copy
     kopy.save ? kopy : nil
   end
-  
+
   def handle_attach(attachment)
     return true if attachment.blank?
     if UploadValidator.new(self, :attach, attachment, :pdf).valid?    
