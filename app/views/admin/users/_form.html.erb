@@ -1,29 +1,22 @@
+<%= form_for [:admin, @user], html: {role: "form", class: "form-horizontal"} do |f| %>
+<%= error_messages_for @user %>  
 <div class="panel-body">
-  <%= form_for [:admin, @user], html: {role: "form", class: "form-horizontal"} do |f| %>
-  <%= error_messages_for @user %>
-  
-
   <div class="form-group">
     <%= f.label :name, "Ime i prezime:", class: "col-lg-4 control-label" %>
     <div class="col-lg-8"><%= f.text_field :name, class: "form-control" %></div>
   </div>
-
   <div class="form-group">
     <%= f.label :email, "E-mail:", class: "col-lg-4 control-label" %>
     <div class="col-lg-8"><%= f.text_field :email, class: "form-control" %></div>
   </div>
-  
   <div class="form-group">
     <%= f.label :phone, "Telefon:", class: "col-lg-4 control-label" %>
     <div class="col-lg-8"><%= f.text_field :phone, class: "form-control" %></div>
   </div>
-  
   <div class="form-group">
     <%= f.label :neighborhood, "Kvart:", class: "col-lg-4 control-label" %>
     <div class="col-lg-8"><%= f.text_field :neighborhood, class: "form-control" %></div>
   </div>
-  
- 
   <div class="form-group">
     <%= f.label :about_attach, "O korisniku - PDF: ", class: "col-lg-4 control-label"%>
     <div class="col-lg-8">
@@ -34,20 +27,11 @@
       <% end %>
     </div>
   </div>
-  
   <hr/>
-  
-  
-  
-  
-  
   <div class="form-group">
     <%= f.label :group_id, "Grupa:", class: "col-lg-4 control-label" %>
     <div class="col-lg-8"><%= f.select :group_id, Group.all.collect {|g| [ g.title, g.id ] }, {:prompt => 'Dodijelite grupu'}, {class: "form-control"} %></div>
   </div>
-  
-  
-  
   <div class="form-group">
     <%= f.label :buyer_tag, "Oznaka naručitelja:", class: "col-lg-4 control-label" %>
     <div class="col-lg-8"><%= f.text_field :buyer_tag, class: "form-control" %></div>
@@ -61,7 +45,7 @@
       </div>
     </div>
   </div>
-  </div>
+
   <div class="form-group">
     <div class="col-lg-8 col-lg-offset-4">
       <div class="checkbox">
@@ -96,6 +80,8 @@
     <%= f.submit "Spremi promjene", class: "btn btn-primary" %>
     <%= link_to '&nbsp; &nbsp; &nbsp; Pregled korisnika &raquo;'.html_safe, admin_user_path(@user) %>
     <%= link_to '&nbsp; &nbsp; &nbsp; Svi korisnici &raquo;'.html_safe, admin_users_path %>
-    <% end %>
+    
   </div>
+  
 </div>
+<% end %>
