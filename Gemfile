@@ -1,18 +1,18 @@
 source 'https://rubygems.org'
-ruby "2.1.1"
+ruby "2.1.5"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.5'
+gem 'rails', '4.1.15'
 
 group :development do
   # gem 'sqlite3'
-  
+
   gem 'quiet_assets'
   # gem 'thin'
   # gem 'grizzled-rails-logger'
   gem 'rails-erd'
   gem 'pry-rails'
-  
+
   gem 'capistrano', '~> 3.1'
   gem 'capistrano-rbenv', '~> 2.0'         # idiomatic rbenv support for capistrano
   gem 'capistrano-rbenv-install'           # ensures the right ruby version is installed
@@ -72,4 +72,4 @@ gem 'jquery-ui-rails'
 
 gem 'kaminari'
 gem 'kaminari-bootstrap', '~> 3.0.1'
-gem 'devise'
+gem 'devise', '~> 3.5'
