@@ -18,3 +18,5 @@ tmp
 
 logfile
 config/initializers/app_env.rb
+.DS_Store
+.ruby-version
