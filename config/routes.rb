@@ -10,14 +10,14 @@ Pozitiva::Application.routes.draw do
     end
   end
   get 'my_profile' => 'profiles#my_profile'
-  
+
   resources :locations
-  
+
   resources :offers do
     collection do
       post 'import'
     end
-    member do 
+    member do
       get 'export'
       get 'duplicate'
       get 'deactivate'
@@ -37,29 +37,39 @@ Pozitiva::Application.routes.draw do
       resources :order_items, only: :destroy
     end
   end
-    
+
   get 'my_orders'    => 'orders#my_orders'
   get 'my_offers'    => 'offers#my_offers'
   get 'admin_offers' => 'offers#admin'
   get 'admin_orders' => 'orders#admin'
-  
+
   get 'help'     => 'static_pages#help'
   get 'manifest' => 'static_pages#manifest'
   get 'info-gsr-pozitiva' => 'static_pages#info_gsr_pozitiva'
   get 'info-gsr-puslek'   => 'static_pages#info_gsr_puslek'
   get 'recipes'   => 'static_pages#recipes'
-  
+
   namespace :admin do
     resources :users do
       get 'print', on: :collection
     end
     post 'clean_older_than' => 'cleanup#clean_older_than'
     get 'export' => 'export#index'
-    
   end
-  
+
+
+  namespace :api do
+    namespace :v1 do
+      resources :offers, only: [:index] do
+        collection do
+          get :selected_with_orders
+        end
+      end
+    end
+  end
+
   # get 'how' => 'static_pages#how_it_works'
- 
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -100,7 +110,7 @@ Pozitiva::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'
