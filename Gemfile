@@ -1,26 +1,12 @@
 source 'https://rubygems.org'
 ruby "2.1.5"
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.15'
 
 group :development do
-  # gem 'sqlite3'
-
   gem 'quiet_assets'
-  # gem 'thin'
-  # gem 'grizzled-rails-logger'
-  gem 'rails-erd'
+  # gem 'rails-erd'
   gem 'pry-rails'
-
-  gem 'capistrano', '~> 3.1'
-  gem 'capistrano-rbenv', '~> 2.0'         # idiomatic rbenv support for capistrano
-  gem 'capistrano-rbenv-install'           # ensures the right ruby version is installed
-  gem 'capistrano-bundler', '~> 1.1.2'     # capistrano support for bundler
-  gem 'capistrano-rails', '~> 1.0.0'       # automatic migrations and asset compilation
-  gem 'capistrano-unicorn-nginx'           # plug-n-play nginx and unicorn
-  gem 'capistrano-postgresql', '~> 2.0.0'  # plug-n-play postgresql
-  gem 'capistrano-safe-deploy-to'          # ensures deploy path for the app exists
 end
 
 gem 'pg' #, group: :production
@@ -54,7 +40,7 @@ gem 'jquery-ui-rails'
 # gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 1.2'
+gem 'jbuilder', '~> 1.2'
 
 # group :doc do
 #   # bundle exec rake doc:rails generates the API under doc/api.
