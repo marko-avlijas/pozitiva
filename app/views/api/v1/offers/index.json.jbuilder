@@ -13,7 +13,7 @@ json.array! @offers do |offer|
   json.user_name  offer.user.name
   json.user_email offer.user.email
   json.title      offer.title
-  json.group      offer.user.group.title
+  json.groups     offer.groups.map{ |g| g.title }
 
   json.deliveries offer.deliveries do |delivery|
     json.when           delivery.when
