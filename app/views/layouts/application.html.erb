@@ -31,7 +31,7 @@
   <% end %>
   <%= javascript_include_tag "application"  %>
   <%= yield :javascript %>
-  
+
   <%= csrf_meta_tags %>
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
@@ -50,7 +50,7 @@
         <%= msg %>
       </div>
       <% end %>
-       
+
       <%= yield %>
     </div> <!-- /container -->
   </div> <!-- /wrap -->
@@ -60,7 +60,7 @@
       <div class="row">
         <div class="col-sm-6">
           <p class="text-muted">
-            <%= link_to "Uvjeti korištenja", manifest_path, target: "_blank" %> &nbsp; &nbsp; 
+            <%= link_to "Uvjeti korištenja", manifest_path, target: "_blank" %> &nbsp; &nbsp;
             <% if current_user && current_user.try(:group).present? %>
             <% slug = "info-" + current_user.group.title.parameterize %>
             <a href="/<%= slug %>">Info</a>
@@ -68,7 +68,7 @@
           </p>
         </div>
         <div class="col-sm-6">
-          <p class="text-muted credits">Izrada: <a href="https://ejla.github.io" target="_blank">Mirna M.</a> © 2014 PozitivaHub</p>
+          <p class="text-muted credits">© 2014 PozitivaHub</p>
         </div>
       </div>
     </div>
