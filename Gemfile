@@ -1,15 +1,18 @@
 source 'https://rubygems.org'
-ruby "2.1.5"
+ruby "2.3.8"
 
-gem 'rails', '4.1.15'
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'rails', '4.1.16'
 
 group :development do
-  gem 'quiet_assets'
+  # gem 'quiet_assets'
+  # gem 'thin'
+  # gem 'grizzled-rails-logger'
   # gem 'rails-erd'
   gem 'pry-rails'
 end
 
-gem 'pg' #, group: :production
+gem 'pg', '~> 0.21'
 
 # for Heroku (production)
 gem 'rails_12factor', group: :production
@@ -33,8 +36,8 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
+gem 'jquery-rails', '~> 3.1.5'
+gem 'jquery-ui-rails', '~> 5.0.5'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # gem 'turbolinks'
