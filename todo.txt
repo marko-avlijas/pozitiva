@@ -1,0 +1,5 @@
+  # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
+
+Add this line to config/initializers/assets.rb
+config.assets.version = '1.0'
+

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "2.3.8"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.16'
+gem 'rails', '4.2.11.3'
 
 group :development do
   # gem 'quiet_assets'
@@ -61,4 +61,4 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'kaminari'
 gem 'kaminari-bootstrap', '~> 3.0.1'
-gem 'devise', '~> 3.5'
+gem 'devise'

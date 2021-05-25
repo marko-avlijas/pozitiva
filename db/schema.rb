@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20171008085425) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "deliveries", force: true do |t|
+  create_table "deliveries", force: :cascade do |t|
     t.integer  "offer_id",    null: false
     t.integer  "location_id"
     t.datetime "when"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20171008085425) do
   add_index "deliveries", ["offer_id"], name: "index_deliveries_on_offer_id", using: :btree
   add_index "deliveries", ["when"], name: "index_deliveries_on_when", using: :btree
 
-  create_table "group_offerings", force: true do |t|
+  create_table "group_offerings", force: :cascade do |t|
     t.integer  "offer_id",   null: false
     t.integer  "group_id",   null: false
     t.datetime "created_at"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20171008085425) do
 
   add_index "group_offerings", ["offer_id", "group_id"], name: "index_group_offerings_on_offer_id_and_group_id", using: :btree
 
-  create_table "groups", force: true do |t|
+  create_table "groups", force: :cascade do |t|
     t.string   "title",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20171008085425) do
 
   add_index "groups", ["title"], name: "index_groups_on_title", unique: true, using: :btree
 
-  create_table "locations", force: true do |t|
+  create_table "locations", force: :cascade do |t|
     t.string   "title",         null: false
     t.float    "lat"
     t.float    "lng"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20171008085425) do
 
   add_index "locations", ["title"], name: "index_offers_on_title", unique: true, using: :btree
 
-  create_table "offer_items", force: true do |t|
+  create_table "offer_items", force: :cascade do |t|
     t.integer  "offer_id",                                                      null: false
     t.integer  "position",                                      default: 0,     null: false
     t.string   "title",                                                         null: false
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 20171008085425) do
   add_index "offer_items", ["offer_id"], name: "index_offer_items_on_offer_id", using: :btree
   add_index "offer_items", ["status"], name: "index_offer_items_on_status", using: :btree
 
-  create_table "offers", force: true do |t|
+  create_table "offers", force: :cascade do |t|
     t.integer  "user_id",          null: false
     t.string   "title",            null: false
     t.text     "note"
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20171008085425) do
 
   add_index "offers", ["user_id"], name: "index_offers_on_user_id", using: :btree
 
-  create_table "order_items", force: true do |t|
+  create_table "order_items", force: :cascade do |t|
     t.integer  "order_id",                                  null: false
     t.integer  "offer_item_id",                             null: false
     t.decimal  "qty",               precision: 7, scale: 1, null: false
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 20171008085425) do
   add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
   add_index "order_items", ["status"], name: "index_order_items_on_status", using: :btree
 
-  create_table "orders", force: true do |t|
+  create_table "orders", force: :cascade do |t|
     t.integer  "user_id",           null: false
     t.integer  "offer_id",          null: false
     t.integer  "delivery_id",       null: false
@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 20171008085425) do
   add_index "orders", ["status"], name: "index_orders_on_status", using: :btree
   add_index "orders", ["user_id"], name: "index_ordes_on_user_id", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
